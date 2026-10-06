@@ -1,0 +1,31 @@
+# OS / editor
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Media and job data (never committed; sources and licenses go in docs/footage.md)
+media/
+data/
+golden/*
+!golden/manifest.json
+*.wav
+*.m4a
+*.mp3
+*.mp4
+*.mkv
+*.webm
+
+# Spike outputs: keep JSON results, summaries and logs; drop audio
+scripts/spikes/**/audio_samples/
+
+# Generated from kernel-metadata.template.json by push.sh
+scripts/spikes/kaggle_s1/kernel-metadata.json
+
+# Secrets
+.env
+*.token
+access_token
+kaggle.json

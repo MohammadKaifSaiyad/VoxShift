@@ -1,0 +1,49 @@
+[{"stream_name":"stdout","time":5.825228138,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.6/20.6 MB 79.9 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":487.352707507,"data":"[s1] tts: ok=True wall=435.2s peak=4557MB \n"}
+,{"stream_name":"stdout","time":512.920661643,"data":"[s1] make_audio: ok=True wall=25.5s peak=3MB \n"}
+,{"stream_name":"stdout","time":561.899991471,"data":"[s1] vad: ok=True wall=13.5s peak=3MB \n"}
+,{"stream_name":"stdout","time":706.401360557,"data":"[s1] asr: ok=True wall=128.0s peak=4119MB \n"}
+,{"stream_name":"stdout","time":789.21642312,"data":"[s1] align: ok=True wall=40.2s peak=1941MB \n"}
+,{"stream_name":"stdout","time":814.651794534,"data":"[s1] diar: ok=False wall=24.1s peak=0MB RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\n"}
+,{"stream_name":"stdout","time":1287.75341816,"data":"[s1] tiger: ok=True wall=445.7s peak=2951MB \n"}
+,{"stream_name":"stdout","time":1330.14603842,"data":"[s1] demucs: ok=True wall=37.8s peak=869MB \n"}
+,{"stream_name":"stdout","time":1348.402899048,"data":"[s1] tagger: ok=True wall=16.9s peak=585MB \n"}
+,{"stream_name":"stdout","time":1370.84649965,"data":"[s1] opusmt: ok=True wall=21.5s peak=651MB \n"}
+,{"stream_name":"stdout","time":1612.339615171,"data":"# Spike S1 results\n"}
+,{"stream_name":"stdout","time":1612.339697455,"data":"\n"}
+,{"stream_name":"stdout","time":1612.339707213,"data":"Started 2026-10-05 17:56:33; GPUs: ['GPU 0: Tesla T4 (UUID: GPU-90ed4278-fdcc-4382-dc87-2da10a3d71be)', 'GPU 1: Tesla T4 (UUID: GPU-a65f392c-2010-9bf3-be14-194554c5761d)']\n"}
+,{"stream_name":"stdout","time":1612.339713562,"data":"\n"}
+,{"stream_name":"stdout","time":1612.339718884,"data":"| Bench | OK | Wall s | nvidia-smi peak MB | Key numbers | Error |\n"}
+,{"stream_name":"stdout","time":1612.339724249,"data":"| --- | --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":1612.339730234,"data":"| tts | True | 435.2 | 4557 | {\"mtl_en_clone_cfg00\": {\"audio_s\": 69.68, \"run_s\": 84.99, \"x_realtime\": 0.82, \"rtf\": 1.22}, \"cfg_weight_0_vs_05_duration_ratio\": 1.284, \"watermark_detect\": {\"raw\": 1.0, \"atempo_1.2\": 1.0, \"aac_128k\": 1.0, \"atempo_1.2+aac\": 1.0}, \"turbo_en_clone\": {\"audio_s\": 47.52, \"run_s\": 23.25, \"x_realtime\": 2.04, \"rtf\": 0.489}} |  |\n"}
+,{"stream_name":"stdout","time":1612.339788749,"data":"| make_audio | True | 25.5 | 3 | {} |  |\n"}
+,{"stream_name":"stdout","time":1612.339797138,"data":"| vad | True | 13.5 | 3 | {\"load_s\": 0.06, \"60s\": {\"audio_s\": 86.04, \"run_s\": 1.49, \"x_realtime\": 57.56, \"rtf\": 0.017, \"regions\": 13, \"speech_recall\": 0.709, \"detected_speech_s\": 54.6, \"true_speech_s\": 77.1, \"device\": \"cpu\"}, \"300s\": {\"audio_s\": 426.29, \"run_s\": 6.79, \"x_realtime\": 62.76, \"rtf\": 0.016, \"regions\": 67, \"speech_recall\": 0.712, \"detected_speech_s\": 274.2, \"true_speech_s\": 385.3, \"device\": \"cpu\"}} |  |\n"}
+,{"stream_name":"stdout","time":1612.339811982,"data":"| asr | True | 128.0 | 4119 | {\"large-v3-turbo\": {\"load_s\": 18.6, \"60s\": {\"audio_s\": 86.04, \"run_s\": 5.35, \"x_realtime\": 16.09, \"rtf\": 0.062, \"segments\": 15, \"wer_tr_vs_truth\": 0.256}, \"segment_fields\": {\"avg_logprob\": true, \"no_speech_prob\": true, \"compression_ratio\": true, \"words\": true}, \"300s\": {\"audio_s\": 426.29, \"run_s\": 11.53, \"x_realtime\": 36.96, \"rtf\": 0.027, \"segments\": 69, \"wer_tr_vs_truth\": 0.198}, \"wer_en_default\" |  |\n"}
+,{"stream_name":"stdout","time":1612.33982067,"data":"| align | True | 40.2 | 1941 | {\"load_s\": 5.8, \"speed_on_speech\": {\"audio_s\": 77.06, \"run_s\": 15.61, \"x_realtime\": 4.94, \"rtf\": 0.203}} |  |\n"}
+,{"stream_name":"stdout","time":1612.339826802,"data":"| diar | False | 24.1 | 0 | {} | RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face) |\n"}
+,{"stream_name":"stdout","time":1612.339874544,"data":"| tiger | True | 445.7 | 2951 | {\"load_s\": 1.7, \"60s\": {\"audio_s\": 86.04, \"run_s\": 75.07, \"x_realtime\": 1.15, \"rtf\": 0.872, \"chunked\": false, \"peak_gpu_mb\": 1184.2, \"si_sdr_dialogue_db\": 16.53, \"si_sdr_background_db\": -1.64, \"si_sdr_mix_vs_dialogue_db\": 16.78}, \"300s\": {\"audio_s\": 426.29, \"run_s\": 347.73, \"x_realtime\": 1.23, \"rtf\": 0.816, \"chunked\": false, \"peak_gpu_mb\": 2042.9, \"si_sdr_dialogue_db\": 16.45, \"si_sdr_background_db |  |\n"}
+,{"stream_name":"stdout","time":1612.339884486,"data":"| demucs | True | 37.8 | 869 | {\"load_s\": 2.8, \"60s\": {\"audio_s\": 86.04, \"run_s\": 6.41, \"x_realtime\": 13.43, \"rtf\": 0.074, \"peak_gpu_mb\": 550.8, \"si_sdr_dialogue_db\": 16.5, \"si_sdr_background_db\": -0.87}, \"300s\": {\"audio_s\": 426.29, \"run_s\": 21.35, \"x_realtime\": 19.96, \"rtf\": 0.05, \"peak_gpu_mb\": 550.8, \"si_sdr_dialogue_db\": 16.5, \"si_sdr_background_db\": -0.99}} |  |\n"}
+,{"stream_name":"stdout","time":1612.339892122,"data":"| tagger | True | 16.9 | 585 | {\"load_s\": 3.8} |  |\n"}
+,{"stream_name":"stdout","time":1612.33989653,"data":"| opusmt | True | 21.5 | 651 | {\"load_s\": 6.7, \"chrf_vs_reference\": 73.3} |  |\n"}
+,{"stream_name":"stdout","time":1612.339900672,"data":"| ollama | True |  |  | {} |  |\n"}
+,{"stream_name":"stdout","time":1612.339904757,"data":"\n"}
+,{"stream_name":"stdout","time":1612.339908545,"data":"## Projection for a 90-minute video (minutes, single T4)\n"}
+,{"stream_name":"stdout","time":1612.339912922,"data":"\n"}
+,{"stream_name":"stdout","time":1612.339916999,"data":"- ASR large-v3-turbo: 2.4\n"}
+,{"stream_name":"stdout","time":1612.339921011,"data":"- ASR large-v3: 7.1\n"}
+,{"stream_name":"stdout","time":1612.339924579,"data":"- VAD: 1.4\n"}
+,{"stream_name":"stdout","time":1612.339928108,"data":"- Separation TIGER-DnR: 73.2\n"}
+,{"stream_name":"stdout","time":1612.339969256,"data":"- Separation Demucs: 4.5\n"}
+,{"stream_name":"stdout","time":1612.339974285,"data":"- Alignment (on ~55 min speech): 11.1\n"}
+,{"stream_name":"stdout","time":1612.339978805,"data":"- TTS multilingual clone (1 GPU): 87.2\n"}
+,{"stream_name":"stdout","time":1612.339983514,"data":"- TTS Turbo (1 GPU): 35.0\n"}
+,{"stream_name":"stdout","time":1612.33998798,"data":"- Translation TranslateGemma 4B (~1,200 segments): 9.2\n"}
+,{"stream_name":"stdout","time":1612.339992648,"data":"\n"}
+,{"stream_name":"stdout","time":1612.339996979,"data":"Install times and venv sizes: see results.json → install.\n"}
+,{"stream_name":"stderr","time":1614.797376228,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":1614.797402558,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":1615.282870142,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":1615.282908134,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":1617.434462395,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":1619.034121987,"data":"[NbConvertApp] Writing 424007 bytes to __results__.html\n"}
+]

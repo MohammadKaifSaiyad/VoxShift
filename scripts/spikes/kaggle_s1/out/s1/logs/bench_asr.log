@@ -1,0 +1,3 @@
+
+$ /tmp/s1/venvs/asr/bin/python /tmp/s1/bench/bench_asr.py {"asr_models": ["large-v3-turbo", "large-v3"], "bench": "asr", "result_path": "/kaggle/working/s1/result_asr.json", "audio_dir": "/tmp/s1/audio", "ffmpeg": "/usr/bin/ffmpeg", "tr_sentences": ["Merhaba, benim adım Ayşe ve bugün size kısa bir hikâye anlatacağım.", "Bu hikâye, 1990 yılında İstanbul'da küçük bir mahallede geçiyor.", "O yıllarda herkes birbirini tanır, akşamları kapı önünde sohbet ederdi.", "Mehmet amca her sabah fırından taze e
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.

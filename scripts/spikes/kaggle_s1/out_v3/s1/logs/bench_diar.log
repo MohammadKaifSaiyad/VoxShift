@@ -1,0 +1,2 @@
+
+$ /tmp/s1/venvs/diar/bin/python /tmp/s1/bench/diar.py {"bench": "diar", "result_path": "/kaggle/working/s1/result_diar.json", "audio_dir": "/tmp/s1/audio", "ffmpeg": "/usr/bin/ffmpeg", "tr_sentences": ["Merhaba, benim adım Ayşe ve bugün size kısa bir hikâye anlatacağım.", "Bu hikâye, 1990 yılında İstanbul'da küçük bir mahallede geçiyor.", "O yıllarda herkes birbirini tanır, akşamları kapı önünde sohbet ederdi.", "Mehmet amca her sabah fırından taze ekmek alır, komşulara dağıtırdı.", "Bir gün mahal

@@ -1,0 +1,8 @@
+{
+  "bench": "tiger",
+  "ok": false,
+  "error": "ModuleNotFoundError: No module named 'pkg_resources'",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/tiger.py\", line 112, in <module>\n    main()\n  File \"/tmp/s1/bench/tiger.py\", line 69, in main\n    import look2hear.models\n  File \"/tmp/s1/tiger/repo/look2hear/models/__init__.py\", line 1, in <module>\n    from .tiger import TIGER\n  File \"/tmp/s1/tiger/repo/look2hear/models/tiger.py\", line 8, in <module>\n    from ..layers import activations, normalizations\n  File \"/tmp/s1/tiger/repo/look2hear/layers/__init__.py\", line 20, in <module>\n    from .stft_tfgn import Stft\n  File \"/tmp/s1/tiger/repo/look2hear/layers/stft_tfgn.py\", line 10, in <module>\n    from ..utils.complex_utils import is_complex\n  File \"/tmp/s1/tiger/repo/look2hear/utils/__init__.py\", line 12, in <module>\n    from .lightning_utils import print_only, RichProgressBarTheme, MyRichProgressBar, BatchesProcessedColumn, MyMetricsTextColumn\n  File \"/tmp/s1/tiger/repo/look2hear/utils/lightning_utils.py\", line 3, in <module>\n    from pytorch_lightning.utilities import rank_zero_only\n  File \"/tmp/s1/venvs/tiger/lib/python3.11/site-packages/pytorch_lightning/__init__.py\", line 25, in <module>\n    from lightning_fabric.utilities.seed import seed_everything  # noqa: E402\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tiger/lib/python3.11/site-packages/lightning_fabric/__init__.py\", line 36, in <module>\n    __import__(\"pkg_resources\").declare_namespace(__name__)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg_resources'\n",
+  "peak_rss_mb": 602.9,
+  "torch_peak_gpu_mb": 0.0
+}

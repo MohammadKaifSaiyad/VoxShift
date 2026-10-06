@@ -1,0 +1,4 @@
+
+$ /tmp/s1/venvs/vad/bin/python /tmp/s1/bench/vad.py {"bench": "vad", "result_path": "/kaggle/working/s1/result_vad.json", "audio_dir": "/tmp/s1/audio", "ffmpeg": "/usr/bin/ffmpeg", "tr_sentences": ["Merhaba, benim adım Ayşe ve bugün size kısa bir hikâye anlatacağım.", "Bu hikâye, 1990 yılında İstanbul'da küçük bir mahallede geçiyor.", "O yıllarda herkes birbirini tanır, akşamları kapı önünde sohbet ederdi.", "Mehmet amca her sabah fırından taze ekmek alır, komşulara dağıtırdı.", "Bir gün mahalleye
+/tmp/s1/venvs/vad/lib/python3.11/site-packages/torch/jit/_serialization.py:176: FutureWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+  warnings.warn(

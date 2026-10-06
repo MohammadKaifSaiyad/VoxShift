@@ -1,0 +1,44 @@
+{
+  "bench": "diar",
+  "ok": true,
+  "versions": {
+    "pyannote.audio": "4.0.7",
+    "torch": "2.14.1"
+  },
+  "load_s": 4.8,
+  "60s": {
+    "audio_s": 86.04,
+    "run_s": 4.59,
+    "x_realtime": 18.74,
+    "rtf": 0.053,
+    "speakers_found": 1,
+    "speakers_true": 2,
+    "labels_distinct": false,
+    "segment_speaker_accuracy": 1.0,
+    "peak_gpu_mb": 1628.8,
+    "output_fields": [
+      "exclusive_speaker_diarization",
+      "serialize",
+      "speaker_diarization",
+      "speaker_embeddings"
+    ],
+    "speaker_embeddings_shape": [
+      1,
+      256
+    ],
+    "has_exclusive_diarization": true
+  },
+  "300s": {
+    "audio_s": 426.29,
+    "run_s": 17.58,
+    "x_realtime": 24.25,
+    "rtf": 0.041,
+    "speakers_found": 1,
+    "speakers_true": 2,
+    "labels_distinct": false,
+    "segment_speaker_accuracy": 1.0,
+    "peak_gpu_mb": 1628.8
+  },
+  "peak_rss_mb": 2099.7,
+  "torch_peak_gpu_mb": 1628.8
+}

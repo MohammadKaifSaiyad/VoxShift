@@ -1,0 +1,12 @@
+{
+  "bench": "diar",
+  "ok": false,
+  "versions": {
+    "pyannote.audio": "4.0.7",
+    "torch": "2.14.1"
+  },
+  "error": "RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/diar.py\", line 113, in <module>\n    main()\n  File \"/tmp/s1/bench/diar.py\", line 73, in main\n    raise RuntimeError(\"HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\")\nRuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\n",
+  "peak_rss_mb": 861.9,
+  "torch_peak_gpu_mb": 0.0
+}

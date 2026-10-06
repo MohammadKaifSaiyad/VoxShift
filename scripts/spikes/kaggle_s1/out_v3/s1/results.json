@@ -1,0 +1,452 @@
+{
+  "started": "2026-10-05 17:45:34",
+  "env": {
+    "python": "3.13.15",
+    "gpus": [
+      "GPU 0: Tesla T4 (UUID: GPU-494a1625-c610-e18f-1add-cebf203f0b10)",
+      "GPU 1: Tesla T4 (UUID: GPU-a79f779b-0727-e8d3-cca2-847922a126f5)"
+    ],
+    "driver": "580.178.04\n580.178.04",
+    "scratch_free_gb": 1148.8,
+    "working_free_gb": 20.9,
+    "ram_gb": 32.9,
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "hf_token_error": "ConnectionError: Connection error trying to communicate with service.",
+    "hf_token_present": false,
+    "internet": true,
+    "test_audio_source": "espeak-ng fallback (Chatterbox unavailable)"
+  },
+  "install": {
+    "tts": {
+      "ok": true,
+      "seconds": 44.2,
+      "venv_gb": 6.18,
+      "note": null
+    },
+    "vad": {
+      "ok": true,
+      "seconds": 34.8,
+      "venv_gb": 5.58,
+      "note": null
+    },
+    "asr": {
+      "ok": true,
+      "seconds": 17.8,
+      "venv_gb": 2.73,
+      "note": null
+    },
+    "align": {
+      "ok": true,
+      "seconds": 47.3,
+      "venv_gb": 7.55,
+      "note": null
+    },
+    "diar": {
+      "ok": true,
+      "seconds": 0.9,
+      "venv_gb": 5.95,
+      "note": null
+    },
+    "tiger": {
+      "ok": true,
+      "seconds": 29.4,
+      "venv_gb": 8.83,
+      "note": null
+    },
+    "demucs": {
+      "ok": true,
+      "seconds": 5.3,
+      "venv_gb": 5.67,
+      "note": null
+    },
+    "tagger": {
+      "ok": true,
+      "seconds": 0.9,
+      "venv_gb": 5.66,
+      "note": null
+    },
+    "opusmt": {
+      "ok": true,
+      "seconds": 0.7,
+      "venv_gb": 5.65,
+      "note": null
+    }
+  },
+  "bench": {
+    "tts": {
+      "bench": "tts",
+      "ok": false,
+      "versions": {
+        "chatterbox-tts": "0.1.7",
+        "torch": "2.6.0",
+        "transformers": "5.2.0",
+        "resemble-perth": "1.0.1"
+      },
+      "device": "Tesla T4",
+      "error": "TypeError: 'NoneType' object is not callable",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/tts.py\", line 156, in <module>\n    main()\n  File \"/tmp/s1/bench/tts.py\", line 75, in main\n    model = ChatterboxMultilingualTTS.from_pretrained(device=\"cuda\")\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tts/lib/python3.11/site-packages/chatterbox/mtl_tts.py\", line 220, in from_pretrained\n    return cls.from_local(ckpt_dir, device)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tts/lib/python3.11/site-packages/chatterbox/mtl_tts.py\", line 199, in from_local\n    return cls(t3, s3gen, ve, tokenizer, device, conds=conds)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tts/lib/python3.11/site-packages/chatterbox/mtl_tts.py\", line 155, in __init__\n    self.watermarker = perth.PerthImplicitWatermarker()\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not callable\n",
+      "peak_rss_mb": 5816.6,
+      "torch_peak_gpu_mb": 3074.8,
+      "wall_s": 55.9,
+      "nvidia_smi_peak_mb": 3219,
+      "returncode": 0
+    },
+    "make_audio": {
+      "bench": "make_audio",
+      "ok": true,
+      "durations": {
+        "60s": 80.13,
+        "300s": 395.73
+      },
+      "concat": {
+        "en_default": null,
+        "en_clone_cfg05": null,
+        "en_clone_cfg00": null
+      },
+      "peak_rss_mb": 1438.4,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 17.6,
+      "nvidia_smi_peak_mb": 3,
+      "returncode": 0
+    },
+    "vad": {
+      "bench": "vad",
+      "ok": true,
+      "versions": {
+        "silero-vad": "6.2.3",
+        "torch": "2.14.1"
+      },
+      "load_s": 0.07,
+      "60s": {
+        "audio_s": 80.13,
+        "run_s": 1.28,
+        "x_realtime": 62.69,
+        "rtf": 0.016,
+        "regions": 15,
+        "speech_recall": 0.95,
+        "detected_speech_s": 67.8,
+        "true_speech_s": 71.1,
+        "device": "cpu"
+      },
+      "300s": {
+        "audio_s": 395.73,
+        "run_s": 5.72,
+        "x_realtime": 69.13,
+        "rtf": 0.014,
+        "regions": 72,
+        "speech_recall": 0.954,
+        "detected_speech_s": 341.0,
+        "true_speech_s": 355.7,
+        "device": "cpu"
+      },
+      "peak_rss_mb": 665.2,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 12.6,
+      "nvidia_smi_peak_mb": 3,
+      "returncode": 0
+    },
+    "asr": {
+      "bench": "asr",
+      "ok": true,
+      "versions": {
+        "faster-whisper": "1.2.1",
+        "ctranslate2": "4.8.2"
+      },
+      "cuda_devices": 1,
+      "large-v3-turbo": {
+        "load_s": 15.5,
+        "60s": {
+          "audio_s": 80.13,
+          "run_s": 4.46,
+          "x_realtime": 17.95,
+          "rtf": 0.056,
+          "segments": 12,
+          "wer_tr_vs_truth": 0.048
+        },
+        "segment_fields": {
+          "avg_logprob": true,
+          "no_speech_prob": true,
+          "compression_ratio": true,
+          "words": true
+        },
+        "300s": {
+          "audio_s": 395.73,
+          "run_s": 10.5,
+          "x_realtime": 37.68,
+          "rtf": 0.027,
+          "segments": 60,
+          "wer_tr_vs_truth": 0.064
+        },
+        "language_detect": {
+          "language": "fr",
+          "probability": 0.74
+        }
+      },
+      "large-v3": {
+        "load_s": 21.8,
+        "60s": {
+          "audio_s": 80.13,
+          "run_s": 5.79,
+          "x_realtime": 13.84,
+          "rtf": 0.072,
+          "segments": 13,
+          "wer_tr_vs_truth": 0.032
+        },
+        "segment_fields": {
+          "avg_logprob": true,
+          "no_speech_prob": true,
+          "compression_ratio": true,
+          "words": true
+        },
+        "300s": {
+          "audio_s": 395.73,
+          "run_s": 28.94,
+          "x_realtime": 13.68,
+          "rtf": 0.073,
+          "segments": 65,
+          "wer_tr_vs_truth": 0.038
+        },
+        "language_detect": {
+          "language": "la",
+          "probability": 0.198
+        }
+      },
+      "peak_rss_mb": 3672.5,
+      "torch_peak_gpu_mb": null,
+      "wall_s": 91.0,
+      "nvidia_smi_peak_mb": 4119,
+      "returncode": 0
+    },
+    "align": {
+      "bench": "align",
+      "ok": true,
+      "versions": {
+        "whisperx": "3.8.6",
+        "torch": "2.8.0",
+        "transformers": "4.57.6"
+      },
+      "default_align_model_tr": "mpoyraz/wav2vec2-xls-r-300m-cv7-turkish",
+      "load_s": 5.6,
+      "speed_on_speech": {
+        "audio_s": 71.15,
+        "run_s": 7.4,
+        "x_realtime": 9.62,
+        "rtf": 0.104
+      },
+      "words_total": 123,
+      "words_without_timestamps": 0,
+      "untimed_words": [],
+      "peak_rss_mb": 2999.5,
+      "torch_peak_gpu_mb": 1339.0,
+      "wall_s": 36.2,
+      "nvidia_smi_peak_mb": 1589,
+      "returncode": 0
+    },
+    "diar": {
+      "bench": "diar",
+      "ok": false,
+      "versions": {
+        "pyannote.audio": "4.0.7",
+        "torch": "2.14.1"
+      },
+      "error": "RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/diar.py\", line 113, in <module>\n    main()\n  File \"/tmp/s1/bench/diar.py\", line 73, in main\n    raise RuntimeError(\"HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\")\nRuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\n",
+      "peak_rss_mb": 861.9,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 24.1,
+      "nvidia_smi_peak_mb": 0,
+      "returncode": 0
+    },
+    "tiger": {
+      "bench": "tiger",
+      "ok": false,
+      "error": "ModuleNotFoundError: No module named 'pkg_resources'",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/tiger.py\", line 112, in <module>\n    main()\n  File \"/tmp/s1/bench/tiger.py\", line 69, in main\n    import look2hear.models\n  File \"/tmp/s1/tiger/repo/look2hear/models/__init__.py\", line 1, in <module>\n    from .tiger import TIGER\n  File \"/tmp/s1/tiger/repo/look2hear/models/tiger.py\", line 8, in <module>\n    from ..layers import activations, normalizations\n  File \"/tmp/s1/tiger/repo/look2hear/layers/__init__.py\", line 20, in <module>\n    from .stft_tfgn import Stft\n  File \"/tmp/s1/tiger/repo/look2hear/layers/stft_tfgn.py\", line 10, in <module>\n    from ..utils.complex_utils import is_complex\n  File \"/tmp/s1/tiger/repo/look2hear/utils/__init__.py\", line 12, in <module>\n    from .lightning_utils import print_only, RichProgressBarTheme, MyRichProgressBar, BatchesProcessedColumn, MyMetricsTextColumn\n  File \"/tmp/s1/tiger/repo/look2hear/utils/lightning_utils.py\", line 3, in <module>\n    from pytorch_lightning.utilities import rank_zero_only\n  File \"/tmp/s1/venvs/tiger/lib/python3.11/site-packages/pytorch_lightning/__init__.py\", line 25, in <module>\n    from lightning_fabric.utilities.seed import seed_everything  # noqa: E402\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tiger/lib/python3.11/site-packages/lightning_fabric/__init__.py\", line 36, in <module>\n    __import__(\"pkg_resources\").declare_namespace(__name__)\n    ^^^^^^^^^^^^^^^^^^^^^^^^^^^\nModuleNotFoundError: No module named 'pkg_resources'\n",
+      "peak_rss_mb": 602.9,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 7.4,
+      "nvidia_smi_peak_mb": 0,
+      "returncode": 0
+    },
+    "demucs": {
+      "bench": "demucs",
+      "ok": false,
+      "error": "ModuleNotFoundError: No module named 'demucs.pretrained'; 'demucs' is not a package",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/demucs.py\", line 99, in <module>\n    main()\n  File \"/tmp/s1/bench/demucs.py\", line 68, in main\n    from demucs.pretrained import get_model\nModuleNotFoundError: No module named 'demucs.pretrained'; 'demucs' is not a package\n",
+      "peak_rss_mb": 517.0,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 5.2,
+      "nvidia_smi_peak_mb": 3,
+      "returncode": 0
+    },
+    "tagger": {
+      "bench": "tagger",
+      "ok": true,
+      "versions": {
+        "transformers": "5.18.0",
+        "torch": "2.14.1"
+      },
+      "load_s": 3.9,
+      "audio_s": 80.13,
+      "run_s": 2.11,
+      "x_realtime": 37.93,
+      "rtf": 0.026,
+      "top_labels_per_10s": [
+        [
+          [
+            "Speech",
+            0.717
+          ],
+          [
+            "Speech synthesizer",
+            0.615
+          ],
+          [
+            "Narration, monologue",
+            0.105
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.669
+          ],
+          [
+            "Speech synthesizer",
+            0.391
+          ],
+          [
+            "Music",
+            0.059
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.64
+          ],
+          [
+            "Speech synthesizer",
+            0.528
+          ],
+          [
+            "Music",
+            0.062
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.662
+          ],
+          [
+            "Speech synthesizer",
+            0.572
+          ],
+          [
+            "Narration, monologue",
+            0.061
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.688
+          ],
+          [
+            "Speech synthesizer",
+            0.539
+          ],
+          [
+            "Narration, monologue",
+            0.059
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.676
+          ],
+          [
+            "Speech synthesizer",
+            0.447
+          ],
+          [
+            "Narration, monologue",
+            0.084
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.747
+          ],
+          [
+            "Speech synthesizer",
+            0.701
+          ],
+          [
+            "Narration, monologue",
+            0.123
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.709
+          ],
+          [
+            "Speech synthesizer",
+            0.542
+          ],
+          [
+            "Narration, monologue",
+            0.068
+          ]
+        ]
+      ],
+      "peak_rss_mb": 1161.0,
+      "torch_peak_gpu_mb": 383.7,
+      "wall_s": 18.1,
+      "nvidia_smi_peak_mb": 585,
+      "returncode": 0
+    },
+    "opusmt": {
+      "bench": "opusmt",
+      "ok": true,
+      "versions": {
+        "transformers": "5.18.0",
+        "torch": "2.14.1",
+        "sentencepiece": "0.2.2"
+      },
+      "load_s": 8.9,
+      "run_s": 0.91,
+      "sentences": 12,
+      "chrf_vs_reference": 73.3,
+      "peak_rss_mb": 1760.9,
+      "torch_peak_gpu_mb": 467.1,
+      "wall_s": 25.1,
+      "nvidia_smi_peak_mb": 651,
+      "returncode": 0
+    },
+    "ollama": {
+      "prompt": "You are a professional Turkish (tr) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Turkish text while adhering to English grammar, vocabulary, and cultural sensitivities. Produce only the English translation, without any additional explanations or commentary. Please translate the following Turkish text into English:\n\n{text}",
+      "install_s": 0.4,
+      "ok": false,
+      "error": "ollama install failed (see logs/ollama.log)"
+    }
+  },
+  "disk": {
+    "scratch_used_gb": 37.51,
+    "hf_cache_gb": 11.41,
+    "uv_cache_gb": 25.02,
+    "ollama_models_gb": null
+  },
+  "finished": "2026-10-05 17:53:54",
+  "projection_90min_minutes": {
+    "ASR large-v3-turbo": 2.4,
+    "ASR large-v3": 6.6,
+    "VAD": 1.3,
+    "Alignment (on ~55 min speech)": 5.7
+  }
+}

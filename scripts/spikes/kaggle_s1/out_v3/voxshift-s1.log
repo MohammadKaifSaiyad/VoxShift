@@ -1,0 +1,44 @@
+[{"stream_name":"stdout","time":4.722914314,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.6/20.6 MB 75.5 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":107.752636287,"data":"[s1] tts: ok=False wall=55.9s peak=3219MB TypeError: 'NoneType' object is not callable\n"}
+,{"stream_name":"stdout","time":139.089625912,"data":"[s1] make_audio: ok=True wall=17.6s peak=3MB \n"}
+,{"stream_name":"stdout","time":186.791368976,"data":"[s1] vad: ok=True wall=12.6s peak=3MB \n"}
+,{"stream_name":"stdout","time":295.780176247,"data":"[s1] asr: ok=True wall=91.0s peak=4119MB \n"}
+,{"stream_name":"stdout","time":379.625625569,"data":"[s1] align: ok=True wall=36.2s peak=1589MB \n"}
+,{"stream_name":"stdout","time":405.051675053,"data":"[s1] diar: ok=False wall=24.1s peak=0MB RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\n"}
+,{"stream_name":"stdout","time":442.227603755,"data":"[s1] tiger: ok=False wall=7.4s peak=0MB ModuleNotFoundError: No module named 'pkg_resources'\n"}
+,{"stream_name":"stdout","time":452.936181852,"data":"[s1] demucs: ok=False wall=5.2s peak=3MB ModuleNotFoundError: No module named 'demucs.pretrained'; 'demucs' is not a package\n"}
+,{"stream_name":"stdout","time":472.296601711,"data":"[s1] tagger: ok=True wall=18.1s peak=585MB \n"}
+,{"stream_name":"stdout","time":498.438585353,"data":"[s1] opusmt: ok=True wall=25.1s peak=651MB \n"}
+,{"stream_name":"stdout","time":501.343286447,"data":"# Spike S1 results\n"}
+,{"stream_name":"stdout","time":501.343311931,"data":"\n"}
+,{"stream_name":"stdout","time":501.34331722,"data":"Started 2026-10-05 17:45:34; GPUs: ['GPU 0: Tesla T4 (UUID: GPU-494a1625-c610-e18f-1add-cebf203f0b10)', 'GPU 1: Tesla T4 (UUID: GPU-a79f779b-0727-e8d3-cca2-847922a126f5)']\n"}
+,{"stream_name":"stdout","time":501.343322251,"data":"\n"}
+,{"stream_name":"stdout","time":501.343330045,"data":"| Bench | OK | Wall s | nvidia-smi peak MB | Key numbers | Error |\n"}
+,{"stream_name":"stdout","time":501.343333294,"data":"| --- | --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":501.343336119,"data":"| tts | False | 55.9 | 3219 | {} | TypeError: 'NoneType' object is not callable |\n"}
+,{"stream_name":"stdout","time":501.343339071,"data":"| make_audio | True | 17.6 | 3 | {} |  |\n"}
+,{"stream_name":"stdout","time":501.343342727,"data":"| vad | True | 12.6 | 3 | {\"load_s\": 0.07, \"60s\": {\"audio_s\": 80.13, \"run_s\": 1.28, \"x_realtime\": 62.69, \"rtf\": 0.016, \"regions\": 15, \"speech_recall\": 0.95, \"detected_speech_s\": 67.8, \"true_speech_s\": 71.1, \"device\": \"cpu\"}, \"300s\": {\"audio_s\": 395.73, \"run_s\": 5.72, \"x_realtime\": 69.13, \"rtf\": 0.014, \"regions\": 72, \"speech_recall\": 0.954, \"detected_speech_s\": 341.0, \"true_speech_s\": 355.7, \"device\": \"cpu\"}} |  |\n"}
+,{"stream_name":"stdout","time":501.343349079,"data":"| asr | True | 91.0 | 4119 | {} |  |\n"}
+,{"stream_name":"stdout","time":501.343351914,"data":"| align | True | 36.2 | 1589 | {\"load_s\": 5.6, \"speed_on_speech\": {\"audio_s\": 71.15, \"run_s\": 7.4, \"x_realtime\": 9.62, \"rtf\": 0.104}} |  |\n"}
+,{"stream_name":"stdout","time":501.343355412,"data":"| diar | False | 24.1 | 0 | {} | RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face) |\n"}
+,{"stream_name":"stdout","time":501.343358409,"data":"| tiger | False | 7.4 | 0 | {} | ModuleNotFoundError: No module named 'pkg_resources' |\n"}
+,{"stream_name":"stdout","time":501.34336127,"data":"| demucs | False | 5.2 | 3 | {} | ModuleNotFoundError: No module named 'demucs.pretrained'; 'demucs' is not a package |\n"}
+,{"stream_name":"stdout","time":501.343364163,"data":"| tagger | True | 18.1 | 585 | {\"load_s\": 3.9} |  |\n"}
+,{"stream_name":"stdout","time":501.343375337,"data":"| opusmt | True | 25.1 | 651 | {\"load_s\": 8.9, \"chrf_vs_reference\": 73.3} |  |\n"}
+,{"stream_name":"stdout","time":501.343377997,"data":"| ollama | False |  |  | {} | ollama install failed (see logs/ollama.log) |\n"}
+,{"stream_name":"stdout","time":501.343380266,"data":"\n"}
+,{"stream_name":"stdout","time":501.343382348,"data":"## Projection for a 90-minute video (minutes, single T4)\n"}
+,{"stream_name":"stdout","time":501.343384886,"data":"\n"}
+,{"stream_name":"stdout","time":501.34338697,"data":"- ASR large-v3-turbo: 2.4\n"}
+,{"stream_name":"stdout","time":501.343389132,"data":"- ASR large-v3: 6.6\n"}
+,{"stream_name":"stdout","time":501.343391279,"data":"- VAD: 1.3\n"}
+,{"stream_name":"stdout","time":501.343393505,"data":"- Alignment (on ~55 min speech): 5.7\n"}
+,{"stream_name":"stdout","time":501.3433957,"data":"\n"}
+,{"stream_name":"stdout","time":501.343397804,"data":"Install times and venv sizes: see results.json → install.\n"}
+,{"stream_name":"stderr","time":503.416966826,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":503.416997571,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":503.707012512,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":503.707048224,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":504.819975699,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":505.855535869,"data":"[NbConvertApp] Writing 422493 bytes to __results__.html\n"}
+]

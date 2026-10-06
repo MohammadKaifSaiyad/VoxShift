@@ -1,0 +1,7 @@
+
+$ /tmp/s1/venvs/opusmt/bin/python /tmp/s1/bench/bench_opusmt.py {"bench": "opusmt", "result_path": "/kaggle/working/s1/result_opusmt.json", "audio_dir": "/tmp/s1/audio", "ffmpeg": "/usr/bin/ffmpeg", "tr_sentences": ["Merhaba, benim adım Ayşe ve bugün size kısa bir hikâye anlatacağım.", "Bu hikâye, 1990 yılında İstanbul'da küçük bir mahallede geçiyor.", "O yıllarda herkes birbirini tanır, akşamları kapı önünde sohbet ederdi.", "Mehmet amca her sabah fırından taze ekmek alır, komşulara dağıtırdı.", 
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/tmp/s1/venvs/opusmt/lib/python3.11/site-packages/transformers/models/marian/tokenization_marian.py:176: UserWarning: Recommended: pip install sacremoses.
+  warnings.warn("Recommended: pip install sacremoses.")
+Loading weights:   0%|          | 0/258 [00:00<?, ?it/s]Loading weights: 100%|██████████| 258/258 [00:00<00:00, 11940.22it/s]
+[transformers] Both `max_new_tokens` (=128) and `max_length`(=512) seem to have been set. `max_new_tokens` will take precedence. Please refer to the documentation for more information. (https://huggingface.co/docs/transformers/main/en/main_classes/text_generation)

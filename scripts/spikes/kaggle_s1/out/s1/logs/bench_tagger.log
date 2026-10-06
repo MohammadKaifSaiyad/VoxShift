@@ -1,0 +1,6 @@
+
+$ /tmp/s1/venvs/tagger/bin/python /tmp/s1/bench/bench_tagger.py {"bench": "tagger", "result_path": "/kaggle/working/s1/result_tagger.json", "audio_dir": "/tmp/s1/audio", "ffmpeg": "/usr/bin/ffmpeg", "tr_sentences": ["Merhaba, benim adım Ayşe ve bugün size kısa bir hikâye anlatacağım.", "Bu hikâye, 1990 yılında İstanbul'da küçük bir mahallede geçiyor.", "O yıllarda herkes birbirini tanır, akşamları kapı önünde sohbet ederdi.", "Mehmet amca her sabah fırından taze ekmek alır, komşulara dağıtırdı.", 
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/tmp/s1/venvs/tagger/lib/python3.11/site-packages/transformers/audio_utils.py:821: UserWarning: At least one mel filter has all zero values. The value for `num_mel_filters` (128) may be set too high. Or, the value for `num_frequency_bins` (257) may be set too low.
+  warnings.warn(
+Loading weights:   0%|          | 0/203 [00:00<?, ?it/s]Loading weights: 100%|██████████| 203/203 [00:00<00:00, 2625.30it/s]

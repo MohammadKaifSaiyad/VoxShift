@@ -1,0 +1,129 @@
+{
+  "bench": "tagger",
+  "ok": true,
+  "versions": {
+    "transformers": "5.18.0",
+    "torch": "2.14.1"
+  },
+  "load_s": 3.9,
+  "audio_s": 80.13,
+  "run_s": 2.11,
+  "x_realtime": 37.93,
+  "rtf": 0.026,
+  "top_labels_per_10s": [
+    [
+      [
+        "Speech",
+        0.717
+      ],
+      [
+        "Speech synthesizer",
+        0.615
+      ],
+      [
+        "Narration, monologue",
+        0.105
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.669
+      ],
+      [
+        "Speech synthesizer",
+        0.391
+      ],
+      [
+        "Music",
+        0.059
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.64
+      ],
+      [
+        "Speech synthesizer",
+        0.528
+      ],
+      [
+        "Music",
+        0.062
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.662
+      ],
+      [
+        "Speech synthesizer",
+        0.572
+      ],
+      [
+        "Narration, monologue",
+        0.061
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.688
+      ],
+      [
+        "Speech synthesizer",
+        0.539
+      ],
+      [
+        "Narration, monologue",
+        0.059
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.676
+      ],
+      [
+        "Speech synthesizer",
+        0.447
+      ],
+      [
+        "Narration, monologue",
+        0.084
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.747
+      ],
+      [
+        "Speech synthesizer",
+        0.701
+      ],
+      [
+        "Narration, monologue",
+        0.123
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.709
+      ],
+      [
+        "Speech synthesizer",
+        0.542
+      ],
+      [
+        "Narration, monologue",
+        0.068
+      ]
+    ]
+  ],
+  "peak_rss_mb": 1161.0,
+  "torch_peak_gpu_mb": 383.7
+}

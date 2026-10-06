@@ -1,0 +1,33 @@
+{
+  "bench": "tiger",
+  "ok": true,
+  "versions": {
+    "torch": "2.5.1",
+    "torchaudio": "2.5.1"
+  },
+  "load_s": 1.7,
+  "60s": {
+    "audio_s": 86.04,
+    "run_s": 75.07,
+    "x_realtime": 1.15,
+    "rtf": 0.872,
+    "chunked": false,
+    "peak_gpu_mb": 1184.2,
+    "si_sdr_dialogue_db": 16.53,
+    "si_sdr_background_db": -1.64,
+    "si_sdr_mix_vs_dialogue_db": 16.78
+  },
+  "300s": {
+    "audio_s": 426.29,
+    "run_s": 347.73,
+    "x_realtime": 1.23,
+    "rtf": 0.816,
+    "chunked": false,
+    "peak_gpu_mb": 2042.9,
+    "si_sdr_dialogue_db": 16.45,
+    "si_sdr_background_db": -1.88,
+    "si_sdr_mix_vs_dialogue_db": 16.82
+  },
+  "peak_rss_mb": 2170.4,
+  "torch_peak_gpu_mb": 2042.9
+}

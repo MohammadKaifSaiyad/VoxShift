@@ -1,0 +1,8 @@
+{
+  "bench": "demucs",
+  "ok": false,
+  "error": "ModuleNotFoundError: No module named 'demucs.pretrained'; 'demucs' is not a package",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/demucs.py\", line 99, in <module>\n    main()\n  File \"/tmp/s1/bench/demucs.py\", line 68, in main\n    from demucs.pretrained import get_model\nModuleNotFoundError: No module named 'demucs.pretrained'; 'demucs' is not a package\n",
+  "peak_rss_mb": 517.0,
+  "torch_peak_gpu_mb": 0.0
+}

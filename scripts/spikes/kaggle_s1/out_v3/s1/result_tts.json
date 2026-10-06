@@ -1,0 +1,15 @@
+{
+  "bench": "tts",
+  "ok": false,
+  "versions": {
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0",
+    "transformers": "5.2.0",
+    "resemble-perth": "1.0.1"
+  },
+  "device": "Tesla T4",
+  "error": "TypeError: 'NoneType' object is not callable",
+  "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/tts.py\", line 156, in <module>\n    main()\n  File \"/tmp/s1/bench/tts.py\", line 75, in main\n    model = ChatterboxMultilingualTTS.from_pretrained(device=\"cuda\")\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tts/lib/python3.11/site-packages/chatterbox/mtl_tts.py\", line 220, in from_pretrained\n    return cls.from_local(ckpt_dir, device)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tts/lib/python3.11/site-packages/chatterbox/mtl_tts.py\", line 199, in from_local\n    return cls(t3, s3gen, ve, tokenizer, device, conds=conds)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/tmp/s1/venvs/tts/lib/python3.11/site-packages/chatterbox/mtl_tts.py\", line 155, in __init__\n    self.watermarker = perth.PerthImplicitWatermarker()\n                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nTypeError: 'NoneType' object is not callable\n",
+  "peak_rss_mb": 5816.6,
+  "torch_peak_gpu_mb": 3074.8
+}

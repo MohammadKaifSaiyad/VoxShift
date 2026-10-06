@@ -1,0 +1,8 @@
+
+$ /tmp/s1/venvs/tts/bin/python /tmp/s1/bench/tts.py {"bench": "tts", "result_path": "/kaggle/working/s1/result_tts.json", "audio_dir": "/tmp/s1/audio", "ffmpeg": "/usr/bin/ffmpeg", "tr_sentences": ["Merhaba, benim adım Ayşe ve bugün size kısa bir hikâye anlatacağım.", "Bu hikâye, 1990 yılında İstanbul'da küçük bir mahallede geçiyor.", "O yıllarda herkes birbirini tanır, akşamları kapı önünde sohbet ederdi.", "Mehmet amca her sabah fırından taze ekmek alır, komşulara dağıtırdı.", "Bir gün mahalleye
+Fetching 6 files:   0%|          | 0/6 [00:00<?, ?it/s]Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Fetching 6 files:  50%|█████     | 3/6 [00:00<00:00,  8.00it/s]Fetching 6 files:  83%|████████▎ | 5/6 [00:22<00:05,  5.48s/it]Fetching 6 files: 100%|██████████| 6/6 [00:22<00:00,  4.10s/it]Fetching 6 files: 100%|██████████| 6/6 [00:22<00:00,  3.79s/it]
+/tmp/s1/venvs/tts/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+Downloading: "https://github.com/explosion/spacy-pkuseg/releases/download/v0.0.26/spacy_ontonotes.zip" to /root/.pkuseg/spacy_ontonotes.zip
+  0%|          | 0/34567143 [00:00<?, ?it/s] 30%|███       | 10493952/34567143 [00:00<00:00, 100703139.85it/s] 66%|██████▋   | 22929408/34567143 [00:00<00:00, 114378437.72it/s]100%|██████████| 34567143/34567143 [00:00<00:00, 122342454.12it/s]

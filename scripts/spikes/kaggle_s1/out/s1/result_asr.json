@@ -1,0 +1,75 @@
+{
+  "bench": "asr",
+  "ok": true,
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "cuda_devices": 1,
+  "large-v3-turbo": {
+    "load_s": 18.6,
+    "60s": {
+      "audio_s": 86.04,
+      "run_s": 5.35,
+      "x_realtime": 16.09,
+      "rtf": 0.062,
+      "segments": 15,
+      "wer_tr_vs_truth": 0.256
+    },
+    "segment_fields": {
+      "avg_logprob": true,
+      "no_speech_prob": true,
+      "compression_ratio": true,
+      "words": true
+    },
+    "300s": {
+      "audio_s": 426.29,
+      "run_s": 11.53,
+      "x_realtime": 36.96,
+      "rtf": 0.027,
+      "segments": 69,
+      "wer_tr_vs_truth": 0.198
+    },
+    "wer_en_default": 0.064,
+    "wer_en_clone_cfg05": 0.018,
+    "wer_en_clone_cfg00": 0.023,
+    "language_detect": {
+      "language": "tr",
+      "probability": 0.999
+    }
+  },
+  "large-v3": {
+    "load_s": 21.1,
+    "60s": {
+      "audio_s": 86.04,
+      "run_s": 7.44,
+      "x_realtime": 11.56,
+      "rtf": 0.086,
+      "segments": 16,
+      "wer_tr_vs_truth": 0.312
+    },
+    "segment_fields": {
+      "avg_logprob": true,
+      "no_speech_prob": true,
+      "compression_ratio": true,
+      "words": true
+    },
+    "300s": {
+      "audio_s": 426.29,
+      "run_s": 33.72,
+      "x_realtime": 12.64,
+      "rtf": 0.079,
+      "segments": 70,
+      "wer_tr_vs_truth": 0.16
+    },
+    "wer_en_default": 0.053,
+    "wer_en_clone_cfg05": 0.012,
+    "wer_en_clone_cfg00": 0.012,
+    "language_detect": {
+      "language": "tr",
+      "probability": 0.999
+    }
+  },
+  "peak_rss_mb": 3737.0,
+  "torch_peak_gpu_mb": null
+}

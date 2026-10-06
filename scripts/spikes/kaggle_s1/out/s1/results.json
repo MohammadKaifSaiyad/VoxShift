@@ -1,0 +1,610 @@
+{
+  "started": "2026-10-05 17:56:33",
+  "env": {
+    "python": "3.13.15",
+    "gpus": [
+      "GPU 0: Tesla T4 (UUID: GPU-90ed4278-fdcc-4382-dc87-2da10a3d71be)",
+      "GPU 1: Tesla T4 (UUID: GPU-a65f392c-2010-9bf3-be14-194554c5761d)"
+    ],
+    "driver": "580.178.04\n580.178.04",
+    "scratch_free_gb": 1148.8,
+    "working_free_gb": 20.9,
+    "ram_gb": 32.9,
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "hf_token_error": "ConnectionError: Connection error trying to communicate with service.",
+    "hf_token_present": false,
+    "internet": true,
+    "test_audio_source": "Chatterbox Multilingual default voice (synthetic)"
+  },
+  "install": {
+    "tts": {
+      "ok": true,
+      "seconds": 43.2,
+      "venv_gb": 6.18,
+      "note": null
+    },
+    "vad": {
+      "ok": true,
+      "seconds": 35.3,
+      "venv_gb": 5.58,
+      "note": null
+    },
+    "asr": {
+      "ok": true,
+      "seconds": 16.2,
+      "venv_gb": 2.73,
+      "note": null
+    },
+    "align": {
+      "ok": true,
+      "seconds": 42.3,
+      "venv_gb": 7.55,
+      "note": null
+    },
+    "diar": {
+      "ok": true,
+      "seconds": 0.9,
+      "venv_gb": 5.95,
+      "note": null
+    },
+    "tiger": {
+      "ok": true,
+      "seconds": 27.1,
+      "venv_gb": 8.83,
+      "note": null
+    },
+    "demucs": {
+      "ok": true,
+      "seconds": 4.2,
+      "venv_gb": 5.67,
+      "note": null
+    },
+    "tagger": {
+      "ok": true,
+      "seconds": 1.0,
+      "venv_gb": 5.66,
+      "note": null
+    },
+    "opusmt": {
+      "ok": true,
+      "seconds": 0.7,
+      "venv_gb": 5.65,
+      "note": null
+    }
+  },
+  "bench": {
+    "tts": {
+      "bench": "tts",
+      "ok": true,
+      "versions": {
+        "chatterbox-tts": "0.1.7",
+        "torch": "2.6.0",
+        "transformers": "5.2.0",
+        "resemble-perth": "1.0.1"
+      },
+      "device": "Tesla T4",
+      "mtl_load_s": 39.3,
+      "mtl_sample_rate": 24000,
+      "mtl_tr_default_voice": {
+        "audio_s": 77.0,
+        "run_s": 90.55,
+        "x_realtime": 0.85,
+        "rtf": 1.176
+      },
+      "mtl_en_default_voice": {
+        "audio_s": 55.44,
+        "run_s": 59.45,
+        "x_realtime": 0.93,
+        "rtf": 1.072
+      },
+      "clone_reference_s": 34.08,
+      "mtl_en_clone_cfg05": {
+        "audio_s": 54.28,
+        "run_s": 70.52,
+        "x_realtime": 0.77,
+        "rtf": 1.299
+      },
+      "mtl_en_clone_cfg00": {
+        "audio_s": 69.68,
+        "run_s": 84.99,
+        "x_realtime": 0.82,
+        "rtf": 1.22
+      },
+      "cfg_weight_0_vs_05_duration_ratio": 1.284,
+      "mtl_peak_gpu_mb": 3734.2,
+      "watermark_detect": {
+        "raw": 1.0,
+        "atempo_1.2": 1.0,
+        "aac_128k": 1.0,
+        "atempo_1.2+aac": 1.0
+      },
+      "turbo_load_s": 39.0,
+      "turbo_en_clone": {
+        "audio_s": 47.52,
+        "run_s": 23.25,
+        "x_realtime": 2.04,
+        "rtf": 0.489
+      },
+      "turbo_peak_gpu_mb": 3282.0,
+      "peak_rss_mb": 6879.0,
+      "torch_peak_gpu_mb": 3282.0,
+      "wall_s": 435.2,
+      "nvidia_smi_peak_mb": 4557,
+      "returncode": 0
+    },
+    "make_audio": {
+      "bench": "make_audio",
+      "ok": true,
+      "durations": {
+        "60s": 86.04,
+        "300s": 426.29
+      },
+      "concat": {
+        "en_default": 12,
+        "en_clone_cfg05": 12,
+        "en_clone_cfg00": 12
+      },
+      "peak_rss_mb": 1544.6,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 25.5,
+      "nvidia_smi_peak_mb": 3,
+      "returncode": 0
+    },
+    "vad": {
+      "bench": "vad",
+      "ok": true,
+      "versions": {
+        "silero-vad": "6.2.3",
+        "torch": "2.14.1"
+      },
+      "load_s": 0.06,
+      "60s": {
+        "audio_s": 86.04,
+        "run_s": 1.49,
+        "x_realtime": 57.56,
+        "rtf": 0.017,
+        "regions": 13,
+        "speech_recall": 0.709,
+        "detected_speech_s": 54.6,
+        "true_speech_s": 77.1,
+        "device": "cpu"
+      },
+      "300s": {
+        "audio_s": 426.29,
+        "run_s": 6.79,
+        "x_realtime": 62.76,
+        "rtf": 0.016,
+        "regions": 67,
+        "speech_recall": 0.712,
+        "detected_speech_s": 274.2,
+        "true_speech_s": 385.3,
+        "device": "cpu"
+      },
+      "peak_rss_mb": 672.0,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 13.5,
+      "nvidia_smi_peak_mb": 3,
+      "returncode": 0
+    },
+    "asr": {
+      "bench": "asr",
+      "ok": true,
+      "versions": {
+        "faster-whisper": "1.2.1",
+        "ctranslate2": "4.8.2"
+      },
+      "cuda_devices": 1,
+      "large-v3-turbo": {
+        "load_s": 18.6,
+        "60s": {
+          "audio_s": 86.04,
+          "run_s": 5.35,
+          "x_realtime": 16.09,
+          "rtf": 0.062,
+          "segments": 15,
+          "wer_tr_vs_truth": 0.256
+        },
+        "segment_fields": {
+          "avg_logprob": true,
+          "no_speech_prob": true,
+          "compression_ratio": true,
+          "words": true
+        },
+        "300s": {
+          "audio_s": 426.29,
+          "run_s": 11.53,
+          "x_realtime": 36.96,
+          "rtf": 0.027,
+          "segments": 69,
+          "wer_tr_vs_truth": 0.198
+        },
+        "wer_en_default": 0.064,
+        "wer_en_clone_cfg05": 0.018,
+        "wer_en_clone_cfg00": 0.023,
+        "language_detect": {
+          "language": "tr",
+          "probability": 0.999
+        }
+      },
+      "large-v3": {
+        "load_s": 21.1,
+        "60s": {
+          "audio_s": 86.04,
+          "run_s": 7.44,
+          "x_realtime": 11.56,
+          "rtf": 0.086,
+          "segments": 16,
+          "wer_tr_vs_truth": 0.312
+        },
+        "segment_fields": {
+          "avg_logprob": true,
+          "no_speech_prob": true,
+          "compression_ratio": true,
+          "words": true
+        },
+        "300s": {
+          "audio_s": 426.29,
+          "run_s": 33.72,
+          "x_realtime": 12.64,
+          "rtf": 0.079,
+          "segments": 70,
+          "wer_tr_vs_truth": 0.16
+        },
+        "wer_en_default": 0.053,
+        "wer_en_clone_cfg05": 0.012,
+        "wer_en_clone_cfg00": 0.012,
+        "language_detect": {
+          "language": "tr",
+          "probability": 0.999
+        }
+      },
+      "peak_rss_mb": 3737.0,
+      "torch_peak_gpu_mb": null,
+      "wall_s": 128.0,
+      "nvidia_smi_peak_mb": 4119,
+      "returncode": 0
+    },
+    "align": {
+      "bench": "align",
+      "ok": true,
+      "versions": {
+        "whisperx": "3.8.6",
+        "torch": "2.8.0",
+        "transformers": "4.57.6"
+      },
+      "default_align_model_tr": "mpoyraz/wav2vec2-xls-r-300m-cv7-turkish",
+      "load_s": 5.8,
+      "speed_on_speech": {
+        "audio_s": 77.06,
+        "run_s": 15.61,
+        "x_realtime": 4.94,
+        "rtf": 0.203
+      },
+      "words_total": 123,
+      "words_without_timestamps": 0,
+      "untimed_words": [],
+      "peak_rss_mb": 2950.9,
+      "torch_peak_gpu_mb": 1676.3,
+      "wall_s": 40.2,
+      "nvidia_smi_peak_mb": 1941,
+      "returncode": 0
+    },
+    "diar": {
+      "bench": "diar",
+      "ok": false,
+      "versions": {
+        "pyannote.audio": "4.0.7",
+        "torch": "2.14.1"
+      },
+      "error": "RuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)",
+      "traceback": "Traceback (most recent call last):\n  File \"/tmp/s1/bench/bench_diar.py\", line 113, in <module>\n    main()\n  File \"/tmp/s1/bench/bench_diar.py\", line 73, in main\n    raise RuntimeError(\"HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\")\nRuntimeError: HF_TOKEN missing (attach the Kaggle secret and accept the model conditions on Hugging Face)\n",
+      "peak_rss_mb": 862.5,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 24.1,
+      "nvidia_smi_peak_mb": 0,
+      "returncode": 0
+    },
+    "tiger": {
+      "bench": "tiger",
+      "ok": true,
+      "versions": {
+        "torch": "2.5.1",
+        "torchaudio": "2.5.1"
+      },
+      "load_s": 1.7,
+      "60s": {
+        "audio_s": 86.04,
+        "run_s": 75.07,
+        "x_realtime": 1.15,
+        "rtf": 0.872,
+        "chunked": false,
+        "peak_gpu_mb": 1184.2,
+        "si_sdr_dialogue_db": 16.53,
+        "si_sdr_background_db": -1.64,
+        "si_sdr_mix_vs_dialogue_db": 16.78
+      },
+      "300s": {
+        "audio_s": 426.29,
+        "run_s": 347.73,
+        "x_realtime": 1.23,
+        "rtf": 0.816,
+        "chunked": false,
+        "peak_gpu_mb": 2042.9,
+        "si_sdr_dialogue_db": 16.45,
+        "si_sdr_background_db": -1.88,
+        "si_sdr_mix_vs_dialogue_db": 16.82
+      },
+      "peak_rss_mb": 2170.4,
+      "torch_peak_gpu_mb": 2042.9,
+      "wall_s": 445.7,
+      "nvidia_smi_peak_mb": 2951,
+      "returncode": 0
+    },
+    "demucs": {
+      "bench": "demucs",
+      "ok": true,
+      "versions": {
+        "demucs": "4.1.0",
+        "torch": "2.14.1",
+        "torchaudio": null
+      },
+      "load_s": 2.8,
+      "sources": [
+        "drums",
+        "bass",
+        "other",
+        "vocals"
+      ],
+      "60s": {
+        "audio_s": 86.04,
+        "run_s": 6.41,
+        "x_realtime": 13.43,
+        "rtf": 0.074,
+        "peak_gpu_mb": 550.8,
+        "si_sdr_dialogue_db": 16.5,
+        "si_sdr_background_db": -0.87
+      },
+      "300s": {
+        "audio_s": 426.29,
+        "run_s": 21.35,
+        "x_realtime": 19.96,
+        "rtf": 0.05,
+        "peak_gpu_mb": 550.8,
+        "si_sdr_dialogue_db": 16.5,
+        "si_sdr_background_db": -0.99
+      },
+      "peak_rss_mb": 3670.5,
+      "torch_peak_gpu_mb": 550.8,
+      "wall_s": 37.8,
+      "nvidia_smi_peak_mb": 869,
+      "returncode": 0
+    },
+    "tagger": {
+      "bench": "tagger",
+      "ok": true,
+      "versions": {
+        "transformers": "5.18.0",
+        "torch": "2.14.1"
+      },
+      "load_s": 3.8,
+      "audio_s": 86.04,
+      "run_s": 1.39,
+      "x_realtime": 61.71,
+      "rtf": 0.016,
+      "top_labels_per_10s": [
+        [
+          [
+            "Speech",
+            0.724
+          ],
+          [
+            "Speech synthesizer",
+            0.311
+          ],
+          [
+            "Narration, monologue",
+            0.233
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.848
+          ],
+          [
+            "Music",
+            0.574
+          ],
+          [
+            "Writing",
+            0.055
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.818
+          ],
+          [
+            "Speech synthesizer",
+            0.17
+          ],
+          [
+            "Music",
+            0.14
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.725
+          ],
+          [
+            "Narration, monologue",
+            0.119
+          ],
+          [
+            "Speech synthesizer",
+            0.091
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.666
+          ],
+          [
+            "Music",
+            0.084
+          ],
+          [
+            "Chirp tone",
+            0.049
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.78
+          ],
+          [
+            "Gasp",
+            0.065
+          ],
+          [
+            "Sigh",
+            0.061
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.647
+          ],
+          [
+            "Hum",
+            0.136
+          ],
+          [
+            "Speech synthesizer",
+            0.101
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.775
+          ],
+          [
+            "Music",
+            0.166
+          ],
+          [
+            "Animal",
+            0.054
+          ]
+        ],
+        [
+          [
+            "Speech",
+            0.534
+          ],
+          [
+            "Sine wave",
+            0.121
+          ],
+          [
+            "Hum",
+            0.07
+          ]
+        ]
+      ],
+      "peak_rss_mb": 1161.0,
+      "torch_peak_gpu_mb": 383.7,
+      "wall_s": 16.9,
+      "nvidia_smi_peak_mb": 585,
+      "returncode": 0
+    },
+    "opusmt": {
+      "bench": "opusmt",
+      "ok": true,
+      "versions": {
+        "transformers": "5.18.0",
+        "torch": "2.14.1",
+        "sentencepiece": "0.2.2"
+      },
+      "load_s": 6.7,
+      "run_s": 0.89,
+      "sentences": 12,
+      "chrf_vs_reference": 73.3,
+      "peak_rss_mb": 1762.9,
+      "torch_peak_gpu_mb": 467.1,
+      "wall_s": 21.5,
+      "nvidia_smi_peak_mb": 651,
+      "returncode": 0
+    },
+    "ollama": {
+      "prompt": "You are a professional Turkish (tr) to English (en) translator. Your goal is to accurately convey the meaning and nuances of the original Turkish text while adhering to English grammar, vocabulary, and cultural sensitivities. Produce only the English translation, without any additional explanations or commentary. Please translate the following Turkish text into English:\n\n{text}",
+      "install_s": 22.1,
+      "gpu_mb_idle": [
+        0,
+        0
+      ],
+      "translategemma:4b": {
+        "pull_s": 33.1,
+        "first_call_s": 88.0,
+        "total_s": 93.1,
+        "peak_gpu_mb": 3723,
+        "decode_tok_per_s": 55.9,
+        "sec_per_sentence_after_load": 0.46,
+        "chrf_vs_reference": 74.7,
+        "gpu_mb_loaded": [
+          3723,
+          0
+        ],
+        "gpu_mb_after_keep_alive_0": [
+          0,
+          0
+        ],
+        "loaded_after_unload": []
+      },
+      "translategemma:12b": {
+        "pull_s": 50.7,
+        "first_call_s": 8.8,
+        "total_s": 24.4,
+        "peak_gpu_mb": 8839,
+        "decode_tok_per_s": 17.6,
+        "sec_per_sentence_after_load": 1.42,
+        "chrf_vs_reference": 74.6,
+        "gpu_mb_loaded": [
+          8839,
+          0
+        ],
+        "gpu_mb_after_keep_alive_0": [
+          0,
+          0
+        ],
+        "loaded_after_unload": []
+      },
+      "ok": true
+    }
+  },
+  "disk": {
+    "scratch_used_gb": 53.22,
+    "hf_cache_gb": 15.56,
+    "uv_cache_gb": 25.02,
+    "ollama_models_gb": 11.41
+  },
+  "finished": "2026-10-05 18:23:24",
+  "projection_90min_minutes": {
+    "ASR large-v3-turbo": 2.4,
+    "ASR large-v3": 7.1,
+    "VAD": 1.4,
+    "Separation TIGER-DnR": 73.2,
+    "Separation Demucs": 4.5,
+    "Alignment (on ~55 min speech)": 11.1,
+    "TTS multilingual clone (1 GPU)": 87.2,
+    "TTS Turbo (1 GPU)": 35.0,
+    "Translation TranslateGemma 4B (~1,200 segments)": 9.2
+  }
+}

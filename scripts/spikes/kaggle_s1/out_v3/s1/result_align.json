@@ -1,0 +1,22 @@
+{
+  "bench": "align",
+  "ok": true,
+  "versions": {
+    "whisperx": "3.8.6",
+    "torch": "2.8.0",
+    "transformers": "4.57.6"
+  },
+  "default_align_model_tr": "mpoyraz/wav2vec2-xls-r-300m-cv7-turkish",
+  "load_s": 5.6,
+  "speed_on_speech": {
+    "audio_s": 71.15,
+    "run_s": 7.4,
+    "x_realtime": 9.62,
+    "rtf": 0.104
+  },
+  "words_total": 123,
+  "words_without_timestamps": 0,
+  "untimed_words": [],
+  "peak_rss_mb": 2999.5,
+  "torch_peak_gpu_mb": 1339.0
+}

@@ -1,0 +1,170 @@
+{
+  "started": "2026-10-06 06:01:23",
+  "env": {
+    "python": "3.13.15",
+    "gpus": [
+      "GPU 0: Tesla T4 (UUID: GPU-1e7da925-700e-522a-1f07-bf31d5d5f32a)",
+      "GPU 1: Tesla T4 (UUID: GPU-f4303515-4f3f-40b1-ec3c-f49aad224ef2)"
+    ],
+    "driver": "580.178.04\n580.178.04",
+    "scratch_free_gb": 1148.8,
+    "working_free_gb": 20.9,
+    "ram_gb": 32.9,
+    "ffmpeg": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers",
+    "hf_token_present": true,
+    "internet": true,
+    "test_audio_source": "Chatterbox Multilingual default voice (synthetic)"
+  },
+  "install": {
+    "tts": {
+      "ok": true,
+      "seconds": 57.3,
+      "venv_gb": 6.18,
+      "note": null
+    },
+    "diar": {
+      "ok": true,
+      "seconds": 51.4,
+      "venv_gb": 5.95,
+      "note": null
+    }
+  },
+  "bench": {
+    "tts": {
+      "bench": "tts",
+      "ok": true,
+      "versions": {
+        "chatterbox-tts": "0.1.7",
+        "torch": "2.6.0",
+        "transformers": "5.2.0",
+        "resemble-perth": "1.0.1"
+      },
+      "device": "Tesla T4",
+      "mtl_load_s": 39.6,
+      "mtl_sample_rate": 24000,
+      "mtl_tr_default_voice": {
+        "audio_s": 77.0,
+        "run_s": 99.59,
+        "x_realtime": 0.77,
+        "rtf": 1.293
+      },
+      "mtl_en_default_voice": {
+        "audio_s": 55.44,
+        "run_s": 63.77,
+        "x_realtime": 0.87,
+        "rtf": 1.15
+      },
+      "clone_reference_s": 34.08,
+      "mtl_en_clone_cfg05": {
+        "audio_s": 54.28,
+        "run_s": 75.13,
+        "x_realtime": 0.72,
+        "rtf": 1.384
+      },
+      "mtl_en_clone_cfg00": {
+        "audio_s": 69.68,
+        "run_s": 89.99,
+        "x_realtime": 0.77,
+        "rtf": 1.291
+      },
+      "cfg_weight_0_vs_05_duration_ratio": 1.284,
+      "mtl_peak_gpu_mb": 3734.2,
+      "watermark_detect": {
+        "raw": 1.0,
+        "atempo_1.2": 1.0,
+        "aac_128k": 1.0,
+        "atempo_1.2+aac": 1.0
+      },
+      "turbo_load_s": 34.1,
+      "turbo_en_clone": {
+        "audio_s": 47.52,
+        "run_s": 25.38,
+        "x_realtime": 1.87,
+        "rtf": 0.534
+      },
+      "turbo_peak_gpu_mb": 3282.0,
+      "peak_rss_mb": 6853.0,
+      "torch_peak_gpu_mb": 3282.0,
+      "wall_s": 461.5,
+      "nvidia_smi_peak_mb": 4557,
+      "returncode": 0
+    },
+    "make_audio": {
+      "bench": "make_audio",
+      "ok": true,
+      "durations": {
+        "60s": 86.04,
+        "300s": 426.29
+      },
+      "concat": {
+        "en_default": 12,
+        "en_clone_cfg05": 12,
+        "en_clone_cfg00": 12
+      },
+      "peak_rss_mb": 1545.3,
+      "torch_peak_gpu_mb": 0.0,
+      "wall_s": 27.6,
+      "nvidia_smi_peak_mb": 3,
+      "returncode": 0
+    },
+    "diar": {
+      "bench": "diar",
+      "ok": true,
+      "versions": {
+        "pyannote.audio": "4.0.7",
+        "torch": "2.14.1"
+      },
+      "load_s": 4.8,
+      "60s": {
+        "audio_s": 86.04,
+        "run_s": 4.59,
+        "x_realtime": 18.74,
+        "rtf": 0.053,
+        "speakers_found": 1,
+        "speakers_true": 2,
+        "labels_distinct": false,
+        "segment_speaker_accuracy": 1.0,
+        "peak_gpu_mb": 1628.8,
+        "output_fields": [
+          "exclusive_speaker_diarization",
+          "serialize",
+          "speaker_diarization",
+          "speaker_embeddings"
+        ],
+        "speaker_embeddings_shape": [
+          1,
+          256
+        ],
+        "has_exclusive_diarization": true
+      },
+      "300s": {
+        "audio_s": 426.29,
+        "run_s": 17.58,
+        "x_realtime": 24.25,
+        "rtf": 0.041,
+        "speakers_found": 1,
+        "speakers_true": 2,
+        "labels_distinct": false,
+        "segment_speaker_accuracy": 1.0,
+        "peak_gpu_mb": 1628.8
+      },
+      "peak_rss_mb": 2099.7,
+      "torch_peak_gpu_mb": 1628.8,
+      "wall_s": 52.3,
+      "nvidia_smi_peak_mb": 2853,
+      "returncode": 0
+    }
+  },
+  "disk": {
+    "scratch_used_gb": 19.92,
+    "hf_cache_gb": 7.29,
+    "uv_cache_gb": 11.93,
+    "ollama_models_gb": null
+  },
+  "finished": "2026-10-06 06:12:24",
+  "projection_90min_minutes": {
+    "Diarization": 3.7,
+    "TTS multilingual clone (1 GPU)": 92.3,
+    "TTS Turbo (1 GPU)": 38.2
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "bench": "make_audio",
+  "ok": true,
+  "durations": {
+    "60s": 80.13,
+    "300s": 395.73
+  },
+  "concat": {
+    "en_default": null,
+    "en_clone_cfg05": null,
+    "en_clone_cfg00": null
+  },
+  "peak_rss_mb": 1438.4,
+  "torch_peak_gpu_mb": 0.0
+}

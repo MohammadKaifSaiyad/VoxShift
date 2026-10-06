@@ -1,0 +1,15 @@
+{
+  "bench": "opusmt",
+  "ok": true,
+  "versions": {
+    "transformers": "5.18.0",
+    "torch": "2.14.1",
+    "sentencepiece": "0.2.2"
+  },
+  "load_s": 6.7,
+  "run_s": 0.89,
+  "sentences": 12,
+  "chrf_vs_reference": 73.3,
+  "peak_rss_mb": 1762.9,
+  "torch_peak_gpu_mb": 467.1
+}

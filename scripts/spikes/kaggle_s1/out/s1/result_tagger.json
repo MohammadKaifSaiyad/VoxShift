@@ -1,0 +1,143 @@
+{
+  "bench": "tagger",
+  "ok": true,
+  "versions": {
+    "transformers": "5.18.0",
+    "torch": "2.14.1"
+  },
+  "load_s": 3.8,
+  "audio_s": 86.04,
+  "run_s": 1.39,
+  "x_realtime": 61.71,
+  "rtf": 0.016,
+  "top_labels_per_10s": [
+    [
+      [
+        "Speech",
+        0.724
+      ],
+      [
+        "Speech synthesizer",
+        0.311
+      ],
+      [
+        "Narration, monologue",
+        0.233
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.848
+      ],
+      [
+        "Music",
+        0.574
+      ],
+      [
+        "Writing",
+        0.055
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.818
+      ],
+      [
+        "Speech synthesizer",
+        0.17
+      ],
+      [
+        "Music",
+        0.14
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.725
+      ],
+      [
+        "Narration, monologue",
+        0.119
+      ],
+      [
+        "Speech synthesizer",
+        0.091
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.666
+      ],
+      [
+        "Music",
+        0.084
+      ],
+      [
+        "Chirp tone",
+        0.049
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.78
+      ],
+      [
+        "Gasp",
+        0.065
+      ],
+      [
+        "Sigh",
+        0.061
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.647
+      ],
+      [
+        "Hum",
+        0.136
+      ],
+      [
+        "Speech synthesizer",
+        0.101
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.775
+      ],
+      [
+        "Music",
+        0.166
+      ],
+      [
+        "Animal",
+        0.054
+      ]
+    ],
+    [
+      [
+        "Speech",
+        0.534
+      ],
+      [
+        "Sine wave",
+        0.121
+      ],
+      [
+        "Hum",
+        0.07
+      ]
+    ]
+  ],
+  "peak_rss_mb": 1161.0,
+  "torch_peak_gpu_mb": 383.7
+}

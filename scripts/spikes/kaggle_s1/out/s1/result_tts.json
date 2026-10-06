@@ -1,0 +1,56 @@
+{
+  "bench": "tts",
+  "ok": true,
+  "versions": {
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0",
+    "transformers": "5.2.0",
+    "resemble-perth": "1.0.1"
+  },
+  "device": "Tesla T4",
+  "mtl_load_s": 39.3,
+  "mtl_sample_rate": 24000,
+  "mtl_tr_default_voice": {
+    "audio_s": 77.0,
+    "run_s": 90.55,
+    "x_realtime": 0.85,
+    "rtf": 1.176
+  },
+  "mtl_en_default_voice": {
+    "audio_s": 55.44,
+    "run_s": 59.45,
+    "x_realtime": 0.93,
+    "rtf": 1.072
+  },
+  "clone_reference_s": 34.08,
+  "mtl_en_clone_cfg05": {
+    "audio_s": 54.28,
+    "run_s": 70.52,
+    "x_realtime": 0.77,
+    "rtf": 1.299
+  },
+  "mtl_en_clone_cfg00": {
+    "audio_s": 69.68,
+    "run_s": 84.99,
+    "x_realtime": 0.82,
+    "rtf": 1.22
+  },
+  "cfg_weight_0_vs_05_duration_ratio": 1.284,
+  "mtl_peak_gpu_mb": 3734.2,
+  "watermark_detect": {
+    "raw": 1.0,
+    "atempo_1.2": 1.0,
+    "aac_128k": 1.0,
+    "atempo_1.2+aac": 1.0
+  },
+  "turbo_load_s": 39.0,
+  "turbo_en_clone": {
+    "audio_s": 47.52,
+    "run_s": 23.25,
+    "x_realtime": 2.04,
+    "rtf": 0.489
+  },
+  "turbo_peak_gpu_mb": 3282.0,
+  "peak_rss_mb": 6879.0,
+  "torch_peak_gpu_mb": 3282.0
+}

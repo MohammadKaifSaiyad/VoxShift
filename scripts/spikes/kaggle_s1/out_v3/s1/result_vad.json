@@ -1,0 +1,33 @@
+{
+  "bench": "vad",
+  "ok": true,
+  "versions": {
+    "silero-vad": "6.2.3",
+    "torch": "2.14.1"
+  },
+  "load_s": 0.07,
+  "60s": {
+    "audio_s": 80.13,
+    "run_s": 1.28,
+    "x_realtime": 62.69,
+    "rtf": 0.016,
+    "regions": 15,
+    "speech_recall": 0.95,
+    "detected_speech_s": 67.8,
+    "true_speech_s": 71.1,
+    "device": "cpu"
+  },
+  "300s": {
+    "audio_s": 395.73,
+    "run_s": 5.72,
+    "x_realtime": 69.13,
+    "rtf": 0.014,
+    "regions": 72,
+    "speech_recall": 0.954,
+    "detected_speech_s": 341.0,
+    "true_speech_s": 355.7,
+    "device": "cpu"
+  },
+  "peak_rss_mb": 665.2,
+  "torch_peak_gpu_mb": 0.0
+}

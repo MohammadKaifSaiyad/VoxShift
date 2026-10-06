@@ -1,0 +1,69 @@
+{
+  "bench": "asr",
+  "ok": true,
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "cuda_devices": 1,
+  "large-v3-turbo": {
+    "load_s": 15.5,
+    "60s": {
+      "audio_s": 80.13,
+      "run_s": 4.46,
+      "x_realtime": 17.95,
+      "rtf": 0.056,
+      "segments": 12,
+      "wer_tr_vs_truth": 0.048
+    },
+    "segment_fields": {
+      "avg_logprob": true,
+      "no_speech_prob": true,
+      "compression_ratio": true,
+      "words": true
+    },
+    "300s": {
+      "audio_s": 395.73,
+      "run_s": 10.5,
+      "x_realtime": 37.68,
+      "rtf": 0.027,
+      "segments": 60,
+      "wer_tr_vs_truth": 0.064
+    },
+    "language_detect": {
+      "language": "fr",
+      "probability": 0.74
+    }
+  },
+  "large-v3": {
+    "load_s": 21.8,
+    "60s": {
+      "audio_s": 80.13,
+      "run_s": 5.79,
+      "x_realtime": 13.84,
+      "rtf": 0.072,
+      "segments": 13,
+      "wer_tr_vs_truth": 0.032
+    },
+    "segment_fields": {
+      "avg_logprob": true,
+      "no_speech_prob": true,
+      "compression_ratio": true,
+      "words": true
+    },
+    "300s": {
+      "audio_s": 395.73,
+      "run_s": 28.94,
+      "x_realtime": 13.68,
+      "rtf": 0.073,
+      "segments": 65,
+      "wer_tr_vs_truth": 0.038
+    },
+    "language_detect": {
+      "language": "la",
+      "probability": 0.198
+    }
+  },
+  "peak_rss_mb": 3672.5,
+  "torch_peak_gpu_mb": null
+}

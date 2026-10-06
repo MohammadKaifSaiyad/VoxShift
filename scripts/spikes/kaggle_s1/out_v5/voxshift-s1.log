@@ -1,0 +1,28 @@
+[{"stream_name":"stdout","time":6.845099977,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.6/20.6 MB 78.4 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":528.873479241,"data":"[s1] tts: ok=True wall=461.5s peak=4557MB \n"}
+,{"stream_name":"stdout","time":556.704755297,"data":"[s1] make_audio: ok=True wall=27.6s peak=3MB \n"}
+,{"stream_name":"stdout","time":660.618177944,"data":"[s1] diar: ok=True wall=52.3s peak=2853MB \n"}
+,{"stream_name":"stdout","time":661.74476292,"data":"# Spike S1 results\n"}
+,{"stream_name":"stdout","time":661.744797755,"data":"\n"}
+,{"stream_name":"stdout","time":661.744803105,"data":"Started 2026-10-06 06:01:23; GPUs: ['GPU 0: Tesla T4 (UUID: GPU-1e7da925-700e-522a-1f07-bf31d5d5f32a)', 'GPU 1: Tesla T4 (UUID: GPU-f4303515-4f3f-40b1-ec3c-f49aad224ef2)']\n"}
+,{"stream_name":"stdout","time":661.745162554,"data":"\n"}
+,{"stream_name":"stdout","time":661.74517647,"data":"| Bench | OK | Wall s | nvidia-smi peak MB | Key numbers | Error |\n"}
+,{"stream_name":"stdout","time":661.745182012,"data":"| --- | --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":661.745188289,"data":"| tts | True | 461.5 | 4557 | {\"mtl_en_clone_cfg00\": {\"audio_s\": 69.68, \"run_s\": 89.99, \"x_realtime\": 0.77, \"rtf\": 1.291}, \"cfg_weight_0_vs_05_duration_ratio\": 1.284, \"watermark_detect\": {\"raw\": 1.0, \"atempo_1.2\": 1.0, \"aac_128k\": 1.0, \"atempo_1.2+aac\": 1.0}, \"turbo_en_clone\": {\"audio_s\": 47.52, \"run_s\": 25.38, \"x_realtime\": 1.87, \"rtf\": 0.534}} |  |\n"}
+,{"stream_name":"stdout","time":661.74519763,"data":"| make_audio | True | 27.6 | 3 | {} |  |\n"}
+,{"stream_name":"stdout","time":661.745203067,"data":"| diar | True | 52.3 | 2853 | {\"load_s\": 4.8, \"60s\": {\"audio_s\": 86.04, \"run_s\": 4.59, \"x_realtime\": 18.74, \"rtf\": 0.053, \"speakers_found\": 1, \"speakers_true\": 2, \"labels_distinct\": false, \"segment_speaker_accuracy\": 1.0, \"peak_gpu_mb\": 1628.8, \"output_fields\": [\"exclusive_speaker_diarization\", \"serialize\", \"speaker_diarization\", \"speaker_embeddings\"], \"speaker_embeddings_shape\": [1, 256], \"has_exclusive_diarization\": true}, \" |  |\n"}
+,{"stream_name":"stdout","time":661.745214592,"data":"\n"}
+,{"stream_name":"stdout","time":661.745219227,"data":"## Projection for a 90-minute video (minutes, single T4)\n"}
+,{"stream_name":"stdout","time":661.74522493,"data":"\n"}
+,{"stream_name":"stdout","time":661.745230034,"data":"- Diarization: 3.7\n"}
+,{"stream_name":"stdout","time":661.745399815,"data":"- TTS multilingual clone (1 GPU): 92.3\n"}
+,{"stream_name":"stdout","time":661.745436293,"data":"- TTS Turbo (1 GPU): 38.2\n"}
+,{"stream_name":"stdout","time":661.745492074,"data":"\n"}
+,{"stream_name":"stdout","time":661.745512206,"data":"Install times and venv sizes: see results.json → install.\n"}
+,{"stream_name":"stderr","time":664.317823039,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":664.317883284,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":664.702787105,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":664.702821709,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":665.8783719,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":667.226085977,"data":"[NbConvertApp] Writing 424096 bytes to __results__.html\n"}
+]
