@@ -31,6 +31,7 @@ Items `docs/SPEC.md` could not settle. Each provisional item is already applied 
 | Q-18 | Do "Chatterbox Multilingual V3" and "Chatterbox Nano (110M)" exist under those names? | Desk research says yes (V3 released 2026-06-10, MIT, includes Turkish; Nano MIT, gated, English), plus a new Chatterbox Flash (`docs/feasibility.md` §2). Close once spike S1 loads them. |
 | Q-19 | Is the ≤ 3× target reachable on the M1 Pro? | TTS real-time factor (with drift-gate regenerations and audition) is the dominant unknown until Phase 0 benchmarks. |
 | Q-20 | Golden-clip footage source | Phase 0 must find rights-cleared multi-speaker Turkish footage; the owner will be asked if none is found. |
+| Q-24 | With Demucs as default (D-62), does singing (for example Teneke's street musician) vanish from the separated background? | Demucs puts singing in the dialogue stem. Check by listening to `aLvkEaaDte8_cfg05_separated` and in spike S3b (singing detection). If it does, songs must be kept from the original (edge case 46). |
 | Q-23 | Reference machine for §2 (Definition of Done): the Mac (D-04) or Kaggle 2× T4 run headless? | Spike S1 measures Kaggle; Kaggle's terms reportedly limit it to personal, non-commercial use, so it fits only while the project stays personal R&D (D-61). |
 
 ## C. Environment notes

@@ -10,6 +10,7 @@ Entries marked **provisional** resolve a conflict that the owner's decisions did
 | --- | --- |
 | 2026-10-03 | v3 created: V1 and v2 consolidated into `docs/SPEC.md`; both moved unedited to `docs/archive/` (plain `mv`, because the folder is not yet a git repository). |
 | 2026-10-05 | Desk research in `docs/feasibility.md`; D-61 added; spike S1 prepared in `scripts/spikes/kaggle_s1/` (not yet run). No SPEC.md change. |
+| 2026-10-06 | S1 and S3 run (`docs/spikes.md`). Owner listening test → D-62 to D-64; SPEC §5 updated (separation default, `cfg_weight`). |
 
 ## Owner decisions (A–H)
 
@@ -80,6 +81,9 @@ Entries marked **provisional** resolve a conflict that the owner's decisions did
 | D-58 | Reference denoise default is none; DeepFilterNet only if Phase 0 shows benefit | Denoisers can add artifacts that hurt cloning; the dialogue stem is already cleaned | — | final |
 | D-59 | Fixture: Turkish voices from a local TTS whose license permits dev use (GPL tools allowed because nothing ships); English from Kokoro; background music synthesized with `lavfi` | Kokoro has no Turkish; downloaded music makes tests non-hermetic | v2 §9 | final |
 | D-60 | A 90-min rights-cleared clip is needed for §2 criteria 7–8; if none exists, concatenated golden clips may be used for speed and resilience only | Long rights-cleared Turkish footage may be hard to find | V1 Phase 12, v2 Phase 12 | provisional |
+| D-62 | Separation default is Demucs `htdemucs` (adefossez fork); TIGER-DnR and Bandit v2 are fallbacks | Owner listening test on S3 ("covers the background"); 21× vs 1.3× real time on a T4 (≈ 4.5 vs ≈ 70 min for 90 min) | SPEC §5 (TIGER-DnR was default); SPEC §19 item 1 keeps the Demucs training-data check | final (singing caveat: Q-24) |
+| D-63 | `cfg_weight` default 0.5; 0.3 is the per-voice fallback for strong accents; 0 not used | Owner heard no disturbing accent at 0.5. On ISLIK, cfg 0 gave median length ÷ slot 1.64 vs 1.17 and truncations 43% vs 21%, for only +0.04–0.11 similarity to the original voice | D-32 (left `cfg_weight` to Phase 0); v2 §5.8 (mandated 0) | final |
+| D-64 | Background mode: the separated mix is confirmed as the first choice; the ducked original stays the automatic fallback | Owner listening test on S3 (ISLIK separated vs ducked) | Confirms D-22 and SPEC §10.1; no SPEC change | final |
 | D-61 | Project context is personal R&D (owner, 2026-10-05). Feasibility spike S1 runs on Kaggle 2× T4 (`scripts/spikes/kaggle_s1/`), with synthetic audio only. The default license policy (D-03) is unchanged. | The Mac has 51 GB free disk and borderline speed; Kaggle's terms reportedly allow personal, non-commercial use, which matches this context | D-56 (Kaggle not a target), for spikes only; the §2 reference machine is unchanged pending Q-23 | final |
 
 ## Stage mapping (V1 / v2 → v3)

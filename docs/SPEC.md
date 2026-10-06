@@ -186,7 +186,7 @@ Keep them disabled for any commercial use, including internal use within a compa
 | ASR | mlx-whisper (MIT), Whisper large-v3 or large-v3-turbo, Metal | faster-whisper (MIT), CPU int8; CUDA on the Linux profile | Size from Phase 0 |
 | Language ID | Whisper language detection per segment | — | Edge case 48 |
 | Word alignment | WhisperX `align()` (BSD-2-Clause) with the per-language wav2vec2 model | Whisper word timestamps | Turkish alignment model license audited in Phase 0 |
-| Separation | Cinematic 3-stem: TIGER-DnR (weights license to confirm) | Bandit v2 (weights license to confirm); Demucs v4 `htdemucs` from the maintained `adefossez/demucs` fork (MIT) | Benchmarked on a 5-minute clip in Phase 0 |
+| Separation | Demucs v4 `htdemucs` from the maintained `adefossez/demucs` fork (MIT code; training-data terms to verify) | TIGER-DnR (cinematic 3-stem; ~1.3× real time on a T4, too slow as default); Bandit v2 (weights license to confirm) | Demucs is a music separator: singing goes to the dialogue stem, so singing detection (edge case 46) must keep songs from the original |
 | Diarization | `pyannote/speaker-diarization-community-1` (CC-BY-4.0, gated, free), MPS | CPU | MPS is not officially supported: parity test required (§16) |
 | Identity embeddings | From the pyannote pipeline, if exposed | WeSpeaker or SpeechBrain ECAPA (Apache-2.0; check training-data terms) | |
 | QC embedder | Chosen in Phase 0 | — | Used for audition and the drift gate; must load inside the TTS worker without dependency conflicts |
@@ -204,7 +204,7 @@ Notes:
 - Chatterbox embeds the Perth watermark in all output. Keep it; never strip it.
 - Provider environments pin Python 3.11.
 - `transformers` v5 is reported to have removed `pipeline("translation")`; load `AutoModelForSeq2SeqLM` directly (verify in Phase 0).
-- `cfg_weight` is a per-voice value chosen in Phase 0 from `0` and the provider default. The Chatterbox README advises `0` to limit accent transfer when the reference language differs from the output language. Lower values are also reported to slow pacing, so Phase 0 measures the effect on clip duration before choosing.
+- `cfg_weight` default is **0.5**, stored per voice. Try 0.3 for a voice whose Turkish accent is too strong. `0` is not used: although the Chatterbox README advises it for cross-language references, it makes clips longer and doubles truncations.
 - Ollama runs on the host. Every request sets `keep_alive=0` (or the model is unloaded at the end of the stage) so memory is free for the next model process.
 
 ---
