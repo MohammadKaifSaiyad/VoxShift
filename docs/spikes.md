@@ -157,6 +157,53 @@ The TTS projection assumes ~55 min of English speech × 1.3 for audition, drift-
 6. **No singing in these films** (maximum AST singing probability 0.03–0.09 on the dialogue stems), so Q-24 is still untested on real singing.
 7. **Voice speaking rates differ by 2×** (9.4–19.4 chars/s). Budgets must be per voice, as SPEC §8.14 says; one global rate would be wrong.
 
+## S3c — S3b with its failures fixed (run v2, 2026-10-06)
+
+- **Code:** `scripts/spikes/kaggle_s3c/run_s3c.py`. Output: `scripts/spikes/kaggle_s3c/out/s3c/`.
+- **Run time:** 33 min including installs; about 25 min of processing for 22 min of film audio.
+- **Fixes:**
+  - Qwen3-4B-Instruct-2507 (no thinking mode);
+  - speech-aware lay-back with a coverage metric;
+  - deterministic ASR plus a second pass on missed speech.
+
+| | ISLIK | Teneke | Hediye |
+| --- | --- | --- | --- |
+| Lines needing tempo > 1.10×, S3 → S3b → S3c | 64% → 67% → **42%** | 93% → 54% → **54%** | 89% → 50% → **39%** |
+| Truncated, S3 → S3b → S3c | 21% → 22% → **5%** | 47% → 17% → **21%** | 43% → 19% → **14%** |
+| Of which overflow into silence (no speed-up beyond 1.25×) | 37% | 17% | 22% |
+| Median TTS length ÷ slot | 1.00 | 1.15 | 0.92 |
+| Segments; under 1 s | 19; 2 | 25; 9 | 40; 7 |
+| Speech coverage (dubbed + kept + non-verbal ÷ VAD speech) | 77% | 86% | 79% |
+| Untranscribed speech muted | 8.8 s | 3.7 s | 11.4 s |
+| English re-transcription of the dub (language; WER) | **en**; 12% | **en**; 43% | **en**; 21% |
+| ASR second pass: missed VAD regions → words added | 5 → 13 | 1 → 2 | 9 → 14 |
+| Rewrite rounds 1 / 2: rewritten of those over 1.10× | 6/11, 0/8 | 6/14, 0/13 | 12/21, 3/14 |
+| Voice consistency within main speakers (mean; lines < 0.6) | 0.72–0.74; 0 | 0.67–0.69; 5 | 0.66–0.74; 5 |
+
+### Findings
+
+1. **The spec's mechanisms stack.** From the naive S3 to S3c:
+   - lines needing > 1.10× fell from 64–93% to 39–54%;
+   - truncation fell from 21–47% to 5–21%;
+   - the median line now fits its slot;
+   - every dub is recognized as English.
+   The target of ≤ 15% (SPEC §2) is **not reached** on these clips.
+2. **What's left is mostly very short lines in rapid exchanges.** "bak." gave 4.5× its slot, "Oğlum" 1.6×, "Darbuka." 2.5×: English TTS needs ~0.6–1 s, and these sources give 0.3–0.5 s with no silence to overflow into. Teneke has 9 of 25 segments under 1 s. Needs a short-utterance policy (an owner decision):
+   - a higher tempo cap for clips under 1 s;
+   - pre-roll into preceding silence;
+   - or keeping the original for one-word interjections.
+   Feature films with longer speeches may behave better; unmeasured.
+3. **Qwen3-4B-Instruct: fast and budget-compliant, but weaker on meaning.**
+   - **Speed and compliance:** 0.67 s per call, 78% of lines within budget (TranslateGemma: 57% in S3b), no commentary.
+   - **Meaning errors on idioms and slang**, for example "Adam mı yiyorsun sen?" → "Are you eating a man?" (TranslateGemma in S3: "Are you out of your mind?"), "Aç mısın oğlum?" → "Open up, buddy?".
+   - **Turkish left in output:** "Aç siktir lan." returned unchanged; one rewrite gave "Son, buraya yaklaş.".
+   This favours the spec's split: TranslateGemma translates, an instruct model only shortens. Validation must also reject output that equals the source or contains Turkish-only letters (ç ğ ı ö ş ü).
+4. **TranslateGemma was not fairly tested in S3c** (spike bug). The latency guard averaged in a ~90 s model reload on its first call and dropped it after 4 lines. The guard must exclude the first call after a load.
+5. **Whisper's classic Turkish phantom lines appeared:** "İzlediğiniz için teşekkür ederim" and "Altyazı M.K.", most likely from the second pass, which runs without VAD gating. This validates SPEC §8.5's blacklist file, which S3c did not implement. The second pass needs the same filters plus the blacklist.
+6. **Speech-aware lay-back stopped the Turkish leak** (all dubs detected as English). Coverage is 77–86%. Whether the muted 3.7–11.4 s is missed dialogue or vocal noise needs listening.
+7. **Rewrite round 2 adds little** (0–3 lines): once a line is near its budget, the 4B model cannot shorten it further without losing meaning. A larger rewrite model, or the short-utterance policy, is the next lever, not more rounds.
+8. **Voices are distinct and fairly consistent.** Between speakers 0.07–0.41. Within a speaker, up to 4–5 of 14–22 lines fall below 0.6 cosine, so the drift gate (SPEC §3.2.7) would regenerate about 10–25% of a main actor's lines. That cost belongs in the speed estimate.
+
 ### Still to do
 
 - **Listen** to `scripts/spikes/kaggle_s3/out/s3/audio/`:

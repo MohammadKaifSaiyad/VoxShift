@@ -1,0 +1,17 @@
+
+$ /usr/bin/python3 -m uv venv /tmp/s3c/venvs/dsp --python 3.11
+warning: The `--system` flag has no effect, `uv venv` always ignores virtual environments when finding a Python interpreter; did you mean `--no-managed-python`?
+Using CPython 3.11.17
+Creating virtual environment at: /tmp/s3c/venvs/dsp
+Activate with: source /tmp/s3c/venvs/dsp/bin/activate
+
+$ /usr/bin/python3 -m uv pip install --python /tmp/s3c/venvs/dsp/bin/python setuptools<81 numpy soundfile
+Using Python 3.11.17 environment at: /tmp/s3c/venvs/dsp
+Resolved 6 packages in 137ms
+Installed 6 packages in 33ms
+ + cffi==2.1.1
+ + numpy==2.4.6
+ + pycparser==3.0
+ + setuptools==80.10.2
+ + soundfile==0.14.0
+ + typing-extensions==4.16.0

@@ -1,0 +1,2 @@
+
+$ /tmp/s3c/venvs/asr/bin/python /tmp/s3c/bench/stage_check.py {"mode": "check", "asr_model": "large-v3", "check_list": "/tmp/s3c/check_list.json", "stage": "check", "result_path": "/kaggle/working/s3c/stage_check.json", "clips_dir": "/tmp/s3c/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}

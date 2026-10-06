@@ -1,0 +1,2 @@
+
+$ /tmp/s3c/venvs/dsp/bin/python /tmp/s3c/bench/stage_mix.py {"audio_out": "/kaggle/working/s3c/audio", "out_dir": "/kaggle/working/s3c", "check_list": "/tmp/s3c/check_list.json", "nonverbal": {"labels": ["Laughter", "Crying, sobbing", "Screaming", "Sigh"], "threshold": 0.3}, "stage": "mix", "result_path": "/kaggle/working/s3c/stage_mix.json", "clips_dir": "/tmp/s3c/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}

@@ -1,0 +1,37 @@
+{
+  "stage": "tts_round1",
+  "ok": true,
+  "versions": {
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0"
+  },
+  "QJH3CCrjda4": {
+    "audio_s": 15.88,
+    "run_s": 21.86,
+    "x_realtime": 0.73,
+    "rtf": 1.376,
+    "segments": 6,
+    "errors": 0,
+    "silence_trimmed_s": 0.4
+  },
+  "aLvkEaaDte8": {
+    "audio_s": 9.82,
+    "run_s": 16.09,
+    "x_realtime": 0.61,
+    "rtf": 1.638,
+    "segments": 6,
+    "errors": 0,
+    "silence_trimmed_s": 0.42
+  },
+  "cQ8J2vdB9VU": {
+    "audio_s": 19.91,
+    "run_s": 33.12,
+    "x_realtime": 0.6,
+    "rtf": 1.663,
+    "segments": 12,
+    "errors": 0,
+    "silence_trimmed_s": 1.17
+  },
+  "peak_rss_mb": 5025.1,
+  "torch_peak_gpu_mb": 3717.2
+}

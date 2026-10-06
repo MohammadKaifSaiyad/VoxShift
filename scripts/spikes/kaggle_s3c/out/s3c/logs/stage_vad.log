@@ -1,0 +1,4 @@
+
+$ /tmp/s3c/venvs/vad/bin/python /tmp/s3c/bench/stage_vad.py {"stage": "vad", "result_path": "/kaggle/working/s3c/stage_vad.json", "clips_dir": "/tmp/s3c/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}
+/tmp/s3c/venvs/vad/lib/python3.11/site-packages/torch/jit/_serialization.py:176: FutureWarning: `torch.jit.load` is deprecated. Please switch to `torch.export`.
+  warnings.warn(

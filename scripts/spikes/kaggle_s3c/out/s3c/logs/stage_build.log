@@ -1,0 +1,2 @@
+
+$ /tmp/s3c/venvs/dsp/bin/python /tmp/s3c/bench/stage_build.py {"build": {"flip_s": 0.5, "merge_gap_s": 0.35, "min_seg_s": 1.0, "fragment_gap_s": 1.0, "max_seg_s": 12.0, "min_mean_p": 0.45}, "singing_threshold": 0.3, "stage": "build", "result_path": "/kaggle/working/s3c/stage_build.json", "clips_dir": "/tmp/s3c/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}

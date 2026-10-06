@@ -1,0 +1,24 @@
+{
+  "stage": "check",
+  "ok": true,
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "QJH3CCrjda4": {
+    "detected_language": "en",
+    "language_probability": 0.967,
+    "wer_vs_translation": 0.121
+  },
+  "aLvkEaaDte8": {
+    "detected_language": "en",
+    "language_probability": 0.699,
+    "wer_vs_translation": 0.426
+  },
+  "cQ8J2vdB9VU": {
+    "detected_language": "en",
+    "language_probability": 0.833,
+    "wer_vs_translation": 0.214
+  },
+  "peak_rss_mb": 3144.9
+}

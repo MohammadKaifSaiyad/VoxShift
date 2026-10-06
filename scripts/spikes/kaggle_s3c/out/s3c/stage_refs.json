@@ -1,0 +1,20 @@
+{
+  "stage": "refs",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "SPEAKER_00": 6.5,
+    "SPEAKER_01": 12.1,
+    "SPEAKER_02": 3.4,
+    "UNKNOWN": 0.0
+  },
+  "aLvkEaaDte8": {
+    "SPEAKER_00": 9.0,
+    "SPEAKER_01": 12.0
+  },
+  "cQ8J2vdB9VU": {
+    "SPEAKER_00": 12.4,
+    "SPEAKER_01": 13.4,
+    "UNKNOWN": 0.0
+  },
+  "peak_rss_mb": 230.1
+}

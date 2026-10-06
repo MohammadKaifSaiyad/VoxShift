@@ -1,0 +1,42 @@
+{
+  "stage": "asr",
+  "ok": true,
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "QJH3CCrjda4": {
+    "audio_s": 438.39,
+    "run_s": 11.54,
+    "x_realtime": 37.98,
+    "rtf": 0.026,
+    "segments": 19,
+    "words": 82,
+    "vad_regions_missed_by_pass1": 5,
+    "pass2_segments": 4,
+    "pass2_words": 13
+  },
+  "aLvkEaaDte8": {
+    "audio_s": 516.13,
+    "run_s": 7.01,
+    "x_realtime": 73.64,
+    "rtf": 0.014,
+    "segments": 24,
+    "words": 94,
+    "vad_regions_missed_by_pass1": 1,
+    "pass2_segments": 1,
+    "pass2_words": 2
+  },
+  "cQ8J2vdB9VU": {
+    "audio_s": 504.85,
+    "run_s": 14.62,
+    "x_realtime": 34.53,
+    "rtf": 0.029,
+    "segments": 40,
+    "words": 156,
+    "vad_regions_missed_by_pass1": 9,
+    "pass2_segments": 9,
+    "pass2_words": 14
+  },
+  "peak_rss_mb": 3724.0
+}

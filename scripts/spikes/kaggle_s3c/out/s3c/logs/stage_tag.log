@@ -1,0 +1,6 @@
+
+$ /tmp/s3c/venvs/tag/bin/python /tmp/s3c/bench/stage_tag.py {"win_s": 3.0, "hop_s": 1.5, "singing_threshold": 0.3, "stage": "tag", "result_path": "/kaggle/working/s3c/stage_tag.json", "clips_dir": "/tmp/s3c/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/tmp/s3c/venvs/tag/lib/python3.11/site-packages/transformers/audio_utils.py:821: UserWarning: At least one mel filter has all zero values. The value for `num_mel_filters` (128) may be set too high. Or, the value for `num_frequency_bins` (257) may be set too low.
+  warnings.warn(
+Loading weights:   0%|          | 0/203 [00:00<?, ?it/s]Loading weights: 100%|██████████| 203/203 [00:00<00:00, 2587.07it/s]

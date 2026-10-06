@@ -1,0 +1,3 @@
+
+$ /tmp/s3c/venvs/asr/bin/python /tmp/s3c/bench/stage_asr.py {"mode": "source", "asr_model": "large-v3", "asr": {"temperature": 0.0, "min_missed_s": 0.6, "missed_cover": 0.3}, "stage": "asr", "result_path": "/kaggle/working/s3c/stage_asr.json", "clips_dir": "/tmp/s3c/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.

@@ -1,0 +1,68 @@
+{
+  "stage": "mix",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "dubbed": 19,
+    "kept_original": 0,
+    "fit": {
+      "none": 10,
+      "tempo_le_1_10": 1,
+      "tempo_gt_1_10": 0,
+      "overflow": 7,
+      "truncated": 1
+    },
+    "ratio_median": 1.0,
+    "share_over_1_10": 0.421,
+    "share_truncated": 0.053,
+    "share_overflow": 0.368,
+    "speech_s": 37.8,
+    "speech_dubbed_s": 29.0,
+    "speech_kept_original_s": 0.0,
+    "speech_nonverbal_s": 0.0,
+    "speech_untranscribed_muted_s": 8.8,
+    "speech_coverage": 0.768
+  },
+  "aLvkEaaDte8": {
+    "dubbed": 24,
+    "kept_original": 1,
+    "fit": {
+      "none": 9,
+      "tempo_le_1_10": 2,
+      "tempo_gt_1_10": 4,
+      "overflow": 4,
+      "truncated": 5
+    },
+    "ratio_median": 1.15,
+    "share_over_1_10": 0.542,
+    "share_truncated": 0.208,
+    "share_overflow": 0.167,
+    "speech_s": 26.6,
+    "speech_dubbed_s": 22.5,
+    "speech_kept_original_s": 0.3,
+    "speech_nonverbal_s": 0.0,
+    "speech_untranscribed_muted_s": 3.7,
+    "speech_coverage": 0.859
+  },
+  "cQ8J2vdB9VU": {
+    "dubbed": 36,
+    "kept_original": 4,
+    "fit": {
+      "none": 20,
+      "tempo_le_1_10": 2,
+      "tempo_gt_1_10": 1,
+      "overflow": 8,
+      "truncated": 5
+    },
+    "ratio_median": 0.92,
+    "share_over_1_10": 0.389,
+    "share_truncated": 0.139,
+    "share_overflow": 0.222,
+    "speech_s": 53.9,
+    "speech_dubbed_s": 38.3,
+    "speech_kept_original_s": 3.4,
+    "speech_nonverbal_s": 0.8,
+    "speech_untranscribed_muted_s": 11.4,
+    "speech_coverage": 0.788
+  },
+  "peak_rss_mb": 2106.5
+}
