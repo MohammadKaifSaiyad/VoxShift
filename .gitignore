@@ -22,7 +22,7 @@ golden/*
 scripts/spikes/**/audio_samples/
 
 # Generated from kernel-metadata.template.json by push.sh
-scripts/spikes/kaggle_s1/kernel-metadata.json
+scripts/spikes/*/kernel-metadata.json
 
 # Secrets
 .env
