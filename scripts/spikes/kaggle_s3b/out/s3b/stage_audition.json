@@ -1,0 +1,40 @@
+{
+  "stage": "audition",
+  "ok": true,
+  "versions": {
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0"
+  },
+  "QJH3CCrjda4": {
+    "SPEAKER_00": {
+      "source": "cloned",
+      "cps": 14.29
+    },
+    "SPEAKER_01": {
+      "source": "cloned",
+      "cps": 15.34
+    }
+  },
+  "aLvkEaaDte8": {
+    "SPEAKER_00": {
+      "source": "cloned",
+      "cps": 18.0
+    },
+    "SPEAKER_01": {
+      "source": "cloned",
+      "cps": 9.41
+    }
+  },
+  "cQ8J2vdB9VU": {
+    "SPEAKER_00": {
+      "source": "cloned",
+      "cps": 17.48
+    },
+    "SPEAKER_01": {
+      "source": "cloned",
+      "cps": 19.39
+    }
+  },
+  "peak_rss_mb": 5897.8,
+  "torch_peak_gpu_mb": 3717.0
+}

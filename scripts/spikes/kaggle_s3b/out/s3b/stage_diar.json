@@ -1,0 +1,87 @@
+{
+  "stage": "diar",
+  "ok": true,
+  "versions": {
+    "pyannote.audio": "4.0.7",
+    "torch": "2.14.1"
+  },
+  "QJH3CCrjda4_auto": {
+    "audio_s": 438.39,
+    "run_s": 18.3,
+    "x_realtime": 23.96,
+    "rtf": 0.042,
+    "speakers": 7,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 6.5,
+      "SPEAKER_01": 4.6,
+      "SPEAKER_02": 5.1,
+      "SPEAKER_03": 7.9,
+      "SPEAKER_04": 4.2,
+      "SPEAKER_05": 4.1,
+      "SPEAKER_06": 17.4
+    }
+  },
+  "QJH3CCrjda4_fixed": {
+    "audio_s": 438.39,
+    "run_s": 17.67,
+    "x_realtime": 24.81,
+    "rtf": 0.04,
+    "speakers": 3,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 8.3,
+      "SPEAKER_01": 19.5,
+      "SPEAKER_02": 22.0
+    }
+  },
+  "aLvkEaaDte8_auto": {
+    "audio_s": 516.13,
+    "run_s": 21.52,
+    "x_realtime": 23.98,
+    "rtf": 0.042,
+    "speakers": 4,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 20.2,
+      "SPEAKER_01": 7.8,
+      "SPEAKER_02": 25.1,
+      "SPEAKER_03": 30.9
+    }
+  },
+  "aLvkEaaDte8_fixed": {
+    "audio_s": 516.13,
+    "run_s": 21.79,
+    "x_realtime": 23.69,
+    "rtf": 0.042,
+    "speakers": 2,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 20.2,
+      "SPEAKER_01": 63.8
+    }
+  },
+  "cQ8J2vdB9VU_auto": {
+    "audio_s": 504.85,
+    "run_s": 20.36,
+    "x_realtime": 24.8,
+    "rtf": 0.04,
+    "speakers": 5,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 9.7,
+      "SPEAKER_01": 19.4,
+      "SPEAKER_02": 15.0,
+      "SPEAKER_03": 37.7,
+      "SPEAKER_04": 3.6
+    }
+  },
+  "cQ8J2vdB9VU_fixed": {
+    "audio_s": 504.85,
+    "run_s": 20.25,
+    "x_realtime": 24.93,
+    "rtf": 0.04,
+    "speakers": 2,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 40.8,
+      "SPEAKER_01": 44.6
+    }
+  },
+  "peak_rss_mb": 2170.6,
+  "torch_peak_gpu_mb": 1628.8
+}

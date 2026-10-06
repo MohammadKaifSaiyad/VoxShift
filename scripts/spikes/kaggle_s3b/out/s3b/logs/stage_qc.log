@@ -1,0 +1,10 @@
+
+$ /tmp/s3b/venvs/diar/bin/python /tmp/s3b/bench/stage_qc.py {"stage": "qc", "result_path": "/kaggle/working/s3b/stage_qc.json", "clips_dir": "/tmp/s3b/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}
+/tmp/s3b/venvs/diar/lib/python3.11/site-packages/pyannote/audio/utils/reproducibility.py:74: ReproducibilityWarning: TensorFloat-32 (TF32) has been disabled as it might lead to reproducibility issues and lower accuracy.
+It can be re-enabled by calling
+   >>> import torch
+   >>> torch.backends.cuda.matmul.allow_tf32 = True
+   >>> torch.backends.cudnn.allow_tf32 = True
+See https://github.com/pyannote/pyannote-audio/issues/1370 for more details.
+
+  warnings.warn(

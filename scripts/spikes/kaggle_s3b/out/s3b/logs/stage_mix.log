@@ -1,0 +1,2 @@
+
+$ /tmp/s3b/venvs/dsp/bin/python /tmp/s3b/bench/stage_mix.py {"audio_out": "/kaggle/working/s3b/audio", "out_dir": "/kaggle/working/s3b", "check_list": "/tmp/s3b/check_list.json", "stage": "mix", "result_path": "/kaggle/working/s3b/stage_mix.json", "clips_dir": "/tmp/s3b/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}

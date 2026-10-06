@@ -1,0 +1,15 @@
+{
+  "stage": "opus",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "filled_by_opus_mt": 0
+  },
+  "aLvkEaaDte8": {
+    "filled_by_opus_mt": 0
+  },
+  "cQ8J2vdB9VU": {
+    "filled_by_opus_mt": 0
+  },
+  "peak_rss_mb": 1381.4,
+  "torch_peak_gpu_mb": 292.6
+}

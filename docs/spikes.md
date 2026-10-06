@@ -119,6 +119,44 @@ The TTS projection assumes ~55 min of English speech × 1.3 for audition, drift-
 - No ground-truth transcript or speaker labels. Speaker counts are compared with the film credits, which may omit minor voices.
 - Naive pipeline: these numbers are the baseline the spec's mechanisms must improve. They are not the expected final quality.
 
+## S3b — S3 with the spec's mechanisms (run v2, 2026-10-06)
+
+- **Code:** `scripts/spikes/kaggle_s3b/run_s3b.py`. Output: `scripts/spikes/kaggle_s3b/out/s3b/` (`summary.md`, `review_<clip>.md`, `audio/<clip>_dub.m4a`).
+- **Same films and decided models** (D-62, D-63, D-64), plus every mechanism listed in `scripts/spikes/kaggle_s3b/README.md`.
+- **Run time:** 2 h 52 min, of which 2 h 32 min was the Qwen3 bug (finding 1). The rest of the pipeline took about 20 min for all three films.
+
+| | ISLIK | Teneke | Hediye |
+| --- | --- | --- | --- |
+| Speakers: auto → fixed count | 7 → 3 | 4 → 2 | 5 → 2 |
+| Segments; under 1 s; median length | 9; 0; 2.1 s | 26; 11; 1.2 s | 29; 2; 1.9 s |
+| Lines needing tempo > 1.10×, S3 → S3b | 64% → **67%** | 93% → **54%** | 89% → **50%** |
+| Lines truncated, S3 → S3b | 21% → 22% | 47% → **17%** | 43% → **19%** |
+| Lines overflowing into following silence | 33% | 29% | 15% |
+| Voice chars/s from audition (per speaker) | 14.3, 15.3 | 18.0, 9.4 | 17.5, 19.4 |
+| Voice consistency within a speaker (mean; p10) | 0.78–0.82; 0.69–0.80 | 0.70–0.74; 0.65–0.71 | 0.71–0.78; 0.65–0.72 |
+| Similarity between speakers' voices | 0.34 | 0.13 | 0.22 |
+| English re-transcription of the dub | **detected Turkish** (p 0.62) | English 0.91, WER 27% | English 0.84, WER 13% |
+| Diarized speech vs speech inside dubbed segments | 49.8 s vs 30.0 s | 84.0 s vs 34.2 s | 85.4 s vs 58.0 s |
+
+### Findings
+
+1. **Qwen3 failed completely, through a bug in the spike.** Every reply was a long reasoning trace (~15,000 characters, ~1.5 min per call), so all 61 translations were rejected as multi-line and all 32 rewrites failed. The `think: false` switch did not take effect; the `qwen3:4b` tag probably points at a thinking-only release. As a result the **rewrite rounds were never actually tested**, and that model step cost 2.5 h of GPU. Fix: use an explicit non-thinking instruct tag and strip everything up to `</think>`; also cap `num_predict`.
+2. **The mechanisms that did work halved the timing misses** on Teneke and Hediye (93% → 54%, 89% → 50%) and cut truncation by more than half. Contributing changes:
+   - the fixed speaker count;
+   - flip smoothing;
+   - fragment merging;
+   - TTS silence trimming (0.1 s per line);
+   - TranslateGemma's budget (57% of lines within budget, 4.6 characters over on average, no commentary).
+   ISLIK did not improve (9 lines only). This is still far from the ≤ 15% target. The missing pieces are working rewrite rounds and better budget compliance.
+3. **A fixed speaker count fixes over-splitting** (7 → 3, 4 → 2, 5 → 2), and voices stay distinct (between-speaker 0.13–0.34) and consistent (within-speaker 0.70–0.82; at most one line per speaker below 0.6). This supports cast review with a "number of speakers" action.
+4. **New risk: untranscribed Turkish leaks into the dub.** Diarization hears much more speech than ends up in dubbed segments (for example ISLIK 49.8 s vs 30.0 s). SPEC §10.2's non-verbal lay-back puts everything outside dubbed spans back at −6 dB, including Turkish speech that ASR missed. On ISLIK, Whisper then identified the whole dub as Turkish. Required changes:
+   - lay back only non-speech (VAD- and tagger-aware);
+   - add a **speech coverage** metric (dubbed ÷ detected speech) with `needs_review`;
+   - add a second ASR pass on detected speech that no segment covers.
+5. **ASR is not stable on hard audio:** ISLIK gave 44 words this run vs 69 in S3, with the same model and input. faster-whisper's temperature fallback samples randomly. Make decoding deterministic (temperature 0 only, or a seeded fallback) and rely on the coverage pass.
+6. **No singing in these films** (maximum AST singing probability 0.03–0.09 on the dialogue stems), so Q-24 is still untested on real singing.
+7. **Voice speaking rates differ by 2×** (9.4–19.4 chars/s). Budgets must be per voice, as SPEC §8.14 says; one global rate would be wrong.
+
 ### Still to do
 
 - **Listen** to `scripts/spikes/kaggle_s3/out/s3/audio/`:

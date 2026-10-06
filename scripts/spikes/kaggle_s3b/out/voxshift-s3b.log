@@ -1,0 +1,108 @@
+[{"stream_name":"stdout","time":7.378257801,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.6/20.6 MB 77.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":151.617362446,"data":"[s3b] sep: ok=True wall=87.8s peak=869MB \n"}
+,{"stream_name":"stdout","time":276.238527926,"data":"[s3b] tag: ok=True wall=113.2s peak=1605MB \n"}
+,{"stream_name":"stdout","time":352.715159786,"data":"[s3b] asr: ok=True wall=60.5s peak=5111MB \n"}
+,{"stream_name":"stdout","time":499.215992235,"data":"[s3b] diar: ok=True wall=143.8s peak=2853MB \n"}
+,{"stream_name":"stdout","time":500.097054416,"data":"[s3b] build: ok=True wall=0.4s peak=0MB \n"}
+,{"stream_name":"stdout","time":500.883354471,"data":"[s3b] refs: ok=True wall=0.6s peak=0MB \n"}
+,{"stream_name":"stdout","time":717.03190432,"data":"[s3b] audition: ok=True wall=171.7s peak=4077MB \n"}
+,{"stream_name":"stdout","time":6360.807988155,"data":"[s3b] translate: ok=True primary=translategemma \n"}
+,{"stream_name":"stdout","time":6383.501292068,"data":"[s3b] opus: ok=True wall=21.1s peak=403MB \n"}
+,{"stream_name":"stdout","time":6626.499610511,"data":"[s3b] tts: ok=True wall=242.9s peak=3945MB \n"}
+,{"stream_name":"stdout","time":10096.962595757,"data":"[s3b] rewrite_1: {\"QJH3CCrjda4\": {\"over_1_10\": 6, \"rewritten\": 0}, \"aLvkEaaDte8\": {\"over_1_10\": 13, \"rewritten\": 0}, \"cQ8J2vdB9VU\": {\"over_1_10\": 13, \"rewritten\": 0}}\n"}
+,{"stream_name":"stdout","time":10114.317581815,"data":"[s3b] qc: ok=True wall=17.2s peak=3157MB \n"}
+,{"stream_name":"stdout","time":10256.976016715,"data":"[s3b] mix: ok=True wall=142.6s peak=0MB \n"}
+,{"stream_name":"stdout","time":10300.799736196,"data":"[s3b] check: ok=True wall=43.6s peak=5143MB \n"}
+,{"stream_name":"stdout","time":10302.019460007,"data":"# Spike S3b results\n"}
+,{"stream_name":"stdout","time":10302.019490935,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019495283,"data":"Started 2026-10-06 10:38:42; finished 2026-10-06 13:30:22\n"}
+,{"stream_name":"stdout","time":10302.019498969,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019502225,"data":"| Stage | OK | Wall s | Peak GPU MB | Error |\n"}
+,{"stream_name":"stdout","time":10302.019505595,"data":"| --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":10302.019508923,"data":"| sep | True | 87.8 | 869 |  |\n"}
+,{"stream_name":"stdout","time":10302.019512159,"data":"| tag | True | 113.2 | 1605 |  |\n"}
+,{"stream_name":"stdout","time":10302.019515352,"data":"| asr | True | 60.5 | 5111 |  |\n"}
+,{"stream_name":"stdout","time":10302.019518586,"data":"| diar | True | 143.8 | 2853 |  |\n"}
+,{"stream_name":"stdout","time":10302.019521865,"data":"| build | True | 0.4 | 0 |  |\n"}
+,{"stream_name":"stdout","time":10302.019525069,"data":"| refs | True | 0.6 | 0 |  |\n"}
+,{"stream_name":"stdout","time":10302.019528252,"data":"| audition | True | 171.7 | 4077 |  |\n"}
+,{"stream_name":"stdout","time":10302.019531586,"data":"| translate | True | 5643.8 |  |  |\n"}
+,{"stream_name":"stdout","time":10302.019534952,"data":"| opus | True | 21.1 | 403 |  |\n"}
+,{"stream_name":"stdout","time":10302.019538243,"data":"| tts | True | 242.9 | 3945 |  |\n"}
+,{"stream_name":"stdout","time":10302.019541461,"data":"| rewrite_1 | True | 3470.5 |  |  |\n"}
+,{"stream_name":"stdout","time":10302.019544709,"data":"| qc | True | 17.2 | 3157 |  |\n"}
+,{"stream_name":"stdout","time":10302.019547956,"data":"| mix | True | 142.6 | 0 |  |\n"}
+,{"stream_name":"stdout","time":10302.019551166,"data":"| check | True | 43.6 | 5143 |  |\n"}
+,{"stream_name":"stdout","time":10302.019554364,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019557596,"data":"## S3 → S3b\n"}
+,{"stream_name":"stdout","time":10302.019571295,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019574178,"data":"| Clip | Speakers auto → fixed (S3) | \u003e 1.10× S3 → S3b | Truncated S3 → S3b | Overflow S3b | Kept original |\n"}
+,{"stream_name":"stdout","time":10302.019579282,"data":"| --- | --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":10302.019583273,"data":"| QJH3CCrjda4 | 7 → 3 (7) | 64% → 67% | 21% → 22% | 33% | 0 |\n"}
+,{"stream_name":"stdout","time":10302.019817932,"data":"| aLvkEaaDte8 | 4 → 2 (4) | 93% → 54% | 47% → 17% | 29% | 2 |\n"}
+,{"stream_name":"stdout","time":10302.019847057,"data":"| cQ8J2vdB9VU | 5 → 2 (6) | 89% → 50% | 43% → 19% | 15% | 3 |\n"}
+,{"stream_name":"stdout","time":10302.019850979,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019853821,"data":"## Per clip\n"}
+,{"stream_name":"stdout","time":10302.019856483,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019859036,"data":"### QJH3CCrjda4\n"}
+,{"stream_name":"stdout","time":10302.01986175,"data":"- sep `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 20.35, \"x_realtime\": 21.54, \"rtf\": 0.046}\n"}
+,{"stream_name":"stdout","time":10302.01986501,"data":"- tag `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 27.38, \"x_realtime\": 16.01, \"rtf\": 0.062, \"windows\": 291, \"singing_windows\": 0, \"max_singing\": 0.093, \"music_windows\": 2}\n"}
+,{"stream_name":"stdout","time":10302.019870023,"data":"- asr `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 9.44, \"x_realtime\": 46.45, \"rtf\": 0.022, \"segments\": 8, \"words\": 44}\n"}
+,{"stream_name":"stdout","time":10302.019873388,"data":"- diar `QJH3CCrjda4_auto`: {\"audio_s\": 438.39, \"run_s\": 18.3, \"x_realtime\": 23.96, \"rtf\": 0.042, \"speakers\": 7, \"speech_s_per_speaker\": {\"SPEAKER_00\": 6.5, \"SPEAKER_01\": 4.6, \"SPEAKER_02\": 5.1, \"SPEAKER_03\": 7.9, \"SPEAKER_04\": 4.2, \"SPEAKER_05\": 4.1, \"SPEAKER_06\": 17.4}}\n"}
+,{"stream_name":"stdout","time":10302.019877283,"data":"- diar `QJH3CCrjda4_fixed`: {\"audio_s\": 438.39, \"run_s\": 17.67, \"x_realtime\": 24.81, \"rtf\": 0.04, \"speakers\": 3, \"speech_s_per_speaker\": {\"SPEAKER_00\": 8.3, \"SPEAKER_01\": 19.5, \"SPEAKER_02\": 22.0}}\n"}
+,{"stream_name":"stdout","time":10302.019884487,"data":"- build `QJH3CCrjda4`: {\"segments\": 9, \"dubbable\": 9, \"skipped\": {}, \"speaker_flips_smoothed\": 1, \"fragments_merged\": 0, \"segments_under_1s\": 0, \"median_segment_s\": 2.12, \"speech_s_per_speaker\": {\"SPEAKER_00\": 6.6, \"SPEAKER_01\": 23.4}}\n"}
+,{"stream_name":"stdout","time":10302.019888172,"data":"- refs `QJH3CCrjda4`: {\"SPEAKER_00\": 6.6, \"SPEAKER_01\": 12.3}\n"}
+,{"stream_name":"stdout","time":10302.019890966,"data":"- audition `QJH3CCrjda4`: {\"SPEAKER_00\": {\"source\": \"cloned\", \"cps\": 14.29}, \"SPEAKER_01\": {\"source\": \"cloned\", \"cps\": 15.34}}\n"}
+,{"stream_name":"stdout","time":10302.019894398,"data":"- translate `QJH3CCrjda4`: {\"segments\": 9, \"chosen\": {\"translategemma\": 9, \"qwen3\": 0, \"opus-mt\": 0}}\n"}
+,{"stream_name":"stdout","time":10302.019897508,"data":"- opus `QJH3CCrjda4`: {\"filled_by_opus_mt\": 0}\n"}
+,{"stream_name":"stdout","time":10302.019900247,"data":"- tts `QJH3CCrjda4`: {\"audio_s\": 26.07, \"run_s\": 34.2, \"x_realtime\": 0.76, \"rtf\": 1.312, \"segments\": 9, \"errors\": 0, \"silence_trimmed_s\": 1.13}\n"}
+,{"stream_name":"stdout","time":10302.019903434,"data":"- rewrite_1 `QJH3CCrjda4`: {\"over_1_10\": 6, \"rewritten\": 0}\n"}
+,{"stream_name":"stdout","time":10302.019906421,"data":"- qc `QJH3CCrjda4`: {\"SPEAKER_01\": {\"n\": 6, \"cos_to_own_centroid_mean\": 0.777, \"cos_to_own_centroid_p10\": 0.69, \"below_0_6\": 0}, \"SPEAKER_00\": {\"n\": 3, \"cos_to_own_centroid_mean\": 0.824, \"cos_to_own_centroid_p10\": 0.802, \"below_0_6\": 0}, \"between_speakers\": {\"SPEAKER_00~SPEAKER_01\": 0.344}}\n"}
+,{"stream_name":"stdout","time":10302.019918577,"data":"- mix `QJH3CCrjda4`: {\"dubbed\": 9, \"kept_original\": 0, \"fit\": {\"none\": 3, \"tempo_le_1_10\": 0, \"tempo_gt_1_10\": 1, \"overflow\": 3, \"truncated\": 2}, \"ratio_median\": 1.34, \"share_over_1_10\": 0.667, \"share_truncated\": 0.222, \"share_overflow\": 0.333}\n"}
+,{"stream_name":"stdout","time":10302.019922375,"data":"- check `QJH3CCrjda4`: {\"detected_language\": \"tr\", \"language_probability\": 0.618, \"wer_vs_translation\": 1.0}\n"}
+,{"stream_name":"stdout","time":10302.01992535,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019927898,"data":"### aLvkEaaDte8\n"}
+,{"stream_name":"stdout","time":10302.01993054,"data":"- sep `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 23.69, \"x_realtime\": 21.79, \"rtf\": 0.046}\n"}
+,{"stream_name":"stdout","time":10302.019933407,"data":"- tag `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 33.52, \"x_realtime\": 15.4, \"rtf\": 0.065, \"windows\": 343, \"singing_windows\": 0, \"max_singing\": 0.03, \"music_windows\": 1}\n"}
+,{"stream_name":"stdout","time":10302.019936634,"data":"- asr `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 6.24, \"x_realtime\": 82.7, \"rtf\": 0.012, \"segments\": 23, \"words\": 92}\n"}
+,{"stream_name":"stdout","time":10302.019939783,"data":"- diar `aLvkEaaDte8_auto`: {\"audio_s\": 516.13, \"run_s\": 21.52, \"x_realtime\": 23.98, \"rtf\": 0.042, \"speakers\": 4, \"speech_s_per_speaker\": {\"SPEAKER_00\": 20.2, \"SPEAKER_01\": 7.8, \"SPEAKER_02\": 25.1, \"SPEAKER_03\": 30.9}}\n"}
+,{"stream_name":"stdout","time":10302.019943169,"data":"- diar `aLvkEaaDte8_fixed`: {\"audio_s\": 516.13, \"run_s\": 21.79, \"x_realtime\": 23.69, \"rtf\": 0.042, \"speakers\": 2, \"speech_s_per_speaker\": {\"SPEAKER_00\": 20.2, \"SPEAKER_01\": 63.8}}\n"}
+,{"stream_name":"stdout","time":10302.01994683,"data":"- build `aLvkEaaDte8`: {\"segments\": 26, \"dubbable\": 26, \"skipped\": {}, \"speaker_flips_smoothed\": 1, \"fragments_merged\": 3, \"segments_under_1s\": 11, \"median_segment_s\": 1.24, \"speech_s_per_speaker\": {\"SPEAKER_00\": 18.9, \"SPEAKER_01\": 15.3}}\n"}
+,{"stream_name":"stdout","time":10302.019950411,"data":"- refs `aLvkEaaDte8`: {\"SPEAKER_00\": 9.1, \"SPEAKER_01\": 8.7}\n"}
+,{"stream_name":"stdout","time":10302.019953266,"data":"- audition `aLvkEaaDte8`: {\"SPEAKER_00\": {\"source\": \"cloned\", \"cps\": 18.0}, \"SPEAKER_01\": {\"source\": \"cloned\", \"cps\": 9.41}}\n"}
+,{"stream_name":"stdout","time":10302.019956457,"data":"- translate `aLvkEaaDte8`: {\"segments\": 26, \"chosen\": {\"translategemma\": 26, \"qwen3\": 0, \"opus-mt\": 0}}\n"}
+,{"stream_name":"stdout","time":10302.019959462,"data":"- opus `aLvkEaaDte8`: {\"filled_by_opus_mt\": 0}\n"}
+,{"stream_name":"stdout","time":10302.019962121,"data":"- tts `aLvkEaaDte8`: {\"audio_s\": 45.46, \"run_s\": 67.75, \"x_realtime\": 0.67, \"rtf\": 1.49, \"segments\": 24, \"errors\": 2, \"silence_trimmed_s\": 2.06}\n"}
+,{"stream_name":"stdout","time":10302.019965394,"data":"- rewrite_1 `aLvkEaaDte8`: {\"over_1_10\": 13, \"rewritten\": 0}\n"}
+,{"stream_name":"stdout","time":10302.019968187,"data":"- qc `aLvkEaaDte8`: {\"SPEAKER_00\": {\"n\": 12, \"cos_to_own_centroid_mean\": 0.741, \"cos_to_own_centroid_p10\": 0.707, \"below_0_6\": 1}, \"SPEAKER_01\": {\"n\": 10, \"cos_to_own_centroid_mean\": 0.703, \"cos_to_own_centroid_p10\": 0.645, \"below_0_6\": 1}, \"between_speakers\": {\"SPEAKER_00~SPEAKER_01\": 0.127}}\n"}
+,{"stream_name":"stdout","time":10302.019971874,"data":"- mix `aLvkEaaDte8`: {\"dubbed\": 24, \"kept_original\": 2, \"fit\": {\"none\": 8, \"tempo_le_1_10\": 3, \"tempo_gt_1_10\": 2, \"overflow\": 7, \"truncated\": 4}, \"ratio_median\": 1.16, \"share_over_1_10\": 0.542, \"share_truncated\": 0.167, \"share_overflow\": 0.292}\n"}
+,{"stream_name":"stdout","time":10302.019975523,"data":"- check `aLvkEaaDte8`: {\"detected_language\": \"en\", \"language_probability\": 0.909, \"wer_vs_translation\": 0.271}\n"}
+,{"stream_name":"stdout","time":10302.01998078,"data":"\n"}
+,{"stream_name":"stdout","time":10302.019983372,"data":"### cQ8J2vdB9VU\n"}
+,{"stream_name":"stdout","time":10302.019985898,"data":"- sep `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 23.33, \"x_realtime\": 21.64, \"rtf\": 0.046}\n"}
+,{"stream_name":"stdout","time":10302.019988749,"data":"- tag `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 34.06, \"x_realtime\": 14.82, \"rtf\": 0.067, \"windows\": 335, \"singing_windows\": 0, \"max_singing\": 0.043, \"music_windows\": 3}\n"}
+,{"stream_name":"stdout","time":10302.019991854,"data":"- asr `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 13.97, \"x_realtime\": 36.14, \"rtf\": 0.028, \"segments\": 32, \"words\": 146}\n"}
+,{"stream_name":"stdout","time":10302.019996332,"data":"- diar `cQ8J2vdB9VU_auto`: {\"audio_s\": 504.85, \"run_s\": 20.36, \"x_realtime\": 24.8, \"rtf\": 0.04, \"speakers\": 5, \"speech_s_per_speaker\": {\"SPEAKER_00\": 9.7, \"SPEAKER_01\": 19.4, \"SPEAKER_02\": 15.0, \"SPEAKER_03\": 37.7, \"SPEAKER_04\": 3.6}}\n"}
+,{"stream_name":"stdout","time":10302.01999986,"data":"- diar `cQ8J2vdB9VU_fixed`: {\"audio_s\": 504.85, \"run_s\": 20.25, \"x_realtime\": 24.93, \"rtf\": 0.04, \"speakers\": 2, \"speech_s_per_speaker\": {\"SPEAKER_00\": 40.8, \"SPEAKER_01\": 44.6}}\n"}
+,{"stream_name":"stdout","time":10302.020003024,"data":"- build `cQ8J2vdB9VU`: {\"segments\": 29, \"dubbable\": 26, \"skipped\": {\"low_confidence\": 3}, \"speaker_flips_smoothed\": 1, \"fragments_merged\": 6, \"segments_under_1s\": 2, \"median_segment_s\": 1.9, \"speech_s_per_speaker\": {\"SPEAKER_00\": 39.3, \"SPEAKER_01\": 18.7}}\n"}
+,{"stream_name":"stdout","time":10302.020006557,"data":"- refs `cQ8J2vdB9VU`: {\"SPEAKER_00\": 13.3, \"SPEAKER_01\": 13.1}\n"}
+,{"stream_name":"stdout","time":10302.020009271,"data":"- audition `cQ8J2vdB9VU`: {\"SPEAKER_00\": {\"source\": \"cloned\", \"cps\": 17.48}, \"SPEAKER_01\": {\"source\": \"cloned\", \"cps\": 19.39}}\n"}
+,{"stream_name":"stdout","time":10302.020012334,"data":"- translate `cQ8J2vdB9VU`: {\"segments\": 26, \"chosen\": {\"translategemma\": 26, \"qwen3\": 0, \"opus-mt\": 0}}\n"}
+,{"stream_name":"stdout","time":10302.020015266,"data":"- opus `cQ8J2vdB9VU`: {\"filled_by_opus_mt\": 0}\n"}
+,{"stream_name":"stdout","time":10302.020017929,"data":"- tts `cQ8J2vdB9VU`: {\"audio_s\": 72.59, \"run_s\": 103.94, \"x_realtime\": 0.7, \"rtf\": 1.432, \"segments\": 26, \"errors\": 0, \"silence_trimmed_s\": 3.17}\n"}
+,{"stream_name":"stdout","time":10302.020021132,"data":"- rewrite_1 `cQ8J2vdB9VU`: {\"over_1_10\": 13, \"rewritten\": 0}\n"}
+,{"stream_name":"stdout","time":10302.020023843,"data":"- qc `cQ8J2vdB9VU`: {\"SPEAKER_01\": {\"n\": 7, \"cos_to_own_centroid_mean\": 0.777, \"cos_to_own_centroid_p10\": 0.721, \"below_0_6\": 0}, \"SPEAKER_00\": {\"n\": 19, \"cos_to_own_centroid_mean\": 0.707, \"cos_to_own_centroid_p10\": 0.648, \"below_0_6\": 1}, \"between_speakers\": {\"SPEAKER_00~SPEAKER_01\": 0.217}}\n"}
+,{"stream_name":"stdout","time":10302.020027752,"data":"- mix `cQ8J2vdB9VU`: {\"dubbed\": 26, \"kept_original\": 3, \"fit\": {\"none\": 9, \"tempo_le_1_10\": 4, \"tempo_gt_1_10\": 4, \"overflow\": 4, \"truncated\": 5}, \"ratio_median\": 1.1, \"share_over_1_10\": 0.5, \"share_truncated\": 0.192, \"share_overflow\": 0.154}\n"}
+,{"stream_name":"stdout","time":10302.020031393,"data":"- check `cQ8J2vdB9VU`: {\"detected_language\": \"en\", \"language_probability\": 0.837, \"wer_vs_translation\": 0.128}\n"}
+,{"stream_name":"stdout","time":10302.020034289,"data":"\n"}
+,{"stream_name":"stdout","time":10302.020036724,"data":"Translators: {\"translategemma\": {\"segments\": 61, \"within_budget\": 0.574, \"rejected\": {}, \"mean_chars_over_budget\": 4.6}, \"qwen3\": {\"segments\": 61, \"within_budget\": 0.0, \"rejected\": {\"multiline\": 61}, \"mean_chars_over_budget\": 14632.1}}\n"}
+,{"stream_name":"stdout","time":10302.020042286,"data":"Primary translator: translategemma\n"}
+,{"stream_name":"stdout","time":10302.020045003,"data":"\n"}
+,{"stream_name":"stdout","time":10302.020047443,"data":"Listen: audio/\u003cclip\u003e_dub.m4a. Read: review_\u003cclip\u003e.md. Private evaluation only (docs/footage.md).\n"}
+,{"stream_name":"stderr","time":10305.059416169,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":10305.059441318,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":10305.669419244,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":10305.669448532,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":10308.440950473,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":10310.013015667,"data":"[NbConvertApp] Writing 461792 bytes to __results__.html\n"}
+]

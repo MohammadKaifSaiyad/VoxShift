@@ -1,0 +1,12 @@
+
+$ /tmp/s3b/venvs/diar/bin/python /tmp/s3b/bench/stage_diar.py {"num_speakers": {"QJH3CCrjda4": 3, "aLvkEaaDte8": 2, "cQ8J2vdB9VU": 2}, "stage": "diar", "result_path": "/kaggle/working/s3b/stage_diar.json", "clips_dir": "/tmp/s3b/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}
+/tmp/s3b/venvs/diar/lib/python3.11/site-packages/pyannote/audio/utils/reproducibility.py:74: ReproducibilityWarning: TensorFloat-32 (TF32) has been disabled as it might lead to reproducibility issues and lower accuracy.
+It can be re-enabled by calling
+   >>> import torch
+   >>> torch.backends.cuda.matmul.allow_tf32 = True
+   >>> torch.backends.cudnn.allow_tf32 = True
+See https://github.com/pyannote/pyannote-audio/issues/1370 for more details.
+
+  warnings.warn(
+/tmp/s3b/venvs/diar/lib/python3.11/site-packages/pyannote/audio/models/blocks/pooling.py:103: UserWarning: std(): degrees of freedom is <= 0. Correction should be strictly less than the reduction factor (input numel divided by output numel). (Triggered internally at /__w/pytorch/pytorch/aten/src/ATen/native/ReduceOps.cpp:1913.)
+  std = sequences.std(dim=-1, correction=1)

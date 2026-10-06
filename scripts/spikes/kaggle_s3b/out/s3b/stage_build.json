@@ -1,0 +1,46 @@
+{
+  "stage": "build",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "segments": 9,
+    "dubbable": 9,
+    "skipped": {},
+    "speaker_flips_smoothed": 1,
+    "fragments_merged": 0,
+    "segments_under_1s": 0,
+    "median_segment_s": 2.12,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 6.6,
+      "SPEAKER_01": 23.4
+    }
+  },
+  "aLvkEaaDte8": {
+    "segments": 26,
+    "dubbable": 26,
+    "skipped": {},
+    "speaker_flips_smoothed": 1,
+    "fragments_merged": 3,
+    "segments_under_1s": 11,
+    "median_segment_s": 1.24,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 18.9,
+      "SPEAKER_01": 15.3
+    }
+  },
+  "cQ8J2vdB9VU": {
+    "segments": 29,
+    "dubbable": 26,
+    "skipped": {
+      "low_confidence": 3
+    },
+    "speaker_flips_smoothed": 1,
+    "fragments_merged": 6,
+    "segments_under_1s": 2,
+    "median_segment_s": 1.9,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 39.3,
+      "SPEAKER_01": 18.7
+    }
+  },
+  "peak_rss_mb": 44.6
+}

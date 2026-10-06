@@ -1,0 +1,33 @@
+{
+  "stage": "asr",
+  "ok": true,
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "QJH3CCrjda4": {
+    "audio_s": 438.39,
+    "run_s": 9.44,
+    "x_realtime": 46.45,
+    "rtf": 0.022,
+    "segments": 8,
+    "words": 44
+  },
+  "aLvkEaaDte8": {
+    "audio_s": 516.13,
+    "run_s": 6.24,
+    "x_realtime": 82.7,
+    "rtf": 0.012,
+    "segments": 23,
+    "words": 92
+  },
+  "cQ8J2vdB9VU": {
+    "audio_s": 504.85,
+    "run_s": 13.97,
+    "x_realtime": 36.14,
+    "rtf": 0.028,
+    "segments": 32,
+    "words": 146
+  },
+  "peak_rss_mb": 3667.9
+}

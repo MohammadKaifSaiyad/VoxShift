@@ -1,0 +1,60 @@
+
+$ /usr/bin/python3 -m uv venv /tmp/s3b/venvs/asr --python 3.11
+warning: The `--system` flag has no effect, `uv venv` always ignores virtual environments when finding a Python interpreter; did you mean `--no-managed-python`?
+Using CPython 3.11.17
+Creating virtual environment at: /tmp/s3b/venvs/asr
+Activate with: source /tmp/s3b/venvs/asr/bin/activate
+
+$ /usr/bin/python3 -m uv pip install --python /tmp/s3b/venvs/asr/bin/python setuptools<81 faster-whisper jiwer soundfile nvidia-cublas-cu12 nvidia-cudnn-cu12==9.*
+Using Python 3.11.17 environment at: /tmp/s3b/venvs/asr
+Resolved 32 packages in 282ms
+Downloading rapidfuzz (3.0MiB)
+Downloading ctranslate2 (37.6MiB)
+Downloading onnxruntime (22.5MiB)
+Downloading av (34.1MiB)
+Downloading nvidia-cudnn-cu12 (730.7MiB)
+Downloading nvidia-cublas-cu12 (554.3MiB)
+Downloading faster-whisper (1.1MiB)
+Downloading nvidia-cuda-nvrtc-cu12 (85.4MiB)
+ Downloaded faster-whisper
+ Downloaded rapidfuzz
+ Downloaded onnxruntime
+ Downloaded av
+ Downloaded ctranslate2
+ Downloaded nvidia-cuda-nvrtc-cu12
+ Downloaded nvidia-cublas-cu12
+ Downloaded nvidia-cudnn-cu12
+Prepared 11 packages in 15.17s
+Installed 32 packages in 98ms
+ + anyio==4.15.1
+ + av==18.1.0
+ + certifi==2026.7.22
+ + cffi==2.1.1
+ + click==8.5.0
+ + ctranslate2==4.8.2
+ + faster-whisper==1.2.1
+ + filelock==4.0.12
+ + flatbuffers==25.12.19
+ + fsspec==2026.9.0
+ + h11==0.16.0
+ + hf-xet==1.6.0
+ + httpcore==1.0.9
+ + httpx==0.28.1
+ + huggingface-hub==1.33.0
+ + idna==3.20
+ + jiwer==4.0.0
+ + numpy==2.4.6
+ + nvidia-cublas-cu12==12.9.2.10
+ + nvidia-cuda-nvrtc-cu12==12.9.86
+ + nvidia-cudnn-cu12==9.27.0.42
+ + onnxruntime==1.30.0
+ + packaging==26.3
+ + protobuf==7.36.2
+ + pycparser==3.0
+ + pyyaml==6.0.3
+ + rapidfuzz==3.14.6
+ + setuptools==80.10.2
+ + soundfile==0.14.0
+ + tokenizers==0.23.2
+ + tqdm==4.70.1
+ + typing-extensions==4.16.0

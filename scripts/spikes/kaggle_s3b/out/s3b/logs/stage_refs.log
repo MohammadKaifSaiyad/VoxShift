@@ -1,0 +1,2 @@
+
+$ /tmp/s3b/venvs/dsp/bin/python /tmp/s3b/bench/stage_refs.py {"ref_seconds": 12.0, "stage": "refs", "result_path": "/kaggle/working/s3b/stage_refs.json", "clips_dir": "/tmp/s3b/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}
