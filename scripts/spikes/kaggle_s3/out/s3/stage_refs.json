@@ -1,0 +1,71 @@
+{
+  "stage": "refs",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "SPEAKER_00": {
+      "seconds": 0.0,
+      "source": "default_voice"
+    },
+    "SPEAKER_02": {
+      "seconds": 5.3,
+      "source": "cloned"
+    },
+    "SPEAKER_03": {
+      "seconds": 6.2,
+      "source": "cloned"
+    },
+    "SPEAKER_04": {
+      "seconds": 3.4,
+      "source": "cloned"
+    },
+    "SPEAKER_05": {
+      "seconds": 0.0,
+      "source": "default_voice"
+    },
+    "SPEAKER_06": {
+      "seconds": 6.2,
+      "source": "cloned"
+    }
+  },
+  "aLvkEaaDte8": {
+    "SPEAKER_00": {
+      "seconds": 4.9,
+      "source": "cloned"
+    },
+    "SPEAKER_01": {
+      "seconds": 0.0,
+      "source": "default_voice"
+    },
+    "SPEAKER_03": {
+      "seconds": 2.8,
+      "source": "cloned"
+    }
+  },
+  "cQ8J2vdB9VU": {
+    "SPEAKER_00": {
+      "seconds": 2.6,
+      "source": "cloned"
+    },
+    "SPEAKER_01": {
+      "seconds": 0.0,
+      "source": "default_voice"
+    },
+    "SPEAKER_02": {
+      "seconds": 4.7,
+      "source": "cloned"
+    },
+    "SPEAKER_03": {
+      "seconds": 2.2,
+      "source": "cloned"
+    },
+    "SPEAKER_04": {
+      "seconds": 10.5,
+      "source": "cloned"
+    },
+    "SPEAKER_05": {
+      "seconds": 4.3,
+      "source": "cloned"
+    }
+  },
+  "peak_rss_mb": 225.2
+}

@@ -1,0 +1,31 @@
+[{"stream_name":"stdout","time":6.098743245,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.6/20.6 MB 77.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":169.817241066,"data":"[s3] sep: ok=True wall=88.5s peak=869MB \n"}
+,{"stream_name":"stdout","time":615.940978821,"data":"[s3] tiger: ok=True wall=374.8s peak=2797MB \n"}
+,{"stream_name":"stdout","time":704.819848972,"data":"[s3] asr: ok=True wall=72.3s peak=4119MB \n"}
+,{"stream_name":"stdout","time":875.808802197,"data":"[s3] diar: ok=True wall=167.9s peak=2853MB \n"}
+,{"stream_name":"stdout","time":876.696201896,"data":"[s3] build: ok=True wall=0.5s peak=0MB \n"}
+,{"stream_name":"stdout","time":1064.530252393,"data":"[s3] translate: ok=True \n"}
+,{"stream_name":"stdout","time":1065.637141661,"data":"[s3] refs: ok=True wall=1.1s peak=3731MB \n"}
+,{"stream_name":"stdout","time":1653.97471187,"data":"[s3] tts: ok=True wall=570.9s peak=4629MB \n"}
+,{"stream_name":"stdout","time":1683.803466499,"data":"[s3] qc: ok=True wall=29.8s peak=373MB \n"}
+,{"stream_name":"stdout","time":2248.119281081,"data":"[s3] mix: ok=True wall=564.1s peak=0MB \n"}
+,{"stream_name":"stderr","time":2248.121026877,"data":"Traceback (most recent call last):\n"}
+,{"stream_name":"stderr","time":2248.122176184,"data":"  File \"/kaggle/src/script.py\", line 887, in \u003cmodule\u003e\n"}
+,{"stream_name":"stderr","time":2248.122199352,"data":"    main()\n"}
+,{"stream_name":"stderr","time":2248.122205803,"data":"    ~~~~^^\n"}
+,{"stream_name":"stderr","time":2248.122211187,"data":"  File \"/kaggle/src/script.py\", line 876, in main\n"}
+,{"stream_name":"stderr","time":2248.122216898,"data":"    stage(\"check\", \"asr\", {\"mode\": \"check\", \"asr_model\": ASR_MODEL, \"check_list\": check_list}, FFMPEG,\n"}
+,{"stream_name":"stderr","time":2248.122223207,"data":"    ~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":2248.122229452,"data":"          extra_env=asr_env)\n"}
+,{"stream_name":"stderr","time":2248.122234743,"data":"          ^^^^^^^^^^^^^^^^^^\n"}
+,{"stream_name":"stderr","time":2248.12224023,"data":"  File \"/kaggle/src/script.py\", line 700, in stage\n"}
+,{"stream_name":"stderr","time":2248.122245979,"data":"    path.write_text(HEAD + SOURCES[name] + TAIL)\n"}
+,{"stream_name":"stderr","time":2248.122251292,"data":"                           ~~~~~~~^^^^^^\n"}
+,{"stream_name":"stderr","time":2248.122256791,"data":"KeyError: 'check'\n"}
+,{"stream_name":"stderr","time":2250.951532305,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":2250.951573663,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":2251.383128956,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":2251.383215832,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":2253.095620599,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":2254.488126254,"data":"[NbConvertApp] Writing 403471 bytes to __results__.html\n"}
+]

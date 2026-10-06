@@ -689,14 +689,15 @@ def install(name: str) -> bool:
     return ok
 
 
-def stage(name: str, family: str, cfg: dict, ffmpeg: str, extra_env: dict | None = None, timeout: int = 5400) -> dict:
+def stage(name: str, family: str, cfg: dict, ffmpeg: str, extra_env: dict | None = None, timeout: int = 5400,
+          program: str | None = None) -> dict:
     if not install(family):
         res = {"ok": False, "error": f"install failed (logs/install_{family}.log)"}
         RESULTS["stages"][name] = res
         save()
         return res
     path = BENCH / f"stage_{name}.py"
-    path.write_text(HEAD + SOURCES[name] + TAIL)
+    path.write_text(HEAD + SOURCES[program or name] + TAIL)
     result_path = WORK_OUT / f"stage_{name}.json"
     full = {**cfg, "stage": name, "result_path": str(result_path), "clips_dir": str(CLIPS_DIR), "ffmpeg": ffmpeg,
             "clips": CLIPS_READY}
@@ -873,7 +874,7 @@ def main() -> None:
           FFMPEG)
     if Path(check_list).exists():
         stage("check", "asr", {"mode": "check", "asr_model": ASR_MODEL, "check_list": check_list}, FFMPEG,
-              extra_env=asr_env)
+              extra_env=asr_env, program="asr")
 
     RESULTS["disk"] = {"scratch_used_gb": du_gb(SCRATCH), "output_gb": du_gb(WORK_OUT)}
     RESULTS["finished"] = time.strftime("%Y-%m-%d %H:%M:%S")

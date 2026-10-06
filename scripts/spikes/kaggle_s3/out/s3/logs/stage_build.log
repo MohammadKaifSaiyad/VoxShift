@@ -1,0 +1,2 @@
+
+$ /tmp/s3/venvs/dsp/bin/python /tmp/s3/bench/stage_build.py {"stage": "build", "result_path": "/kaggle/working/s3/stage_build.json", "clips_dir": "/tmp/s3/clips", "ffmpeg": "/usr/bin/ffmpeg", "clips": ["QJH3CCrjda4", "aLvkEaaDte8", "cQ8J2vdB9VU"]}

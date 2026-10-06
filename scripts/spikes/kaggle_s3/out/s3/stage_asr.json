@@ -1,0 +1,70 @@
+{
+  "stage": "asr",
+  "ok": true,
+  "versions": {
+    "faster-whisper": "1.2.1",
+    "ctranslate2": "4.8.2"
+  },
+  "load_s": 26.7,
+  "QJH3CCrjda4_dialogue": {
+    "audio_s": 438.39,
+    "run_s": 8.94,
+    "x_realtime": 49.05,
+    "rtf": 0.02,
+    "segments": 14,
+    "words": 69,
+    "flagged": 0,
+    "mean_avg_logprob": -0.261
+  },
+  "QJH3CCrjda4_original": {
+    "audio_s": 438.39,
+    "run_s": 5.54,
+    "x_realtime": 79.16,
+    "rtf": 0.013,
+    "segments": 13,
+    "words": 62,
+    "flagged": 0,
+    "mean_avg_logprob": -0.24
+  },
+  "aLvkEaaDte8_dialogue": {
+    "audio_s": 516.13,
+    "run_s": 6.67,
+    "x_realtime": 77.32,
+    "rtf": 0.013,
+    "segments": 25,
+    "words": 88,
+    "flagged": 0,
+    "mean_avg_logprob": -0.382
+  },
+  "aLvkEaaDte8_original": {
+    "audio_s": 516.13,
+    "run_s": 4.54,
+    "x_realtime": 113.68,
+    "rtf": 0.009,
+    "segments": 9,
+    "words": 55,
+    "flagged": 0,
+    "mean_avg_logprob": -0.342
+  },
+  "cQ8J2vdB9VU_dialogue": {
+    "audio_s": 504.85,
+    "run_s": 10.34,
+    "x_realtime": 48.81,
+    "rtf": 0.02,
+    "segments": 36,
+    "words": 146,
+    "flagged": 0,
+    "mean_avg_logprob": -0.413
+  },
+  "cQ8J2vdB9VU_original": {
+    "audio_s": 504.85,
+    "run_s": 6.65,
+    "x_realtime": 75.95,
+    "rtf": 0.013,
+    "segments": 19,
+    "words": 84,
+    "flagged": 0,
+    "mean_avg_logprob": -0.234
+  },
+  "peak_rss_mb": 3668.5
+}

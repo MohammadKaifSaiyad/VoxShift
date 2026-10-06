@@ -1,0 +1,13 @@
+{
+  "stage": "tiger",
+  "ok": true,
+  "load_s": 1.8,
+  "QJH3CCrjda4": {
+    "audio_s": 438.39,
+    "run_s": 349.31,
+    "x_realtime": 1.26,
+    "rtf": 0.797
+  },
+  "peak_rss_mb": 1851.0,
+  "torch_peak_gpu_mb": 2014.7
+}

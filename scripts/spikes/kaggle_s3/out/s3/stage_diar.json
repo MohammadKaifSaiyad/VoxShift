@@ -1,0 +1,97 @@
+{
+  "stage": "diar",
+  "ok": true,
+  "versions": {
+    "pyannote.audio": "4.0.7",
+    "torch": "2.14.1"
+  },
+  "load_s": 6.1,
+  "QJH3CCrjda4_dialogue": {
+    "audio_s": 438.39,
+    "run_s": 21.53,
+    "x_realtime": 20.36,
+    "rtf": 0.049,
+    "speakers": 7,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 6.3,
+      "SPEAKER_01": 4.6,
+      "SPEAKER_02": 5.1,
+      "SPEAKER_03": 7.8,
+      "SPEAKER_04": 4.2,
+      "SPEAKER_05": 4.1,
+      "SPEAKER_06": 16.8
+    }
+  },
+  "QJH3CCrjda4_original": {
+    "audio_s": 438.39,
+    "run_s": 19.93,
+    "x_realtime": 22.0,
+    "rtf": 0.045,
+    "speakers": 7,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 6.6,
+      "SPEAKER_01": 10.4,
+      "SPEAKER_02": 7.2,
+      "SPEAKER_03": 7.8,
+      "SPEAKER_04": 3.5,
+      "SPEAKER_05": 3.1,
+      "SPEAKER_06": 5.2
+    }
+  },
+  "aLvkEaaDte8_dialogue": {
+    "audio_s": 516.13,
+    "run_s": 24.03,
+    "x_realtime": 21.47,
+    "rtf": 0.047,
+    "speakers": 4,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 20.3,
+      "SPEAKER_01": 5.1,
+      "SPEAKER_02": 23.2,
+      "SPEAKER_03": 32.3
+    }
+  },
+  "aLvkEaaDte8_original": {
+    "audio_s": 516.13,
+    "run_s": 22.64,
+    "x_realtime": 22.79,
+    "rtf": 0.044,
+    "speakers": 3,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 5.6,
+      "SPEAKER_01": 21.2,
+      "SPEAKER_02": 29.5
+    }
+  },
+  "cQ8J2vdB9VU_dialogue": {
+    "audio_s": 504.85,
+    "run_s": 21.95,
+    "x_realtime": 23.0,
+    "rtf": 0.043,
+    "speakers": 6,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 9.6,
+      "SPEAKER_01": 6.6,
+      "SPEAKER_02": 7.2,
+      "SPEAKER_03": 2.6,
+      "SPEAKER_04": 41.3,
+      "SPEAKER_05": 21.6
+    }
+  },
+  "cQ8J2vdB9VU_original": {
+    "audio_s": 504.85,
+    "run_s": 22.54,
+    "x_realtime": 22.39,
+    "rtf": 0.045,
+    "speakers": 5,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 9.6,
+      "SPEAKER_01": 29.8,
+      "SPEAKER_02": 14.1,
+      "SPEAKER_03": 21.0,
+      "SPEAKER_04": 11.7
+    }
+  },
+  "peak_rss_mb": 1952.4,
+  "torch_peak_gpu_mb": 1628.8
+}

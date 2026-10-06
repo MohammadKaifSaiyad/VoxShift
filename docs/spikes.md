@@ -65,7 +65,66 @@ The TTS projection assumes ~55 min of English speech × 1.3 for audition, drift-
 - **One run per stage, one GPU type.** Not the reference Mac (open question Q-23).
 - **Chatterbox version.** `chatterbox-tts` 0.1.7 loaded the multilingual model from `ResembleAI/chatterbox`; whether those weights are the V3 release is not confirmed (Q-18 stays open).
 
+## S3 — rough end-to-end dub of three CC-BY Turkish short films (run v3, 2026-10-06)
+
+- **Setup:** Kaggle T4. Clips: ISLIK (7:18, 3 credited actors), Teneke (8:36, 2 main characters + street music), Hediye (8:25, 2 main characters + sound effects). Sources and use limits: `docs/footage.md`.
+- **Code:** `scripts/spikes/kaggle_s3/run_s3.py`. Output: `scripts/spikes/kaggle_s3/out/s3/`:
+  - `review_<clip>.md`: Turkish, English and fit for each segment;
+  - `audio/`: dubbed mixes and stems (git-ignored);
+  - `results.json`.
+- **Run time:** about 40 min of GPU time for all three films.
+- **Not a real dub:** the pipeline was naive on purpose. It had no translation budget, no rewrite rounds, no TTS silence trimming, no cast review and no bank voices, so it shows the raw behaviour that SPEC §3, §8 and §9 are meant to correct.
+- **Bug:** the final English re-transcription stage did not run (a stage-name bug in the spike, now fixed).
+
+### Results
+
+| | ISLIK | Teneke | Hediye |
+| --- | --- | --- | --- |
+| Speech in the film (after segmenting) | 31 s | 31 s | 55 s |
+| Diarization speakers (dialogue stem / original) vs real | **7 / 7 vs 3** | **4 / 3 vs 2** | **6 / 5 vs 2** |
+| ASR words (dialogue stem / original) | 69 / 62 | 88 / 55 | 146 / 84 |
+| Segments; speakers with < 2 s of clean speech (default voice) | 15; 2 of 6 | 33; 1 of 3 | 38; 1 of 6 |
+| Reference length per cloned speaker | 3.4–6.2 s | 2.8–4.9 s | 2.2–10.5 s |
+| TTS RTF (cfg 0.5) | 1.27 | 1.39 | 1.49 |
+| Median TTS length ÷ available slot | 1.17 (cfg 0: **1.64**) | **2.07** | **1.79** |
+| Segments needing tempo > 1.10× (SPEC target ≤ 15%) | **64%** (cfg 0: 79%) | **93%** | **89%** |
+| Segments truncated | 21% (cfg 0: 43%) | 47% | 43% |
+| Voice consistency within a speaker (cosine to own centroid; mean, speakers with ≥ 4 clips) | 0.81–0.84 | 0.68 | 0.73–0.85 |
+| Similarity between different speakers' voices | 0.02–0.46 | −0.09–0.19 | −0.03–0.50 |
+| Similarity of the English output to the Turkish reference | 0.47–0.69 | 0.41–0.52 | 0.39–0.63 |
+
+**Speed:** Demucs ran at 21× real time and TIGER-DnR at 1.3×. ASR ran at 49–114× real time (Silero gating skips non-speech), diarization at 20–23×, and translation took 6–10 s per film once loaded.
+
+### Findings
+
+1. **Speaker identity is not stable without review.** Diarization found 2–3.5× more speakers than the films have, in both the dialogue stem and the original, and some sentences flip speaker mid-way. Splitting one actor into several labels is the dominant error. The mandatory cast review (SPEC §3.1) is essential. A "set number of speakers" action that reruns diarization with `num_speakers` would fix most of it.
+2. **Fitting fails without the spec's timing machinery.** 64–93% of segments needed tempo > 1.10× (target ≤ 15%), and 21–47% were truncated. Causes:
+   - segments of one or two words ("Aç", "Bak", "canım");
+   - leading and trailing silence in TTS clips (not trimmed);
+   - verbose translations;
+   - no rewrite rounds.
+   The translation budget and rewrite rounds (SPEC §8.14, §9) are required, not optional. TTS silence trimming and merging of very short fragments must be added.
+3. **The translation model sometimes explains instead of translating.** On one garbled line, TranslateGemma returned a paragraph of alternatives ("This phrase is difficult to translate directly… It could mean: …"). Validation must reject commentary (multiple lines, bullets, length > ~2× the source) and fall back. Ordinary lines translated well, idioms and profanity included.
+4. **The hallucination filters missed a garbled opening.** Hediye's first 20 s (probably a background announcer or music) was transcribed as nonsense with good confidence, and 0 segments were flagged. Per-segment checks (audio-event tagging, word probability, language ID) are needed on top of Whisper's scores.
+5. **Voices stay distinct and fairly consistent once cloned.** Within a speaker, voices score 0.68–0.93; between speakers, mostly < 0.35. But the 10th-percentile score within a speaker is 0.57–0.69, so some segments drift; the drift gate (SPEC §3.2.7) is justified. Two speakers who both fell back to the single default voice scored 0.86 against each other, i.e. sounded the same, which confirms the need for **distinct** bank voices per actor (SPEC §3.3).
+6. **The Turkish reference is a poor yardstick for the English output** (cosine 0.39–0.69). This confirms D-08: gate drift against the TTS centroid, not the reference.
+7. **`cfg_weight=0` vs 0.5 (ISLIK):** cfg 0 scored slightly higher against the reference (+0.04 to +0.11 for 3 of 4 speakers) and on consistency (+0.02), but produced 9% more audio and twice as many truncations. Listening must decide whether the accent gain is worth it.
+8. **References are short in short films:** 2–6 s for most speakers, against the 10–15 s target (SPEC §3.2.2). Features will have more speech per actor, and merging over-split speakers adds more.
+9. **ASR on the dialogue stem finds 11–75% more words** than on the original, but whether those words are real or hallucinated needs a human check of `review_*.md`. `ASR_INPUT` is still open (SPEC §19.13).
+10. **Chatterbox warnings:** 17 forced stops for token repetition and 5 failed generations, mostly on very short texts. More evidence that tiny segments should be merged before TTS.
+
+### Caveats
+
+- Short films with little dialogue (31–55 s per film), so speaker statistics rest on few segments.
+- No ground-truth transcript or speaker labels. Speaker counts are compared with the film credits, which may omit minor voices.
+- Naive pipeline: these numbers are the baseline the spec's mechanisms must improve. They are not the expected final quality.
+
 ### Still to do
 
+- **Listen** to `scripts/spikes/kaggle_s3/out/s3/audio/`:
+  - `*_cfg05_separated` vs `*_ducked`;
+  - `QJH3CCrjda4_cfg05_*` vs `QJH3CCrjda4_cfg00_*` (accent);
+  - `QJH3CCrjda4_demucs_dialogue` vs `QJH3CCrjda4_tiger_dialogue` (separation).
+- **S3b:** rerun with silence trimming, fragment merging, budgeted translation with validation, rewrite rounds and a fixed speaker count, to measure how far the spec's mechanisms close the gap.
 - **S2 (voice cloning)** and **S3 (real clip)**: need consented Turkish voices and rights-cleared footage.
 - **Listen** to `out/s1/audio_samples/`: `en_clone_cfg00` vs `en_clone_cfg05` (accent and pacing), and `tiger_dialogue_60s`.
