@@ -33,7 +33,8 @@ They report these to the main agent, which takes them to the owner.
 - **Done:** Task 1 (commit `6495eda`) and Task 2 (D-69 to D-80).
 - **Decided:** Q-01 to Q-37 (D-66 to D-81). Kaggle terms are recorded in `docs/platform_terms.md`.
 - **Open:** Q-17, Q-18, Q-19, Q-24 and Q-38 to Q-42.
-- **Task 3:** starts as S4a, a Chatterbox-only experiment on the Mac (D-66). The other Mac downloads wait for its result.
+- **Task 3:** S4a is done (commit `2ac1ed4`). Chatterbox on the Mac runs at RTF 6.7–7.2, so TTS alone projects to about 8 h for a 90-min film. Per D-66 the reference machine is revisited (Q-43). The rest of Task 3 and any further downloads wait for the owner's answer to Q-43.
+- **Golden shortlist:** recorded in `docs/footage.md` (commit `084873b`) and waiting for owner approval.
 - **Changes caused by Task 2:**
   - Task 4's QC-embedder row now checks that WeSpeaker ONNX (D-72) separates speakers; it no longer compares embedders.
   - Task 10, Step 2's blacklist rule is already in SPEC §8.5.
