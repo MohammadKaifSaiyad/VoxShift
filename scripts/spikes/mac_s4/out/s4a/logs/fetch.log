@@ -1,0 +1,28 @@
+$ /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/bin/python /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/run_s4a.py fetch
+# env: {}
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/perth/perth_net/__init__.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+WARNING:chatterbox.models.tokenizers.tokenizer:pkuseg not available - Chinese segmentation will be skipped
+loaded PerthNet (Implicit) at step 250,000
+fetch: from_pretrained 816.3 s, 11 files, blocked hosts: []
+      821.61 real        55.30 user        76.52 sys
+          3446833152  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1137933  page reclaims
+              121443  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                1454  messages sent
+             1726314  messages received
+                   0  signals received
+                3873  voluntary context switches
+             2627010  involuntary context switches
+        517797243707  instructions retired
+        278731986814  cycles elapsed
+          4749482056  peak memory footprint

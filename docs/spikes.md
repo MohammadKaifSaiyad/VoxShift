@@ -48,7 +48,59 @@ Method: a 3 s `testsrc` 320×240 clip encoded to MKV (WebM for VP9), then `ffmpe
 - Every remux printed one harmless warning: the later `-c:s mov_text` overrides `-c copy` for the subtitle stream.
 - Result: all four codecs in the default `MP4_COPY_CODECS` stream-copy into MP4 with `mov_text` subtitles on this build. Synthetic 8-bit clips only; real files (10-bit, HDR, unusual profiles) not tested.
 
-**Deferred:** MPS availability needs torch → spike S4.
+**Deferred:** MPS availability needs torch → spike S4. (S4a shows MPS is available and works with torch 2.6.0.)
+
+## S4a — Chatterbox TTS on the Mac (2026-10-07)
+
+- **Scope:** only Chatterbox Multilingual (D-66). No other model was downloaded.
+- **Code:** `scripts/spikes/mac_s4/run_s4a.py`. Results: `scripts/spikes/mac_s4/out/s4a/run1/results.json`. Logs hold indices and character counts only. Audio is git-ignored.
+- **Setup:**
+  - `chatterbox-tts` 0.1.7, torch 2.6.0, transformers 5.2.0, Python 3.11.16.
+  - Model `ResembleAI/chatterbox` at revision `5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18`.
+  - Settings as in S3d: `cfg_weight` 0.5, exaggeration 0.5, seed 1000 + line, one warm-up generation excluded.
+- **Input:**
+  - Reference: 11.8 s of ISLIK `SPEAKER_01` (165.4–177.2 s, one continuous stretch, original mix).
+  - Text: the 16 English lines that S3d produced for ISLIK (6–78 characters each).
+  - 3 Turkish sentences of our own, for the import check.
+- **Process:** the subagent that ran S4a stalled while starting a repeat run. The main agent reviewed run 1 and wrote this section.
+
+| | CPU | MPS |
+| --- | --- | --- |
+| Load + conditioning | 12.2 s + 12.3 s | 15.4 s + 10.6 s |
+| Generation, 16 lines | 290 s for 40.1 s of audio | 276 s for 41.2 s of audio |
+| **RTF** (generation ÷ audio) | **7.24** | **6.71** |
+| Per-line RTF | 6.5–9.0 | 5.0–9.5 |
+| Peak memory | RSS 5.3 GB | RSS 4.8 GB; MPS driver allocation grew from 3.7 to **13.1 GB**; peak process footprint 19.7 GB (on 16 GB, so swapping) |
+| Turkish check, 3 sentences | RTF 6.3–6.9 | RTF 11.8–16.7 |
+| Ops falling back to CPU | — | none logged |
+| Offline (`HF_HUB_OFFLINE=1`, network blocked) | OK | OK |
+
+For comparison, the Kaggle T4 ran the same model on the same film's lines at RTF 1.43–1.60 (S3d) and 1.22–1.30 (S1). The Mac is about 4.5× slower.
+
+**Disk:** venv 1.16 GB (torch 358 MB is the largest package); model 3.2 GB (`t3_mtl23ls_v2.safetensors` 2.14 GB, `s3gen.pt` 1.06 GB); uv cache 1.19 GB (APFS clones shared with the venv). Free disk afterwards: 50 GB.
+
+### Findings
+
+1. **Chatterbox on the M1 Pro is about 7× slower than real time, and MPS barely helps** (RTF 6.7 vs 7.2). Generation is an autoregressive token loop at batch size 1, so the GPU adds little.
+2. **90-minute projection (estimate):** 55 min of English speech × 1.3 × RTF 6.71 ≈ **480 min (8 h) for TTS alone**. The whole pipeline's 3× budget is 270 min. This is clearly over the target, which per D-66 means the reference machine must be revisited. Even if a clean rerun halved the RTF, TTS alone would take about 240 min.
+3. **MPS memory grows without bound.** The driver allocation rose from 3.7 GB to 13.1 GB over 16 lines, and the process footprint peaked at 19.7 GB on a 16 GB machine. A real provider must free the MPS cache (for example `torch.mps.empty_cache()` per item) or cap it (`PYTORCH_MPS_HIGH_WATERMARK_RATIO`). The swapping may have slowed the MPS run, especially the Turkish check.
+4. **Q-33: `pykakasi` and `gradio` are not needed for English or Turkish.**
+   - Neither is imported at module import or after English and Turkish generation.
+   - With both blocked (`sys.modules[...] = None`), loading the model and generating English and Turkish still work.
+   - `pykakasi` is imported only on the Japanese path (`chatterbox/models/tokenizers/tokenizer.py:81`, guarded, with a warning if missing).
+   - Not yet tested: installing without them (`--no-deps` with an explicit dependency list). That gets tested when the TTS provider venv is built.
+5. **New: a hidden download on every model load.** Chatterbox's multilingual tokenizer imports `spacy_pkuseg` (`tokenizer.py:193`), which downloads `spacy_ontonotes.zip` from GitHub on every load, whatever the language. That bypasses the license gate and offline rule (SPEC §4.2). With `spacy_pkuseg` blocked, only Chinese segmentation is skipped. The TTS environment should exclude `spacy-pkuseg` as well (Q-44).
+6. **Forced stops are normal for this model.** Chatterbox's "forced EOS" warning appeared on 10 of 16 lines on CPU and 14 of 16 on MPS, and on 61 of 68 lines on the T4 in S3d. No line had a suspicious duration.
+
+### Caveats
+
+- **Not a clean benchmark:**
+  - the Mac ran on battery (90% → 81%);
+  - load average was about 10 on 10 cores, from other apps and parallel research subagents;
+  - the Mac slept twice during the MPS run (idle sleep 20:33–20:38, lid closed 20:38–20:40).
+- **Sleep and timing:** the timer (`time.perf_counter`) does not advance during sleep, so per-line times exclude it, but memory pressure after waking may have slowed some lines.
+- **Next step:** a clean rerun (AC power, lid open, `caffeinate`, nothing else running, MPS cache freed per line) would give fairer numbers. It needs no downloads, because the model and venv are kept.
+- **Lines:** 16 short dub lines (median about 30 characters), not 20. Short lines carry fixed per-call overhead.
 
 ## S1 — model families on Kaggle (run v4, 2026-10-05)
 

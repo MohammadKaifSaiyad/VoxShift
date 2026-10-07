@@ -1,0 +1,306 @@
+{
+  "device": "cpu",
+  "env": {
+    "HF_HUB_OFFLINE": "1",
+    "PYTORCH_ENABLE_MPS_FALLBACK": null,
+    "TQDM_DISABLE": "1"
+  },
+  "torch_threads": 8,
+  "import_s": 2.85,
+  "load_s": 12.24,
+  "cond_s": 12.29,
+  "warmup": {
+    "gen_s": 24.11,
+    "audio_s": 3.68,
+    "forced_eos": 1,
+    "repetition": 1
+  },
+  "lines": 16,
+  "total_gen_s": 290.33,
+  "total_audio_s": 40.12,
+  "rtf": 7.237,
+  "x_realtime": 0.138,
+  "per_line": [
+    {
+      "i": 0,
+      "chars": 31,
+      "gen_s": 18.087,
+      "audio_s": 2.52,
+      "rtf": 7.177,
+      "chars_per_audio_s": 12.3,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "rss_after": 4583145472,
+      "mps": null
+    },
+    {
+      "i": 1,
+      "chars": 29,
+      "gen_s": 13.644,
+      "audio_s": 1.68,
+      "rtf": 8.122,
+      "chars_per_audio_s": 17.3,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4605820928,
+      "mps": null
+    },
+    {
+      "i": 2,
+      "chars": 31,
+      "gen_s": 16.264,
+      "audio_s": 2.12,
+      "rtf": 7.672,
+      "chars_per_audio_s": 14.6,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "rss_after": 4608901120,
+      "mps": null
+    },
+    {
+      "i": 3,
+      "chars": 78,
+      "gen_s": 31.328,
+      "audio_s": 4.8,
+      "rtf": 6.527,
+      "chars_per_audio_s": 16.2,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4826497024,
+      "mps": null
+    },
+    {
+      "i": 4,
+      "chars": 14,
+      "gen_s": 12.788,
+      "audio_s": 1.52,
+      "rtf": 8.413,
+      "chars_per_audio_s": 9.2,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 1,
+      "rss_after": 4829757440,
+      "mps": null
+    },
+    {
+      "i": 5,
+      "chars": 37,
+      "gen_s": 28.206,
+      "audio_s": 4.36,
+      "rtf": 6.469,
+      "chars_per_audio_s": 8.5,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4831150080,
+      "mps": null
+    },
+    {
+      "i": 6,
+      "chars": 6,
+      "gen_s": 12.581,
+      "audio_s": 1.48,
+      "rtf": 8.501,
+      "chars_per_audio_s": 4.1,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4831756288,
+      "mps": null
+    },
+    {
+      "i": 7,
+      "chars": 32,
+      "gen_s": 20.464,
+      "audio_s": 2.96,
+      "rtf": 6.913,
+      "chars_per_audio_s": 10.8,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4832247808,
+      "mps": null
+    },
+    {
+      "i": 8,
+      "chars": 38,
+      "gen_s": 19.056,
+      "audio_s": 2.68,
+      "rtf": 7.11,
+      "chars_per_audio_s": 14.2,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "rss_after": 4833869824,
+      "mps": null
+    },
+    {
+      "i": 9,
+      "chars": 36,
+      "gen_s": 22.535,
+      "audio_s": 3.36,
+      "rtf": 6.707,
+      "chars_per_audio_s": 10.7,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "rss_after": 4834508800,
+      "mps": null
+    },
+    {
+      "i": 10,
+      "chars": 31,
+      "gen_s": 16.794,
+      "audio_s": 2.28,
+      "rtf": 7.366,
+      "chars_per_audio_s": 13.6,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4835065856,
+      "mps": null
+    },
+    {
+      "i": 11,
+      "chars": 18,
+      "gen_s": 11.509,
+      "audio_s": 1.28,
+      "rtf": 8.992,
+      "chars_per_audio_s": 14.1,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4835442688,
+      "mps": null
+    },
+    {
+      "i": 12,
+      "chars": 29,
+      "gen_s": 15.346,
+      "audio_s": 2.0,
+      "rtf": 7.673,
+      "chars_per_audio_s": 14.5,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "rss_after": 4835721216,
+      "mps": null
+    },
+    {
+      "i": 13,
+      "chars": 24,
+      "gen_s": 13.532,
+      "audio_s": 1.68,
+      "rtf": 8.054,
+      "chars_per_audio_s": 14.3,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "rss_after": 4836032512,
+      "mps": null
+    },
+    {
+      "i": 14,
+      "chars": 22,
+      "gen_s": 21.195,
+      "audio_s": 3.08,
+      "rtf": 6.882,
+      "chars_per_audio_s": 7.1,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4836540416,
+      "mps": null
+    },
+    {
+      "i": 15,
+      "chars": 38,
+      "gen_s": 17.001,
+      "audio_s": 2.32,
+      "rtf": 7.328,
+      "chars_per_audio_s": 16.4,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "rss_after": 4839424000,
+      "mps": null
+    }
+  ],
+  "forced_eos_lines": 10,
+  "repetition_warning_lines": 1,
+  "flagged_lines": [],
+  "turkish": [
+    {
+      "k": 0,
+      "chars": 37,
+      "gen_s": 21.01,
+      "audio_s": 3.04,
+      "forced_eos": 1,
+      "repetition": 1
+    },
+    {
+      "k": 1,
+      "chars": 46,
+      "gen_s": 32.65,
+      "audio_s": 5.2,
+      "forced_eos": 1,
+      "repetition": 0
+    },
+    {
+      "k": 2,
+      "chars": 51,
+      "gen_s": 26.67,
+      "audio_s": 3.92,
+      "forced_eos": 1,
+      "repetition": 1
+    }
+  ],
+  "modules_after_english": {
+    "pykakasi": false,
+    "gradio": false,
+    "spacy_pkuseg": false
+  },
+  "modules_after_turkish": {
+    "pykakasi": false,
+    "gradio": false,
+    "spacy_pkuseg": false
+  },
+  "related_top_level_modules_loaded": [],
+  "peak_rss_sampled": 5187092480,
+  "mem_after_load": {
+    "rss": 2979381248,
+    "mps": null
+  },
+  "mps_peak_after_lines": null,
+  "mps_fallback_ops": {},
+  "python_warnings": {
+    "UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as ": 1,
+    "FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by install": 1,
+    "DeprecationWarning: 'aifc' is deprecated and slated for removal in Python 3.13": 1,
+    "DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13": 1,
+    "DeprecationWarning: 'sunau' is deprecated and slated for removal in Python 3.13": 1,
+    "FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new": 1
+  },
+  "other_log_warnings": {
+    "pkuseg not available - Chinese segmentation will be skipped": 1
+  },
+  "network_hosts_blocked": [],
+  "versions": {
+    "python": "3.11.16",
+    "macos": "27.0.1",
+    "machine": "arm64",
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0",
+    "torchaudio": "2.6.0",
+    "transformers": "5.2.0",
+    "huggingface-hub": "1.33.0",
+    "numpy": "1.26.4",
+    "resemble-perth": "1.0.1",
+    "s3tokenizer": "0.3.0",
+    "librosa": "0.11.0"
+  }
+}

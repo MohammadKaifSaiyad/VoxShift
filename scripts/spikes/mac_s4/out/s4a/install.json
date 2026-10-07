@@ -1,0 +1,12 @@
+{
+  "python": "3.11.16 (uv python install 3.11: 8.5 s)",
+  "command": "uv pip install --python .venv/bin/python chatterbox-tts==0.1.7 'setuptools<81' soundfile psutil",
+  "packages_installed": 112,
+  "packages_downloaded": 99,
+  "seconds": 73.06,
+  "free_disk_kb_before": 59896528,
+  "free_disk_kb_after": 58844492,
+  "uv_cache_before": "111M",
+  "uv_cache_after": "1.1G (APFS clones shared with the venv)",
+  "log": "logs/install.log"
+}

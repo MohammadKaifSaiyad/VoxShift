@@ -1,0 +1,5 @@
+importtime: {"modules_imported_count": {"pykakasi": 0, "gradio": 0, "spacy_pkuseg": 0, "jaconv": 0}, "chatterbox.mtl_tts_cumulative_us": 4979135}
+{"step": "bench_cpu", "rc": 0, "wall_s": 423.8, "max_rss_bytes": 5292146688, "peak_footprint_bytes": 5076456464}
+{"step": "bench_mps", "rc": 0, "wall_s": 547.5, "max_rss_bytes": 4796989440, "peak_footprint_bytes": 19655520568}
+{"step": "blocked_mps", "rc": 0, "wall_s": 61.1, "max_rss_bytes": 4787339264, "peak_footprint_bytes": 12112631856}
+results: /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/out/s4a/results.json

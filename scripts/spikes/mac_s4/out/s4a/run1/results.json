@@ -1,0 +1,1166 @@
+{
+  "spike": "S4a",
+  "date": "2026-10-07",
+  "machine": "Apple M1 Pro, 16 GB, macOS (see versions)",
+  "settings": {
+    "language_id": "en",
+    "cfg_weight": 0.5,
+    "exaggeration": 0.5,
+    "seed": "1000 + line index",
+    "warmup": "1 generation, excluded",
+    "conditioning": "prepare_conditionals once from the reference"
+  },
+  "install": {
+    "python": "3.11.16 (uv python install 3.11: 8.5 s)",
+    "command": "uv pip install --python .venv/bin/python chatterbox-tts==0.1.7 'setuptools<81' soundfile psutil",
+    "packages_installed": 112,
+    "packages_downloaded": 99,
+    "seconds": 73.06,
+    "free_disk_kb_before": 59896528,
+    "free_disk_kb_after": 58844492,
+    "uv_cache_before": "111M",
+    "uv_cache_after": "1.1G (APFS clones shared with the venv)",
+    "log": "logs/install.log"
+  },
+  "ref": {
+    "source": "media/QJH3CCrjda4.m4a (ISLIK, CC-BY, private evaluation)",
+    "speaker": "SPEAKER_01 (S3d labels)",
+    "start_s": 165.4,
+    "end_s": 177.2,
+    "seconds": 11.8,
+    "review_rows_covered": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "clips_joined": 1,
+    "processing": "ffmpeg: stereo->mono average, resample to 24 kHz, 20 ms fades, float32 WAV; no gain, no separation",
+    "sample_rate": 24000,
+    "channels": 1,
+    "duration_s": 11.8,
+    "rms_db": -24.202882,
+    "peak_db": 0.187055,
+    "boundary_method": "S3d review start times + ffmpeg silencedetect (-30 dB, d=0.25 s) on the original mix; S3d per-segment end times (segments.json) were not downloaded from Kaggle"
+  },
+  "fetch": {
+    "import_s": 3.94,
+    "from_pretrained_s_including_download": 816.3,
+    "repo_dir": "~/.cache/huggingface/hub/models--ResembleAI--chatterbox",
+    "revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18",
+    "snapshots": [
+      "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18"
+    ],
+    "files": [
+      {
+        "path": ".locks/models--ResembleAI--chatterbox/d77891f84ca1db0d6f7058a4ee081d4bb0bfe88e.lock",
+        "bytes": 0
+      },
+      {
+        "path": "CACHEDIR.TAG",
+        "bytes": 191
+      },
+      {
+        "path": "Cangjie5_TC.json",
+        "bytes": 1920163
+      },
+      {
+        "path": "conds.pt",
+        "bytes": 107374
+      },
+      {
+        "path": "grapheme_mtl_merged_expanded_v1.json",
+        "bytes": 69989
+      },
+      {
+        "path": "models--ResembleAI--chatterbox/blobs/d77891f84ca1db0d6f7058a4ee081d4bb0bfe88e",
+        "bytes": 1920163
+      },
+      {
+        "path": "models--ResembleAI--chatterbox/refs/main",
+        "bytes": 40
+      },
+      {
+        "path": "models--ResembleAI--chatterbox/snapshots/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/Cangjie5_TC.json",
+        "bytes": 1920163
+      },
+      {
+        "path": "s3gen.pt",
+        "bytes": 1057165844
+      },
+      {
+        "path": "t3_mtl23ls_v2.safetensors",
+        "bytes": 2143989752
+      },
+      {
+        "path": "ve.pt",
+        "bytes": 5698626
+      }
+    ],
+    "network_hosts_allowed": [
+      "huggingface.co"
+    ],
+    "network_hosts_blocked": [],
+    "spacy_pkuseg_blocked": true,
+    "versions": {
+      "python": "3.11.16",
+      "macos": "27.0.1",
+      "machine": "arm64",
+      "chatterbox-tts": "0.1.7",
+      "torch": "2.6.0",
+      "torchaudio": "2.6.0",
+      "transformers": "5.2.0",
+      "huggingface-hub": "1.33.0",
+      "numpy": "1.26.4",
+      "resemble-perth": "1.0.1",
+      "s3tokenizer": "0.3.0",
+      "librosa": "0.11.0"
+    }
+  },
+  "english_lines": {
+    "source": "review_QJH3CCrjda4.md, 'English (final)' column, first non-empty rows",
+    "requested": 20,
+    "available": 16,
+    "chars": [
+      31,
+      29,
+      31,
+      78,
+      14,
+      37,
+      6,
+      32,
+      38,
+      36,
+      31,
+      18,
+      29,
+      24,
+      22,
+      38
+    ]
+  },
+  "steps": {
+    "importtime": {
+      "modules_imported_count": {
+        "pykakasi": 0,
+        "gradio": 0,
+        "spacy_pkuseg": 0,
+        "jaconv": 0
+      },
+      "chatterbox.mtl_tts_cumulative_us": 4979135
+    },
+    "power_before_cpu": {
+      "time": "2026-10-07T20:20:48",
+      "power_source": "battery",
+      "battery": "90%; discharging;",
+      "low_power_mode": "0",
+      "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+      "load_avg": "10.13, 8.45, 8.09",
+      "top_cpu": [
+        {
+          "command": "iTerm2",
+          "cpu_pct": "18.7"
+        },
+        {
+          "command": "kernel_task",
+          "cpu_pct": "15.1"
+        },
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "14.5"
+        },
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "10.7"
+        },
+        {
+          "command": "claude.exe",
+          "cpu_pct": "10.3"
+        },
+        {
+          "command": "top",
+          "cpu_pct": "9.2"
+        }
+      ]
+    },
+    "bench_cpu": {
+      "step": "bench_cpu",
+      "rc": 0,
+      "wall_s": 423.8,
+      "max_rss_bytes": 5292146688,
+      "peak_footprint_bytes": 5076456464
+    },
+    "power_after_cpu": {
+      "time": "2026-10-07T20:27:53",
+      "power_source": "battery",
+      "battery": "85%; discharging;",
+      "low_power_mode": "0",
+      "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+      "load_avg": "9.74, 9.69, 8.87",
+      "top_cpu": [
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "19.0"
+        },
+        {
+          "command": "iTerm2",
+          "cpu_pct": "17.1"
+        },
+        {
+          "command": "WindowServer",
+          "cpu_pct": "14.8"
+        },
+        {
+          "command": "claude.exe",
+          "cpu_pct": "12.0"
+        },
+        {
+          "command": "top",
+          "cpu_pct": "8.9"
+        },
+        {
+          "command": "kernel_task",
+          "cpu_pct": "6.7"
+        }
+      ]
+    },
+    "power_before_mps": {
+      "time": "2026-10-07T20:27:55",
+      "power_source": "battery",
+      "battery": "85%; discharging;",
+      "low_power_mode": "0",
+      "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+      "load_avg": "9.74, 9.69, 8.87",
+      "top_cpu": [
+        {
+          "command": "iTerm2",
+          "cpu_pct": "33.0"
+        },
+        {
+          "command": "claude.exe",
+          "cpu_pct": "23.6"
+        },
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "16.3"
+        },
+        {
+          "command": "WindowServer",
+          "cpu_pct": "16.0"
+        },
+        {
+          "command": "kernel_task",
+          "cpu_pct": "12.6"
+        },
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "9.7"
+        }
+      ]
+    },
+    "bench_mps": {
+      "step": "bench_mps",
+      "rc": 0,
+      "wall_s": 547.5,
+      "max_rss_bytes": 4796989440,
+      "peak_footprint_bytes": 19655520568
+    },
+    "power_after_mps": {
+      "time": "2026-10-07T20:43:31",
+      "power_source": "battery",
+      "battery": "81%; discharging;",
+      "low_power_mode": "0",
+      "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+      "load_avg": "10.10, 8.38, 8.24",
+      "top_cpu": [
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "92.9"
+        },
+        {
+          "command": "kernel_task",
+          "cpu_pct": "37.3"
+        },
+        {
+          "command": "WindowServer",
+          "cpu_pct": "36.1"
+        },
+        {
+          "command": "Brave Browser",
+          "cpu_pct": "31.0"
+        },
+        {
+          "command": "PerfPowerService",
+          "cpu_pct": "21.9"
+        },
+        {
+          "command": "Brave Browser He",
+          "cpu_pct": "20.5"
+        }
+      ]
+    },
+    "blocked_mps": {
+      "step": "blocked_mps",
+      "rc": 0,
+      "wall_s": 61.1,
+      "max_rss_bytes": 4787339264,
+      "peak_footprint_bytes": 12112631856
+    }
+  },
+  "bench_cpu": {
+    "device": "cpu",
+    "env": {
+      "HF_HUB_OFFLINE": "1",
+      "PYTORCH_ENABLE_MPS_FALLBACK": null,
+      "TQDM_DISABLE": "1"
+    },
+    "torch_threads": 8,
+    "import_s": 2.85,
+    "load_s": 12.24,
+    "cond_s": 12.29,
+    "warmup": {
+      "gen_s": 24.11,
+      "audio_s": 3.68,
+      "forced_eos": 1,
+      "repetition": 1
+    },
+    "lines": 16,
+    "total_gen_s": 290.33,
+    "total_audio_s": 40.12,
+    "rtf": 7.237,
+    "x_realtime": 0.138,
+    "per_line": [
+      {
+        "i": 0,
+        "chars": 31,
+        "gen_s": 18.087,
+        "audio_s": 2.52,
+        "rtf": 7.177,
+        "chars_per_audio_s": 12.3,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 4583145472,
+        "mps": null
+      },
+      {
+        "i": 1,
+        "chars": 29,
+        "gen_s": 13.644,
+        "audio_s": 1.68,
+        "rtf": 8.122,
+        "chars_per_audio_s": 17.3,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4605820928,
+        "mps": null
+      },
+      {
+        "i": 2,
+        "chars": 31,
+        "gen_s": 16.264,
+        "audio_s": 2.12,
+        "rtf": 7.672,
+        "chars_per_audio_s": 14.6,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 4608901120,
+        "mps": null
+      },
+      {
+        "i": 3,
+        "chars": 78,
+        "gen_s": 31.328,
+        "audio_s": 4.8,
+        "rtf": 6.527,
+        "chars_per_audio_s": 16.2,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4826497024,
+        "mps": null
+      },
+      {
+        "i": 4,
+        "chars": 14,
+        "gen_s": 12.788,
+        "audio_s": 1.52,
+        "rtf": 8.413,
+        "chars_per_audio_s": 9.2,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 1,
+        "rss_after": 4829757440,
+        "mps": null
+      },
+      {
+        "i": 5,
+        "chars": 37,
+        "gen_s": 28.206,
+        "audio_s": 4.36,
+        "rtf": 6.469,
+        "chars_per_audio_s": 8.5,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4831150080,
+        "mps": null
+      },
+      {
+        "i": 6,
+        "chars": 6,
+        "gen_s": 12.581,
+        "audio_s": 1.48,
+        "rtf": 8.501,
+        "chars_per_audio_s": 4.1,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4831756288,
+        "mps": null
+      },
+      {
+        "i": 7,
+        "chars": 32,
+        "gen_s": 20.464,
+        "audio_s": 2.96,
+        "rtf": 6.913,
+        "chars_per_audio_s": 10.8,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4832247808,
+        "mps": null
+      },
+      {
+        "i": 8,
+        "chars": 38,
+        "gen_s": 19.056,
+        "audio_s": 2.68,
+        "rtf": 7.11,
+        "chars_per_audio_s": 14.2,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 4833869824,
+        "mps": null
+      },
+      {
+        "i": 9,
+        "chars": 36,
+        "gen_s": 22.535,
+        "audio_s": 3.36,
+        "rtf": 6.707,
+        "chars_per_audio_s": 10.7,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 4834508800,
+        "mps": null
+      },
+      {
+        "i": 10,
+        "chars": 31,
+        "gen_s": 16.794,
+        "audio_s": 2.28,
+        "rtf": 7.366,
+        "chars_per_audio_s": 13.6,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4835065856,
+        "mps": null
+      },
+      {
+        "i": 11,
+        "chars": 18,
+        "gen_s": 11.509,
+        "audio_s": 1.28,
+        "rtf": 8.992,
+        "chars_per_audio_s": 14.1,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4835442688,
+        "mps": null
+      },
+      {
+        "i": 12,
+        "chars": 29,
+        "gen_s": 15.346,
+        "audio_s": 2.0,
+        "rtf": 7.673,
+        "chars_per_audio_s": 14.5,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 4835721216,
+        "mps": null
+      },
+      {
+        "i": 13,
+        "chars": 24,
+        "gen_s": 13.532,
+        "audio_s": 1.68,
+        "rtf": 8.054,
+        "chars_per_audio_s": 14.3,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 4836032512,
+        "mps": null
+      },
+      {
+        "i": 14,
+        "chars": 22,
+        "gen_s": 21.195,
+        "audio_s": 3.08,
+        "rtf": 6.882,
+        "chars_per_audio_s": 7.1,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4836540416,
+        "mps": null
+      },
+      {
+        "i": 15,
+        "chars": 38,
+        "gen_s": 17.001,
+        "audio_s": 2.32,
+        "rtf": 7.328,
+        "chars_per_audio_s": 16.4,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 4839424000,
+        "mps": null
+      }
+    ],
+    "forced_eos_lines": 10,
+    "repetition_warning_lines": 1,
+    "flagged_lines": [],
+    "turkish": [
+      {
+        "k": 0,
+        "chars": 37,
+        "gen_s": 21.01,
+        "audio_s": 3.04,
+        "forced_eos": 1,
+        "repetition": 1
+      },
+      {
+        "k": 1,
+        "chars": 46,
+        "gen_s": 32.65,
+        "audio_s": 5.2,
+        "forced_eos": 1,
+        "repetition": 0
+      },
+      {
+        "k": 2,
+        "chars": 51,
+        "gen_s": 26.67,
+        "audio_s": 3.92,
+        "forced_eos": 1,
+        "repetition": 1
+      }
+    ],
+    "modules_after_english": {
+      "pykakasi": false,
+      "gradio": false,
+      "spacy_pkuseg": false
+    },
+    "modules_after_turkish": {
+      "pykakasi": false,
+      "gradio": false,
+      "spacy_pkuseg": false
+    },
+    "related_top_level_modules_loaded": [],
+    "peak_rss_sampled": 5187092480,
+    "mem_after_load": {
+      "rss": 2979381248,
+      "mps": null
+    },
+    "mps_peak_after_lines": null,
+    "mps_fallback_ops": {},
+    "python_warnings": {
+      "UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as ": 1,
+      "FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by install": 1,
+      "DeprecationWarning: 'aifc' is deprecated and slated for removal in Python 3.13": 1,
+      "DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13": 1,
+      "DeprecationWarning: 'sunau' is deprecated and slated for removal in Python 3.13": 1,
+      "FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new": 1
+    },
+    "other_log_warnings": {
+      "pkuseg not available - Chinese segmentation will be skipped": 1
+    },
+    "network_hosts_blocked": [],
+    "versions": {
+      "python": "3.11.16",
+      "macos": "27.0.1",
+      "machine": "arm64",
+      "chatterbox-tts": "0.1.7",
+      "torch": "2.6.0",
+      "torchaudio": "2.6.0",
+      "transformers": "5.2.0",
+      "huggingface-hub": "1.33.0",
+      "numpy": "1.26.4",
+      "resemble-perth": "1.0.1",
+      "s3tokenizer": "0.3.0",
+      "librosa": "0.11.0"
+    }
+  },
+  "bench_mps": {
+    "device": "mps",
+    "env": {
+      "HF_HUB_OFFLINE": "1",
+      "PYTORCH_ENABLE_MPS_FALLBACK": "1",
+      "TQDM_DISABLE": "1"
+    },
+    "torch_threads": 8,
+    "import_s": 3.56,
+    "load_s": 15.35,
+    "cond_s": 10.61,
+    "warmup": {
+      "gen_s": 40.87,
+      "audio_s": 3.64,
+      "forced_eos": 0,
+      "repetition": 0
+    },
+    "lines": 16,
+    "total_gen_s": 276.28,
+    "total_audio_s": 41.16,
+    "rtf": 6.712,
+    "x_realtime": 0.149,
+    "per_line": [
+      {
+        "i": 0,
+        "chars": 31,
+        "gen_s": 18.246,
+        "audio_s": 2.8,
+        "rtf": 6.516,
+        "chars_per_audio_s": 11.1,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 557252608,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 9285976064
+        }
+      },
+      {
+        "i": 1,
+        "chars": 29,
+        "gen_s": 10.956,
+        "audio_s": 1.8,
+        "rtf": 6.086,
+        "chars_per_audio_s": 16.1,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 449609728,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 9308946432
+        }
+      },
+      {
+        "i": 2,
+        "chars": 31,
+        "gen_s": 12.15,
+        "audio_s": 2.4,
+        "rtf": 5.062,
+        "chars_per_audio_s": 12.9,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 553484288,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 9359540224
+        }
+      },
+      {
+        "i": 3,
+        "chars": 78,
+        "gen_s": 31.565,
+        "audio_s": 4.76,
+        "rtf": 6.631,
+        "chars_per_audio_s": 16.4,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 377536512,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12588580864
+        }
+      },
+      {
+        "i": 4,
+        "chars": 14,
+        "gen_s": 11.052,
+        "audio_s": 1.16,
+        "rtf": 9.528,
+        "chars_per_audio_s": 12.1,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 646725632,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12594364416
+        }
+      },
+      {
+        "i": 5,
+        "chars": 37,
+        "gen_s": 29.175,
+        "audio_s": 3.2,
+        "rtf": 9.117,
+        "chars_per_audio_s": 11.6,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 360562688,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12651708416
+        }
+      },
+      {
+        "i": 6,
+        "chars": 6,
+        "gen_s": 14.172,
+        "audio_s": 1.72,
+        "rtf": 8.239,
+        "chars_per_audio_s": 3.5,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 562757632,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12697206784
+        }
+      },
+      {
+        "i": 7,
+        "chars": 32,
+        "gen_s": 18.84,
+        "audio_s": 3.48,
+        "rtf": 5.414,
+        "chars_per_audio_s": 9.2,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 547815424,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12756828160
+        }
+      },
+      {
+        "i": 8,
+        "chars": 38,
+        "gen_s": 14.064,
+        "audio_s": 2.8,
+        "rtf": 5.023,
+        "chars_per_audio_s": 13.6,
+        "flag": null,
+        "forced_eos": 0,
+        "repetition": 0,
+        "rss_after": 590053376,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12756893696
+        }
+      },
+      {
+        "i": 9,
+        "chars": 36,
+        "gen_s": 17.27,
+        "audio_s": 3.0,
+        "rtf": 5.757,
+        "chars_per_audio_s": 12.0,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 352927744,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12808159232
+        }
+      },
+      {
+        "i": 10,
+        "chars": 31,
+        "gen_s": 16.548,
+        "audio_s": 2.12,
+        "rtf": 7.806,
+        "chars_per_audio_s": 14.6,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 612073472,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12860817408
+        }
+      },
+      {
+        "i": 11,
+        "chars": 18,
+        "gen_s": 10.756,
+        "audio_s": 1.36,
+        "rtf": 7.908,
+        "chars_per_audio_s": 13.2,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 682721280,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12907757568
+        }
+      },
+      {
+        "i": 12,
+        "chars": 29,
+        "gen_s": 14.795,
+        "audio_s": 2.48,
+        "rtf": 5.966,
+        "chars_per_audio_s": 11.7,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 558252032,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 12959105024
+        }
+      },
+      {
+        "i": 13,
+        "chars": 24,
+        "gen_s": 11.187,
+        "audio_s": 1.64,
+        "rtf": 6.822,
+        "chars_per_audio_s": 14.6,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 715505664,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 13003915264
+        }
+      },
+      {
+        "i": 14,
+        "chars": 22,
+        "gen_s": 17.894,
+        "audio_s": 3.16,
+        "rtf": 5.663,
+        "chars_per_audio_s": 7.0,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 706723840,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 13085949952
+        }
+      },
+      {
+        "i": 15,
+        "chars": 38,
+        "gen_s": 27.61,
+        "audio_s": 3.28,
+        "rtf": 8.418,
+        "chars_per_audio_s": 11.6,
+        "flag": null,
+        "forced_eos": 1,
+        "repetition": 0,
+        "rss_after": 338296832,
+        "mps": {
+          "current_allocated": 3563576832,
+          "driver_allocated": 13114474496
+        }
+      }
+    ],
+    "forced_eos_lines": 14,
+    "repetition_warning_lines": 0,
+    "flagged_lines": [],
+    "turkish": [
+      {
+        "k": 0,
+        "chars": 37,
+        "gen_s": 57.49,
+        "audio_s": 3.44,
+        "forced_eos": 1,
+        "repetition": 1
+      },
+      {
+        "k": 1,
+        "chars": 46,
+        "gen_s": 54.0,
+        "audio_s": 4.08,
+        "forced_eos": 0,
+        "repetition": 0
+      },
+      {
+        "k": 2,
+        "chars": 51,
+        "gen_s": 63.27,
+        "audio_s": 5.36,
+        "forced_eos": 1,
+        "repetition": 1
+      }
+    ],
+    "modules_after_english": {
+      "pykakasi": false,
+      "gradio": false,
+      "spacy_pkuseg": false
+    },
+    "modules_after_turkish": {
+      "pykakasi": false,
+      "gradio": false,
+      "spacy_pkuseg": false
+    },
+    "related_top_level_modules_loaded": [],
+    "peak_rss_sampled": 4796989440,
+    "mem_after_load": {
+      "rss": 1794899968,
+      "mps": {
+        "current_allocated": 3205989632,
+        "driver_allocated": 3691380736
+      }
+    },
+    "mps_peak_after_lines": {
+      "current_allocated": 3563576832,
+      "driver_allocated": 13114474496
+    },
+    "mps_fallback_ops": {},
+    "python_warnings": {
+      "UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as ": 1,
+      "FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by install": 1,
+      "DeprecationWarning: 'aifc' is deprecated and slated for removal in Python 3.13": 1,
+      "DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13": 1,
+      "DeprecationWarning: 'sunau' is deprecated and slated for removal in Python 3.13": 1,
+      "FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new": 1
+    },
+    "other_log_warnings": {
+      "pkuseg not available - Chinese segmentation will be skipped": 1
+    },
+    "network_hosts_blocked": [],
+    "versions": {
+      "python": "3.11.16",
+      "macos": "27.0.1",
+      "machine": "arm64",
+      "chatterbox-tts": "0.1.7",
+      "torch": "2.6.0",
+      "torchaudio": "2.6.0",
+      "transformers": "5.2.0",
+      "huggingface-hub": "1.33.0",
+      "numpy": "1.26.4",
+      "resemble-perth": "1.0.1",
+      "s3tokenizer": "0.3.0",
+      "librosa": "0.11.0"
+    }
+  },
+  "blocked_mps": {
+    "device": "mps",
+    "blocked_modules": [
+      "pykakasi",
+      "gradio",
+      "spacy_pkuseg"
+    ],
+    "import_pykakasi": "ImportError (blocked)",
+    "import_gradio": "ImportError (blocked)",
+    "load_s": 15.56,
+    "generations": [
+      {
+        "lang": "en",
+        "chars": 31,
+        "gen_s": 16.31,
+        "audio_s": 2.8,
+        "flag": null
+      },
+      {
+        "lang": "tr",
+        "chars": 37,
+        "gen_s": 16.71,
+        "audio_s": 3.44,
+        "flag": null
+      }
+    ],
+    "ok": true,
+    "pykakasi_sys_modules_at_end": "blocked (None)",
+    "gradio_sys_modules_at_end": "blocked (None)",
+    "log_warnings": {
+      "pkuseg not available - Chinese segmentation will be skipped": 1
+    },
+    "network_hosts_blocked": []
+  },
+  "chatterbox_source_refs": [
+    {
+      "file": "chatterbox/models/tokenizers/tokenizer.py",
+      "line": 81,
+      "code": "import pykakasi"
+    },
+    {
+      "file": "chatterbox/models/tokenizers/tokenizer.py",
+      "line": 82,
+      "code": "_kakasi = pykakasi.kakasi()"
+    },
+    {
+      "file": "chatterbox/models/tokenizers/tokenizer.py",
+      "line": 113,
+      "code": "logger.warning(\"pykakasi not available - Japanese text processing skipped\")"
+    },
+    {
+      "file": "chatterbox/models/tokenizers/tokenizer.py",
+      "line": 170,
+      "code": "cangjie_file = hf_hub_download("
+    },
+    {
+      "file": "chatterbox/models/tokenizers/tokenizer.py",
+      "line": 193,
+      "code": "from spacy_pkuseg import pkuseg"
+    },
+    {
+      "file": "chatterbox/models/tokenizers/tokenizer.py",
+      "line": 194,
+      "code": "self.segmenter = pkuseg()"
+    },
+    {
+      "file": "chatterbox/mtl_tts.py",
+      "line": 212,
+      "code": "snapshot_download("
+    },
+    {
+      "file": "chatterbox/tts.py",
+      "line": 178,
+      "code": "local_path = hf_hub_download(repo_id=REPO_ID, filename=fpath)"
+    },
+    {
+      "file": "chatterbox/tts_turbo.py",
+      "line": 195,
+      "code": "local_path = snapshot_download("
+    },
+    {
+      "file": "chatterbox/vc.py",
+      "line": 72,
+      "code": "local_path = hf_hub_download(repo_id=REPO_ID, filename=fpath)"
+    }
+  ],
+  "disk": {
+    "venv_bytes": 1156292608,
+    "largest_packages": [
+      {
+        "name": "torch",
+        "bytes": 358088704
+      },
+      {
+        "name": "llvmlite",
+        "bytes": 136437760
+      },
+      {
+        "name": "scipy",
+        "bytes": 87158784
+      },
+      {
+        "name": "gradio",
+        "bytes": 56975360
+      },
+      {
+        "name": "numpy",
+        "bytes": 54108160
+      },
+      {
+        "name": "transformers",
+        "bytes": 52944896
+      },
+      {
+        "name": "pandas",
+        "bytes": 50741248
+      },
+      {
+        "name": "sympy",
+        "bytes": 44122112
+      },
+      {
+        "name": "sklearn",
+        "bytes": 38359040
+      },
+      {
+        "name": "perth",
+        "bytes": 37904384
+      }
+    ],
+    "hf_repo_bytes_following_links": 6421794816,
+    "hf_repo_dir_bytes_links_only": 3936256,
+    "hf_hub_shared_blobs_bytes": 3206991872,
+    "hf_hub_bytes_before_spike": 91635712,
+    "hf_xet_dir_bytes": 46030848,
+    "uv_cache_bytes": 1187811328,
+    "pkuseg_home_exists": false,
+    "free_bytes_home": 50173644800
+  },
+  "s3d_t4_reference": {
+    "versions": {
+      "chatterbox-tts": "0.1.7",
+      "torch": "2.6.0"
+    },
+    "QJH3CCrjda4": {
+      "audio_s": 46.19,
+      "run_s": 66.13,
+      "x_realtime": 0.7,
+      "rtf": 1.432,
+      "segments": 16,
+      "errors": 0,
+      "silence_trimmed_s": 1.17
+    },
+    "aLvkEaaDte8": {
+      "audio_s": 51.61,
+      "run_s": 78.76,
+      "x_realtime": 0.66,
+      "rtf": 1.526,
+      "segments": 22,
+      "errors": 1,
+      "silence_trimmed_s": 1.15
+    },
+    "cQ8J2vdB9VU": {
+      "audio_s": 80.94,
+      "run_s": 129.84,
+      "x_realtime": 0.62,
+      "rtf": 1.604,
+      "segments": 29,
+      "errors": 0,
+      "silence_trimmed_s": 3.02
+    },
+    "peak_rss_mb": 5016.8,
+    "torch_peak_gpu_mb": 3715.5
+  },
+  "projection_90min_estimate": {
+    "assumption": "55 min English speech x 1.3 (audition, drift-gate regenerations, rewrites)",
+    "best_device": "mps",
+    "rtf": 6.712,
+    "tts_minutes": 479.9,
+    "per_device_tts_minutes": {
+      "cpu": 517.4,
+      "mps": 479.9
+    },
+    "pipeline_budget_minutes_3x": 270
+  },
+  "log_text_check": {
+    "files_scanned": 15,
+    "dialogue_lines_found": 0
+  }
+}

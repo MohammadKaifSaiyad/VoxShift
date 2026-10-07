@@ -1,0 +1,21 @@
+{
+  "source": "media/QJH3CCrjda4.m4a (ISLIK, CC-BY, private evaluation)",
+  "speaker": "SPEAKER_01 (S3d labels)",
+  "start_s": 165.4,
+  "end_s": 177.2,
+  "seconds": 11.8,
+  "review_rows_covered": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "clips_joined": 1,
+  "processing": "ffmpeg: stereo->mono average, resample to 24 kHz, 20 ms fades, float32 WAV; no gain, no separation",
+  "sample_rate": 24000,
+  "channels": 1,
+  "duration_s": 11.8,
+  "rms_db": -24.202882,
+  "peak_db": 0.187055,
+  "boundary_method": "S3d review start times + ffmpeg silencedetect (-30 dB, d=0.25 s) on the original mix; S3d per-segment end times (segments.json) were not downloaded from Kaggle"
+}

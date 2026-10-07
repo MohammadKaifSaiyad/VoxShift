@@ -1,0 +1,34 @@
+{
+  "device": "mps",
+  "blocked_modules": [
+    "pykakasi",
+    "gradio",
+    "spacy_pkuseg"
+  ],
+  "import_pykakasi": "ImportError (blocked)",
+  "import_gradio": "ImportError (blocked)",
+  "load_s": 15.56,
+  "generations": [
+    {
+      "lang": "en",
+      "chars": 31,
+      "gen_s": 16.31,
+      "audio_s": 2.8,
+      "flag": null
+    },
+    {
+      "lang": "tr",
+      "chars": 37,
+      "gen_s": 16.71,
+      "audio_s": 3.44,
+      "flag": null
+    }
+  ],
+  "ok": true,
+  "pykakasi_sys_modules_at_end": "blocked (None)",
+  "gradio_sys_modules_at_end": "blocked (None)",
+  "log_warnings": {
+    "pkuseg not available - Chinese segmentation will be skipped": 1
+  },
+  "network_hosts_blocked": []
+}

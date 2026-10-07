@@ -1,0 +1,37 @@
+$ /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/bin/python /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/run_s4a.py blocked --device mps
+# env: {"HF_HUB_OFFLINE": "1", "PYTORCH_ENABLE_MPS_FALLBACK": "1"}
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/perth/perth_net/__init__.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+loaded PerthNet (Implicit) at step 250,000
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/audioread/rawread.py:16: DeprecationWarning: 'aifc' is deprecated and slated for removal in Python 3.13
+  import aifc
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/audioread/rawread.py:17: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+  import audioop
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/audioread/rawread.py:19: DeprecationWarning: 'sunau' is deprecated and slated for removal in Python 3.13
+  import sunau
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+  self.gen = func(*args, **kwds)
+The following generation flags are not valid and may be ignored: ['output_attentions']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+blocked (mps): ok=True
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/tempfile.py:934: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/bv/wyfb50rx2dvcx6zt23wwh67m0000gn/T/tmp450upk61'>
+  _warnings.warn(warn_message, ResourceWarning)
+       61.06 real        82.08 user        27.59 sys
+          4787339264  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              763692  page reclaims
+              137615  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+               24156  voluntary context switches
+             1781283  involuntary context switches
+       1299614938817  instructions retired
+        328898758699  cycles elapsed
+         12112631856  peak memory footprint

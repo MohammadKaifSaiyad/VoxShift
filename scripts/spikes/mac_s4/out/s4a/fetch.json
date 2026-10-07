@@ -1,0 +1,74 @@
+{
+  "import_s": 3.94,
+  "from_pretrained_s_including_download": 816.3,
+  "repo_dir": "~/.cache/huggingface/hub/models--ResembleAI--chatterbox",
+  "revision": "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18",
+  "snapshots": [
+    "5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18"
+  ],
+  "files": [
+    {
+      "path": ".locks/models--ResembleAI--chatterbox/d77891f84ca1db0d6f7058a4ee081d4bb0bfe88e.lock",
+      "bytes": 0
+    },
+    {
+      "path": "CACHEDIR.TAG",
+      "bytes": 191
+    },
+    {
+      "path": "Cangjie5_TC.json",
+      "bytes": 1920163
+    },
+    {
+      "path": "conds.pt",
+      "bytes": 107374
+    },
+    {
+      "path": "grapheme_mtl_merged_expanded_v1.json",
+      "bytes": 69989
+    },
+    {
+      "path": "models--ResembleAI--chatterbox/blobs/d77891f84ca1db0d6f7058a4ee081d4bb0bfe88e",
+      "bytes": 1920163
+    },
+    {
+      "path": "models--ResembleAI--chatterbox/refs/main",
+      "bytes": 40
+    },
+    {
+      "path": "models--ResembleAI--chatterbox/snapshots/5bb1f6ee58e50c3b8d408bc82a6d3740c2db6e18/Cangjie5_TC.json",
+      "bytes": 1920163
+    },
+    {
+      "path": "s3gen.pt",
+      "bytes": 1057165844
+    },
+    {
+      "path": "t3_mtl23ls_v2.safetensors",
+      "bytes": 2143989752
+    },
+    {
+      "path": "ve.pt",
+      "bytes": 5698626
+    }
+  ],
+  "network_hosts_allowed": [
+    "huggingface.co"
+  ],
+  "network_hosts_blocked": [],
+  "spacy_pkuseg_blocked": true,
+  "versions": {
+    "python": "3.11.16",
+    "macos": "27.0.1",
+    "machine": "arm64",
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0",
+    "torchaudio": "2.6.0",
+    "transformers": "5.2.0",
+    "huggingface-hub": "1.33.0",
+    "numpy": "1.26.4",
+    "resemble-perth": "1.0.1",
+    "s3tokenizer": "0.3.0",
+    "librosa": "0.11.0"
+  }
+}

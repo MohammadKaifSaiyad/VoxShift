@@ -1,0 +1,53 @@
+$ /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/bin/python /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/run_s4a.py bench --device cpu
+# env: {"HF_HUB_OFFLINE": "1"}
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/perth/perth_net/__init__.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+loaded PerthNet (Implicit) at step 250,000
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/audioread/rawread.py:16: DeprecationWarning: 'aifc' is deprecated and slated for removal in Python 3.13
+  import aifc
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/audioread/rawread.py:17: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+  import audioop
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/audioread/rawread.py:19: DeprecationWarning: 'sunau' is deprecated and slated for removal in Python 3.13
+  import sunau
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+  self.gen = func(*args, **kwds)
+The following generation flags are not valid and may be ignored: ['output_attentions']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+cpu line 00: chars=31 gen=18.09s audio=2.52s eos=0
+cpu line 01: chars=29 gen=13.64s audio=1.68s eos=1
+cpu line 02: chars=31 gen=16.26s audio=2.12s eos=0
+cpu line 03: chars=78 gen=31.33s audio=4.80s eos=1
+cpu line 04: chars=14 gen=12.79s audio=1.52s eos=1
+cpu line 05: chars=37 gen=28.21s audio=4.36s eos=1
+cpu line 06: chars=6 gen=12.58s audio=1.48s eos=1
+cpu line 07: chars=32 gen=20.46s audio=2.96s eos=1
+cpu line 08: chars=38 gen=19.06s audio=2.68s eos=0
+cpu line 09: chars=36 gen=22.54s audio=3.36s eos=0
+cpu line 10: chars=31 gen=16.79s audio=2.28s eos=1
+cpu line 11: chars=18 gen=11.51s audio=1.28s eos=1
+cpu line 12: chars=29 gen=15.35s audio=2.00s eos=0
+cpu line 13: chars=24 gen=13.53s audio=1.68s eos=0
+cpu line 14: chars=22 gen=21.20s audio=3.08s eos=1
+cpu line 15: chars=38 gen=17.00s audio=2.32s eos=1
+cpu: load 12.2s cond 12.29s RTF 7.237 (290.3s / 40.1s)
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/tempfile.py:934: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/bv/wyfb50rx2dvcx6zt23wwh67m0000gn/T/tmpmfxxjnqs'>
+  _warnings.warn(warn_message, ResourceWarning)
+      423.80 real      2477.39 user       596.94 sys
+          5292146688  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+              993347  page reclaims
+               76256  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                 973  voluntary context switches
+            10577758  involuntary context switches
+      30002950316514  instructions retired
+       6377648643256  cycles elapsed
+          5076456464  peak memory footprint

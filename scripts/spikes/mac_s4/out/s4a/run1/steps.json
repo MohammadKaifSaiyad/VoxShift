@@ -1,0 +1,168 @@
+{
+  "importtime": {
+    "modules_imported_count": {
+      "pykakasi": 0,
+      "gradio": 0,
+      "spacy_pkuseg": 0,
+      "jaconv": 0
+    },
+    "chatterbox.mtl_tts_cumulative_us": 4979135
+  },
+  "power_before_cpu": {
+    "time": "2026-10-07T20:20:48",
+    "power_source": "battery",
+    "battery": "90%; discharging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "10.13, 8.45, 8.09",
+    "top_cpu": [
+      {
+        "command": "iTerm2",
+        "cpu_pct": "18.7"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "15.1"
+      },
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "14.5"
+      },
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "10.7"
+      },
+      {
+        "command": "claude.exe",
+        "cpu_pct": "10.3"
+      },
+      {
+        "command": "top",
+        "cpu_pct": "9.2"
+      }
+    ]
+  },
+  "bench_cpu": {
+    "step": "bench_cpu",
+    "rc": 0,
+    "wall_s": 423.8,
+    "max_rss_bytes": 5292146688,
+    "peak_footprint_bytes": 5076456464
+  },
+  "power_after_cpu": {
+    "time": "2026-10-07T20:27:53",
+    "power_source": "battery",
+    "battery": "85%; discharging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "9.74, 9.69, 8.87",
+    "top_cpu": [
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "19.0"
+      },
+      {
+        "command": "iTerm2",
+        "cpu_pct": "17.1"
+      },
+      {
+        "command": "WindowServer",
+        "cpu_pct": "14.8"
+      },
+      {
+        "command": "claude.exe",
+        "cpu_pct": "12.0"
+      },
+      {
+        "command": "top",
+        "cpu_pct": "8.9"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "6.7"
+      }
+    ]
+  },
+  "power_before_mps": {
+    "time": "2026-10-07T20:27:55",
+    "power_source": "battery",
+    "battery": "85%; discharging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "9.74, 9.69, 8.87",
+    "top_cpu": [
+      {
+        "command": "iTerm2",
+        "cpu_pct": "33.0"
+      },
+      {
+        "command": "claude.exe",
+        "cpu_pct": "23.6"
+      },
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "16.3"
+      },
+      {
+        "command": "WindowServer",
+        "cpu_pct": "16.0"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "12.6"
+      },
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "9.7"
+      }
+    ]
+  },
+  "bench_mps": {
+    "step": "bench_mps",
+    "rc": 0,
+    "wall_s": 547.5,
+    "max_rss_bytes": 4796989440,
+    "peak_footprint_bytes": 19655520568
+  },
+  "power_after_mps": {
+    "time": "2026-10-07T20:43:31",
+    "power_source": "battery",
+    "battery": "81%; discharging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "10.10, 8.38, 8.24",
+    "top_cpu": [
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "92.9"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "37.3"
+      },
+      {
+        "command": "WindowServer",
+        "cpu_pct": "36.1"
+      },
+      {
+        "command": "Brave Browser",
+        "cpu_pct": "31.0"
+      },
+      {
+        "command": "PerfPowerService",
+        "cpu_pct": "21.9"
+      },
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "20.5"
+      }
+    ]
+  },
+  "blocked_mps": {
+    "step": "blocked_mps",
+    "rc": 0,
+    "wall_s": 61.1,
+    "max_rss_bytes": 4787339264,
+    "peak_footprint_bytes": 12112631856
+  }
+}
