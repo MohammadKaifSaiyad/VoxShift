@@ -30,11 +30,15 @@ They report these to the main agent, which takes them to the owner.
 
 ## Status (2026-10-07)
 
-- **Task 1:** done (commit `6495eda`).
-- **Decided:** Q-23 (D-66), Q-20 (D-67), Q-16 (D-68), and Q-01–Q-15 except Q-12.
-- **Answered, not yet recorded:** Q-25–Q-34; Task 2 will record them.
-- **New open items:** Q-35–Q-37.
+- **Done:** Task 1 (commit `6495eda`) and Task 2 (D-69 to D-80).
+- **Decided:** Q-01 to Q-37 (D-66 to D-81). Kaggle terms are recorded in `docs/platform_terms.md`.
+- **Open:** Q-17, Q-18, Q-19, Q-24 and Q-38 to Q-42.
 - **Task 3:** starts as S4a, a Chatterbox-only experiment on the Mac (D-66). The other Mac downloads wait for its result.
+- **Changes caused by Task 2:**
+  - Task 4's QC-embedder row now checks that WeSpeaker ONNX (D-72) separates speakers; it no longer compares embedders.
+  - Task 10, Step 2's blacklist rule is already in SPEC §8.5.
+  - Task 5's outcome feeds §19 item 8 and D-71.
+- **Footage (Q-39):** new golden clips come only through sanctioned routes (Commons, Vimeo downloads, creator-provided files) until the owner decides otherwise.
 
 ## Global Constraints
 

@@ -66,6 +66,7 @@ A local-first application that dubs a video from a source language into a target
 - Keep the TTS watermark. Label outputs as AI-dubbed (§11).
 - Speaker embeddings and reference clips are biometric data: scoped to one job, never reused across jobs, deleted by `DELETE /api/jobs/{id}`.
 - Non-commercial models are disabled by default (§4.3).
+- The repository is private, and spike or test outputs that contain film dialogue or voices (for example `review_*.md`) are never committed.
 
 ---
 
@@ -105,7 +106,7 @@ Two separate layers: **identity** (who is who across the whole video) and **voic
    - merge proposal: cosine ≥ `MERGE_COS`;
    - "similar voices" warning: `SPLIT_COS` ≤ cosine < `MERGE_COS` (edge case 12);
    - split proposal: a speaker whose segment embeddings form two clusters (agglomerative; cosine between cluster centroids < `SPLIT_COS`; each cluster ≥ 5 segments and ≥ 5 s).
-4. **Cast review** (stage `CAST_REVIEW`, mandatory). Job status `PAUSED`. Shown per speaker: 3 audio clips (highest confidence, spread across the timeline), segment count, speech seconds, estimated gender with confidence, the similarity matrix and the proposals. Actions: `merge`, `split` (accept a proposal or list segment ids), `rename` (display name), `ignore` (reason `crowd | tv | song | other`; that speaker's segments are not dubbed and keep original audio), `set_gender` (`female | male | unknown`), `set_voice` (§3.2.9). Actions are stored as `SpeakerOverride` rows. The effective cast (diarization + overrides) feeds the input hash of every later stage. Leave the pause with `POST /api/jobs/{id}/resume`.
+4. **Cast review** (stage `CAST_REVIEW`, mandatory). Job status `PAUSED`. Shown per speaker: 3 audio clips (highest confidence, spread across the timeline), segment count, speech seconds, estimated gender with confidence, the similarity matrix and the proposals. Actions: `merge`, `split` (accept a proposal or list segment ids), `rename` (display name), `ignore` (reason `crowd | tv | song | other`; that speaker's segments are not dubbed and keep original audio), `set_gender` (`female | male | unknown`), `set_voice` (§3.2.9), `set_speaker_count` (`n`; reruns `DIARIZING` with `num_speakers = n` and the stages after it, so `CAST_REVIEW` pauses again with the new speakers). Actions are stored as `SpeakerOverride` rows. The effective cast (diarization + overrides) feeds the input hash of every later stage. Leave the pause with `POST /api/jobs/{id}/resume`.
 5. **`--auto-cast`** (CLI) / `auto_cast=true` (API) resumes `CAST_REVIEW` with no overrides. Accepted only when `DUBBER_TEST_MODE=true`. The report records `cast_review_mode = auto | human`; only `human` counts for §2.
 6. Overrides may change after later stages ran. The changed hash invalidates the affected downstream stages and segments.
 
@@ -128,7 +129,7 @@ Two separate layers: **identity** (who is who across the whole video) and **voic
 
 ### 3.3 Fallback voice bank
 
-- `assets/voice_bank/`: 4–6 clips (≥ 2 female, ≥ 2 male, 1–2 neutral), each with `LICENSE` and `PROVENANCE` files. Allowed sources: synthetic voices from a permissively licensed TTS, or recordings of people who consented to voice cloning. The license must allow redistribution. Target-language clips are preferred, because a same-language reference avoids accent transfer.
+- `assets/voice_bank/`: 4–6 clips (≥ 2 female, ≥ 2 male, 1–2 neutral), each with `LICENSE` and `PROVENANCE` files. Allowed sources: synthetic voices from a permissively licensed TTS, or recordings of people who consented to voice cloning. First candidates: Kokoro-82M voices (Apache-2.0), used only after their provenance and redistribution rights pass the license gate (§4). The license must allow redistribution. Target-language clips are preferred, because a same-language reference avoids accent transfer.
 - Assignment per actor: by effective gender (`unknown` → neutral), in a fixed order, and avoiding reuse while unused bank voices of that gender remain. Reuse produces a warning.
 
 ### 3.4 Gender
@@ -170,6 +171,7 @@ Keep them disabled for any commercial use, including internal use within a compa
 ### 4.4 Packages and tools
 
 - Python and npm package licenses are audited by `scripts/license_report.py` into `THIRD_PARTY_LICENSES.md`. Runtime packages: permissive, MPL-2.0, or LGPL (unmodified, dynamically used). GPL packages only in dev-only tooling (for example fixture generation), never imported by the shipped runtime.
+- Provider environments declare their dependencies explicitly. `chatterbox-tts` 0.1.7 requires `pykakasi==2.3.0` (GPL-3.0-or-later) and `gradio==6.8.0`; both are excluded from the TTS environment if the tr/en runtime does not need them (checked in Phase 0). If they turn out to be required, the owner decides, because GPL is not allowed in the shipped runtime.
 - FFmpeg is installed by the user and run as an executable; it is not redistributed in this release. Use the native `aac` encoder (never `libfdk_aac`). Never depend on GPL-only filters such as `rubberband`. A future image that bundles FFmpeg must use an LGPL build.
 
 ---
@@ -186,13 +188,13 @@ Keep them disabled for any commercial use, including internal use within a compa
 | ASR | mlx-whisper (MIT), Whisper large-v3 or large-v3-turbo, Metal | faster-whisper (MIT), CPU int8; CUDA on the Linux profile | Size from Phase 0 |
 | Language ID | Whisper language detection per segment | — | Edge case 48 |
 | Word alignment | WhisperX `align()` (BSD-2-Clause) with the per-language wav2vec2 model | Whisper word timestamps | Turkish alignment model license audited in Phase 0 |
-| Separation | Demucs v4 `htdemucs` from the maintained `adefossez/demucs` fork (MIT code; training-data terms to verify) | TIGER-DnR (cinematic 3-stem; ~1.3× real time on a T4, too slow as default); Bandit v2 (weights license to confirm) | Demucs is a music separator: singing goes to the dialogue stem, so singing detection (edge case 46) must keep songs from the original |
+| Separation | Demucs v4 `htdemucs` from the maintained `adefossez/demucs` fork (MIT code; training-data terms to verify) | None. If separation fails or misses its thresholds, mixing uses `speech_mask_ducked_original` (§10) | Demucs is a music separator: singing goes to the dialogue stem, so singing detection (edge case 46) must keep songs from the original |
 | Diarization | `pyannote/speaker-diarization-community-1` (CC-BY-4.0, gated, free), MPS | CPU | MPS is not officially supported: parity test required (§16) |
 | Identity embeddings | From the pyannote pipeline, if exposed | WeSpeaker or SpeechBrain ECAPA (Apache-2.0; check training-data terms) | |
-| QC embedder | Chosen in Phase 0 | — | Used for audition and the drift gate; must load inside the TTS worker without dependency conflicts |
+| QC embedder | WeSpeaker speaker-embedding model through ONNX Runtime, inside the TTS process | — | Used for audition and the drift gate. No torch dependency, so it does not conflict with Chatterbox's torch pin. License and lock entry checked in Phase 0 |
 | Gender | F0 heuristic (librosa pYIN, ISC) | audeering model (non-commercial plugin) | |
 | Translation | TranslateGemma 4B or 12B (Gemma Terms of Use, allowlisted) via Ollama on the host | `Helsinki-NLP/opus-mt-tr-en` (Apache-2.0); MADLAD-400 3B (Apache-2.0) for other pairs; NLLB-200 (non-commercial plugin) | Size from Phase 0 by memory |
-| Rewrite (shorten) | Apache-2.0 instruct LLM (for example Qwen3) via Ollama, thinking disabled | — | |
+| Rewrite (shorten) | Qwen3-4B-Instruct-2507 (Apache-2.0) via Ollama, thinking disabled | — | A larger instruct model is benchmarked in Phase 0 and adopted only by a later decision |
 | TTS | Chatterbox Multilingual V3 (MIT; 23 languages incl. Turkish and English) | Chatterbox English, Turbo, Nano; Qwen3-TTS 0.6B/1.7B (Apache-2.0, no Turkish); `chatterbox-mlx` fork (candidate only); XTTS-v2 (non-commercial plugin) | Backend CPU, MPS or hybrid-MLX from Phase 0 |
 | Voice conversion | Chatterbox VC (MIT), optional | — | §3.2.8 |
 | TTS text normalization | Permissively licensed number-to-words library (for example `inflect`, MIT) | — | §8.14 |
@@ -206,6 +208,7 @@ Notes:
 - `transformers` v5 is reported to have removed `pipeline("translation")`; load `AutoModelForSeq2SeqLM` directly (verify in Phase 0).
 - `cfg_weight` default is **0.5**, stored per voice. Try 0.3 for a voice whose Turkish accent is too strong. `0` is not used: although the Chatterbox README advises it for cross-language references, it makes clips longer and doubles truncations.
 - Ollama runs on the host. Every request sets `keep_alive=0` (or the model is unloaded at the end of the stage) so memory is free for the next model process.
+- LLM calls: thinking off; `num_predict` capped at 160 tokens for translation and 100 for rewrites; any text up to and including a closing `</think>` tag is stripped from the reply; latency is measured without model load time.
 
 ---
 
@@ -264,6 +267,7 @@ class TTSProvider(Protocol):
 ```
 
 - All inputs and outputs are Pydantic models with `schema_version`. Providers are registered by name from config.
+- `TranslationProvider` always returns translations keyed by segment id; each model's adapter chooses its own prompt format (§8.14).
 - `synthesize` takes items for one actor. The drift gate (§3.2.7) runs inside the TTS worker with the QC embedder loaded in the same process; `TtsResult` returns the chosen attempt, its seed, its embedding and all attempt scores.
 
 ### 6.4 Stage engine
@@ -368,9 +372,9 @@ SQLite via SQLAlchemy, WAL mode, schema migrations (tool chosen in Phase 1). **T
 | `Job` | id, status, current_stage, progress, source_type (`upload | url`), source_url (nullable), original_filename, source_sha256, source_language, target_language, consent_confirmed, idempotency_key, config_snapshot JSON, background_mode, audio_stream_index, audio_offset_s, pause_after_translation, cast_review_mode (`human | auto`), error_type, error_message, warnings JSON, metadata JSON, created_at, updated_at |
 | `StageRun` | id, job_id, stage, attempt, status, input_hash, effective_config JSON, worker_id, heartbeat_at, provider_pid, started_at, finished_at, error_type, error_message, stderr_path, metrics JSON |
 | `Artifact` | id, job_id, stage_run_id, kind (`source`, `audio`, `stem`, `analysis`, `transcript`, `diarization`, `segments`, `embeddings`, `review_clip`, `reference`, `conditioning`, `translations`, `tts_segment`, `fit_segment`, `mix`, `video_mp4`, `video_mkv`, `srt`, `report`, `manifest`), name (unique per job), path, sha256, size, downloadable, created_at |
-| `Segment` | id, job_id, idx, speaker_id, src_start, src_end, src_text, src_words JSON, language, language_confidence, asr_confidence, avg_logprob, no_speech_prob, is_overlap, assignment_overlap, speaker_cos, speaker_margin, speaker_confidence, flags JSON, available_s, hard_limit_s, tgt_text, tts_text, tgt_budget_chars, rewrite_count, dub_status, skip_reason, voice_id, seed, tts_attempts, drift_cos, seg_hash, tts_path, gen_dur, final_dur, fit_method, placement_start, needs_review, warnings JSON |
+| `Segment` | id, job_id, idx, speaker_id, src_start, src_end, src_text, src_words JSON, language, language_confidence, asr_confidence, avg_logprob, no_speech_prob, is_overlap, assignment_overlap, speaker_cos, speaker_margin, speaker_confidence, flags JSON, available_s, hard_limit_s, tgt_text, tts_text, tgt_budget_chars, rewrite_count, dub_status, skip_reason, voice_id, seed, tts_attempts, drift_cos, seg_hash, tts_path, gen_dur, final_dur, fit_method, placement_start, ripple_delay_s, needs_review, warnings JSON |
 | `SpeakerProfile` | id, job_id, speaker_label, display_name, status (`active | minor | ignored | merged`), merged_into, speech_seconds, segment_count, gender, gender_confidence, voice_id, reference_segment_ids JSON, reference_quality, similar_to JSON |
-| `SpeakerOverride` | id, job_id, seq, action (`merge | split | rename | ignore | set_gender | set_voice`), payload JSON, created_at |
+| `SpeakerOverride` | id, job_id, seq, action (`merge | split | rename | ignore | set_gender | set_voice | set_speaker_count`), payload JSON, created_at |
 | `SegmentOverride` | id, job_id, segment_id, seq, field (`tgt_text | skip | regenerate`), value JSON, created_at |
 | `Voice` | voice_id, job_id, speaker_id, source (`cloned | fallback_bank`), provider, model_lock_id, reference_path, reference_sha256, conditioning_path, conditioning_sha256, seed_list JSON, exaggeration, cfg_weight, voice_cps, audition_score, fallback_reason, created_at. Immutable. |
 | `Metric` | id, job_id, stage, name, value, unit, created_at (processing time, CPU time, accelerator time, peak memory, model ids, WER, drift, LUFS) |
@@ -398,7 +402,7 @@ SQLite via SQLAlchemy, WAL mode, schema migrations (tool chosen in Phase 1). **T
 | 11 | `EXTRACTING_REFERENCES` | Top-3 candidate references per actor | — (optional denoise provider) | `voices/*/candidates/` |
 | 12 | `AUDITIONING_VOICES` | Audition; canonical reference or bank voice | tts (+ QC embedder) | `voices/*/audition/` |
 | 13 | `REGISTERING_VOICES` | Immutable Voice rows, cached conditioning | tts | `voices/*/reference`, `conditioning` |
-| 14 | `TRANSLATING` | Context-aware, budgeted translation | translation; opus-mt fallback | Segment rows |
+| 14 | `TRANSLATING` | Budgeted translation through per-model prompt adapters | translation; opus-mt fallback | Segment rows |
 | 15 | `TRANSLATION_REVIEW` | Optional pause | — | SegmentOverride rows |
 | 16 | `GENERATING_TTS` | Synthesis with drift gate | tts (+ QC embedder) | `tts/` |
 | 17 | `FIT_AND_PLACE` | Timing (§9), batched rewrite rounds | translation, tts | `fit/` |
@@ -433,10 +437,12 @@ SQLite via SQLAlchemy, WAL mode, schema migrations (tool chosen in Phase 1). **T
 
 ### 8.5 TRANSCRIBING
 
-1. Input per `ASR_INPUT`. Transcribe only VAD speech regions (merged, padded 0.2 s, windows ≤ 30 s), `condition_on_previous_text=False`, fixed source language. Checkpoint per window.
-2. Hallucination filters (edge case 18); flagged segments are never dubbed: `no_speech_prob > 0.6` together with `avg_logprob < −1.0`; `compression_ratio > 2.4`; repeated n-grams; phrases in `config/hallucination_blacklist.<lang>.txt` (for Turkish, subtitle-credit phrases Whisper emits on silence); < 50% overlap with VAD speech. All thresholds are configurable.
-3. Language ID (edge case 48): for segments ≥ 1.0 s, detect the language. If the top language is not the source language and its probability ≥ `LID_MIN_CONF`, flag `foreign_language` and re-transcribe that segment in the detected language for the record. Never force-transcribe it as the source language. With `FOREIGN_SPEECH_POLICY=keep_original` (default) the segment is not dubbed. Shorter segments inherit the language of their neighbours.
-4. Persist all confidences.
+1. Input per `ASR_INPUT`. Transcribe only VAD speech regions (merged, padded 0.2 s, windows ≤ 30 s), `condition_on_previous_text=False`, fixed source language. Decoding is deterministic: temperature 0 only, with no temperature fallback. Checkpoint per window.
+2. Second pass: each VAD speech region of ≥ 0.6 s that first-pass segments cover < 30% is transcribed again on its own, with the same settings.
+3. Hallucination filters (edge case 18), on both passes; flagged segments are never dubbed: `no_speech_prob > 0.6` together with `avg_logprob < −1.0`; `compression_ratio > 2.4`; repeated n-grams; blacklist phrases (item 4); < 50% overlap with VAD speech. Second-pass segments must also have `avg_logprob ≥ −0.8` and `no_speech_prob ≤ 0.5`. All thresholds are configurable.
+4. Blacklist: `config/hallucination_blacklist.<lang>.txt` (for Turkish, subtitle-credit phrases Whisper emits on silence). The segment text and each phrase are normalized the same way: for Turkish, Turkish-aware casefolding first (`İ→i`, `I→ı`), then lowercase, then strip punctuation. A phrase matches only as a whole word sequence. The bare phrase "altyazı" matches only in segments of ≤ 4 words.
+5. Language ID (edge case 48): for segments ≥ 1.0 s, detect the language. If the top language is not the source language and its probability ≥ `LID_MIN_CONF`, flag `foreign_language` and re-transcribe that segment in the detected language for the record. Never force-transcribe it as the source language. With `FOREIGN_SPEECH_POLICY=keep_original` (default) the segment is not dubbed. Shorter segments inherit the language of their neighbours.
+6. Persist all confidences.
 
 ### 8.6 ALIGNING_WORDS
 
@@ -448,12 +454,13 @@ SQLite via SQLAlchemy, WAL mode, schema migrations (tool chosen in Phase 1). **T
 
 1. Whole-file community-1 on `DIARIZATION_INPUT`; regular and exclusive diarization; RTTM; per-speaker embeddings if the pipeline exposes them. Device MPS with CPU fallback.
 2. Failure: retry. Out of memory → chunked diarization with embedding reconciliation (edge case 31). Still failing: single speaker with a warning only if `ALLOW_SINGLE_SPEAKER_FALLBACK=true`; otherwise the job fails.
+3. If cast review recorded `set_speaker_count` (§3.1 item 4), diarization runs with `num_speakers` set to that count. The count is part of this stage's input hash.
 
 ### 8.8 BUILDING_SEGMENTS
 
-1. Assign each word to the exclusive-diarization speaker with maximum overlap. Words with no overlap → nearest turn within 0.5 s; otherwise speaker `unknown` and flagged.
+1. Assign each word to the exclusive-diarization speaker with maximum overlap. Words with no overlap → nearest turn within 0.5 s; otherwise speaker `unknown` and flagged. Flip smoothing: a run of another speaker's words shorter than `FLIP_S` (default 0.5 s), lying between two runs of one speaker, takes that speaker.
 2. Split at speaker changes. Merge same-speaker fragments when the gap is < 0.35 s and no sentence end intervenes. Cap at 12 s (split at punctuation, else at the largest word gap).
-3. Minimum 0.3 s, except complete short utterances ("Evet", "Ne?"), kept when separated from the same speaker's other speech by ≥ 0.25 s on both sides (edge case 23). Other fragments under 0.3 s merge into the adjacent same-speaker segment, otherwise they are dropped and flagged.
+3. Fragment merge: a segment shorter than `MIN_SEG_S` (default 1.0 s) merges into an adjacent same-speaker segment (the previous one first) when the gap is < `FRAGMENT_GAP_S` (default 1.0 s), even across a sentence end, as long as the result stays within the 12 s cap. A short segment that cannot merge stays a segment of its own if it lasts ≥ 0.3 s or is a complete short utterance ("Evet", "Ne?") (edge case 23); other fragments under 0.3 s are dropped and flagged. Complete short utterances are therefore never dropped: they stay a segment of their own or become part of the merged segment.
 4. `assignment_overlap` = share of the segment covered by the assigned speaker's exclusive turns. `is_overlap` = another speaker's regular turn covers > 20% of the segment (edge case 15).
 5. Not dubbed (`KEPT_ORIGINAL`): hallucination flags; singing (singing events cover > 50% of the segment; edge case 46); `foreign_language` under the default policy; speaker `unknown` with low ASR confidence; background, TV and crowd voices (low `assignment_overlap` and speech also present on the background stem → `low_confidence`; edge cases 16, 17).
 6. Compute each segment's `next_speech`, `hard_limit_s` and `available_s` (§9); translation budgets use them.
@@ -481,9 +488,12 @@ SQLite via SQLAlchemy, WAL mode, schema migrations (tool chosen in Phase 1). **T
 ### 8.14 TRANSLATING
 
 1. Dubbable segments only. Group consecutive segments of one speaker with gaps < 1 s into utterances (≤ 6 segments each).
-2. Prompt: the utterance; the previous 3 and next 1 source sentences; the glossary (job glossary plus detected names and numbers); a character budget per segment. Output: JSON keyed by segment id.
+2. The translation provider always returns translations keyed by segment id, but each model's adapter chooses its own prompt format:
+   - TranslateGemma is not forced into keyed JSON. It translates each segment separately with its native prompt and the segment's character budget. Whether it also gets context lines (the previous 3 and next 1 source sentences) is decided in Phase 0 (§19 item 8).
+   - Keyed JSON stays available for instruct models (for example the rewriter): the utterance, the previous 3 and next 1 source sentences, the glossary and a character budget per segment, with output JSON keyed by segment id.
+   - The glossary (job glossary plus detected names and numbers) is enforced by validation (item 4), whether or not the adapter puts it in the prompt.
 3. Budget: `tgt_budget_chars = floor(available_s × voice_cps × 0.95)`, with `voice_cps` from the actor's `Voice`.
-4. Validate: the JSON parses, every id is present, no text is empty, digits are preserved, glossary names are present. Characters outside the TTS character set are normalized or stripped (edge case 25). On failure: retry once → translate per segment with context → opus-mt → `KEPT_ORIGINAL` with `translation_failed`, keeping the source text (edge case 24).
+4. Validate: every segment id has a translation (for keyed JSON: the JSON parses and every id is present), no text is empty, digits are preserved, glossary names are present. Also rejected: multi-line output; bullets; commentary phrases (for example "literally", "this phrase"); length > 2 × the source length + 15 characters; output in which ≥ 50% of the words are source words (untranslated); lowercase words containing ç, ğ, ı, ö, ş or ü (Turkish letters left in the output; capitalized names are allowed). Characters outside the TTS character set are normalized or stripped (edge case 25). On failure: retry once → translate per segment with context (adapters that group segments) → opus-mt → `KEPT_ORIGINAL` with `translation_failed`, keeping the source text (edge case 24).
 5. `tgt_text` = display and subtitle text (numbers as digits). `tts_text` = text for speech (numbers as words, abbreviations expanded).
 
 ### 8.15 TRANSLATION_REVIEW
@@ -494,9 +504,10 @@ If `pause_after_translation`: job `PAUSED`; the user edits `tgt_text` or skips s
 
 1. §3.2 items 6–8.
 2. `tts_text` longer than `TTS_MAX_CHARS` (from Phase 0) is split at sentence boundaries and joined with 80 ms gaps.
-3. Duration sanity: `gen_dur` outside [0.4, 2.0] × expected duration (`len(tts_text) / voice_cps`) counts as a failed attempt (babble or truncation) and moves to the next seed.
-4. No usable attempt after all seeds → `KEPT_ORIGINAL` with `tts_failed` and `needs_review` (edge case 26).
-5. Results are checkpointed per segment.
+3. Silence trim before fitting: leading and trailing audio below −35 dB relative to the clip's peak is cut, keeping 40 ms on each side. `gen_dur` is the trimmed duration.
+4. Duration sanity: `gen_dur` outside [0.4, 2.0] × expected duration (`len(tts_text) / voice_cps`) counts as a failed attempt (babble or truncation) and moves to the next seed.
+5. No usable attempt after all seeds → `KEPT_ORIGINAL` with `tts_failed` and `needs_review` (edge case 26).
+6. Results are checkpointed per segment.
 
 ### 8.17 FIT_AND_PLACE
 
@@ -534,12 +545,13 @@ Rules:
 1. `r ≤ 1.0`: accept. Place at `src_start`; pad with silence; never slow speech down. `fit_method = none`.
 2. `1.0 < r ≤ 1.10`: FFmpeg `atempo = r`. `fit_method = tempo`.
 3. `r > 1.10`: rewrite rounds. All such segments go in one batch to `rewrite_shorter` with budget `floor(available_s × voice_cps × 0.9)`, then one TTS batch regenerates them (drift gate applies); recompute `r`. At most 2 rounds. Then apply rule 1 or 2, or `atempo` up to 1.25 if `r ≤ 1.25`. `fit_method = rewrite` or `rewrite+tempo`.
-4. Still `r > 1.25` after the rounds: `atempo = 1.25`. If the result ends before `hard_limit_s`, it overflows into the following silence with a 150 ms fade-out: `fit_method = overflow`, `needs_review = true`. Otherwise apply `FIT_TERMINAL_POLICY`: `truncate` (default) cuts at `hard_limit_s` with a 150 ms fade-out (`fit_method = truncated`, `needs_review = true`); `keep_original` sets `KEPT_ORIGINAL` with `fit_terminal`.
+4. Still `r > 1.25` after the rounds: `atempo = 1.25`. If the result ends before `hard_limit_s` (extended by rule 5b where it applies), it overflows into the following silence with a 150 ms fade-out: `fit_method = overflow`, `needs_review = true`. Otherwise apply `FIT_TERMINAL_POLICY`: `truncate` (default) cuts at `hard_limit_s` with a 150 ms fade-out (`fit_method = truncated`, `needs_review = true`); `keep_original` sets `KEPT_ORIGINAL` with `fit_terminal`.
 5. `gen_dur < 0.5 × src_dur`: keep as is, placed at `src_start` (edge case 22).
 5a. **Short lines** (`src_dur < 1.0 s`): the `atempo` cap in rules 3–4 is 1.5 instead of 1.25, and the clip may start up to 0.3 s before `src_start` (pre-roll), only into silence after the previous speech end + `guard` and only as much as it needs. Pre-roll adds to both `available_s` and `hard_limit_s`.
-6. Never overwrite later dialogue. Never use the `rubberband` filter. Never change video timing.
+5b. **Ripple**: when a segment still does not fit after rules 3–4 (at the `atempo` cap it would end after its `hard_limit_s`), then, before rule 4 chooses overflow or the terminal policy, the next dubbed segment may start up to `RIPPLE_MAX_S` (default 0.25 s) after its own placement start, only as much as needed, and only if that delayed segment still ends before its own `hard_limit_s`. The current segment's `hard_limit_s` grows by the same delay. One level only: a delayed segment cannot delay another. Only a dubbed segment can be delayed; kept-original audio and original VAD speech never move, so ripple applies only when the next dubbed segment sets the current segment's `hard_limit_s`. The delay is stored as `ripple_delay_s` on the delayed segment.
+6. Never overwrite later dialogue: rule 5b moves a later dubbed line, it never overwrites it. Never use the `rubberband` filter. Never change video timing.
 
-Each rewrite round is one translation process call plus one TTS process call; the round number is part of the stage input hash. Persist `gen_dur`, `final_dur`, `fit_method`, `rewrite_count`, `tts_attempts`, `placement_start`. All thresholds live in config: initial values from Phase 0, checked on fixtures in Phase 6, tuned on golden clips in Phase 11.
+Each rewrite round is one translation process call plus one TTS process call; the round number is part of the stage input hash. Persist `gen_dur`, `final_dur`, `fit_method`, `rewrite_count`, `tts_attempts`, `placement_start`, `ripple_delay_s`. All thresholds live in config: initial values from Phase 0, checked on fixtures in Phase 6, tuned on golden clips in Phase 11.
 
 ---
 
@@ -555,20 +567,20 @@ Each rewrite round is one translation process call plus one TTS process call; th
 
 2. **Original dialogue restore** (`separated` mode only):
    - Kept-original segments (any `skip_reason`) and ignored speakers: dialogue stem at 0 dB over the segment span, 50 ms fades.
-   - Non-verbal lay-back (edge case 47): dialogue stem at `NONVERBAL_GAIN_DB` (default −6 dB) everywhere outside dubbed spans, excluding `DUB_SPAN_MARGIN` (default 100 ms) around each dubbed span, with 20 ms fades.
+   - Non-verbal lay-back (edge case 47), speech-aware: dialogue stem at `NONVERBAL_GAIN_DB` (default −6 dB) outside dubbed spans, excluding `DUB_SPAN_MARGIN` (default 100 ms) around each dubbed span, with 20 ms fades, but only where VAD on the dialogue stem hears no speech or the audio-event tagger hears a non-verbal sound (§8.4). VAD speech that no dubbed or kept-original segment covers (untranscribed source speech) is muted. The muted seconds and the speech coverage (§12.2 SC7) are stored as metrics.
    - Inside dubbed spans the dialogue stem is fully removed (tested for Turkish leakage).
    - In the two original-mix modes the original dialogue is already present; ducking applies only to dubbed spans, so kept-original regions stay at their original level.
 3. **Dialogue assembly** in blocks of `BLOCK_SECONDS` (default 300) with 2 s crossfaded overlap; within a block, per-speaker tracks are summed (overlaps are mixed, never serialized; edge case 15); every clip gets 10–20 ms fades (edge case 30). Blocks are concatenated, or memory-mapped. Full-length multi-track audio is never held in RAM; a 90-minute stereo 48 kHz float32 track is about 2 GB.
 4. **Loudness match**: each clip is gain-matched to the original dialogue loudness over the same span (short-term LUFS; spans < 400 ms use RMS), clamped to ±12 dB. Whispers stay quiet, shouts stay loud.
 5. **Ducking**: background ducked under dubbed dialogue with FFmpeg `sidechaincompress`, in `separated` mode only (the other modes are already attenuated; no double ducking).
-6. **Master**: two-pass `loudnorm` with `linear=true` to the original program's integrated loudness (`source_lufs`, §8.2) and `TRUE_PEAK_TARGET_DBTP` (default −2.0), so switching between the dubbed and original tracks keeps the same loudness. If the original's loudness cannot be measured (no result, or below −70 LUFS), the target is `LOUDNESS_FALLBACK_LUFS` (default −16). The effective target and its source (`original | fallback`) are stored in the report. If the second pass reports `normalization_type` other than `linear`, apply a static gain plus a true-peak limiter instead. Verify no clipping (edge case 29).
+6. **Master**: two-pass `loudnorm` with `linear=true` to the original program's integrated loudness (`source_lufs`, §8.2) and `TRUE_PEAK_TARGET_DBTP` (default −2.0), so switching between the dubbed and original tracks keeps the same loudness. If the original's loudness gives no result, or is below `QUIET_LUFS` (default −40 LUFS, §8.2), the target is `LOUDNESS_FALLBACK_LUFS` (default −16); below `QUIET_LUFS` a warning also says that the original was unusually quiet. The true-peak target is the same in both cases. The effective target and its source (`original | fallback`) are stored in the report. If the second pass reports `normalization_type` other than `linear`, apply a static gain plus a true-peak limiter instead. Verify no clipping (edge case 29).
 7. Background stereo is preserved; dialogue sits near the center.
 
 ---
 
 ## 11. Render
 
-1. Video stream-copied; never re-encoded by default. MP4 when the video codec is in `MP4_COPY_CODECS` (default `h264, hevc, av1, vp9`; confirmed in Phase 0); otherwise MKV. An explicit, logged H.264 transcode is the only permitted video re-encode.
+1. Video stream-copied; never re-encoded by default. MP4 when the video codec is in `MP4_COPY_CODECS` (default `h264, hevc, av1, vp9`; confirmed in Phase 0); otherwise MKV. HEVC video in MP4 is written with the `hvc1` sample entry (`-tag:v hvc1`) for Apple players. An explicit, logged H.264 transcode is the only permitted video re-encode.
 2. Audio track 0: dubbed mix, native AAC 192 kb/s, default disposition, language = target (`eng`), title "English (AI-dubbed)".
 3. Audio track 1: the original selected audio stream, stream-copied (AAC if copying fails), language = source (`tur`), title "Original".
 4. Subtitles: target language, `mov_text` in MP4, SRT in MKV; also written as a separate SRT file.
@@ -602,6 +614,7 @@ Each rewrite round is one translation process call plus one TTS process call; th
 | SC4 | Share of segments with tempo > 1.10× ≤ 15% |
 | SC5 | Similar-voice warnings, bank-voice reuse, actors on bank voices |
 | SC6 | Watermark detectable in track 0 (only if Phase 0 shows the detector survives processing) |
+| SC7 | Speech coverage ≥ 75% (initial threshold, calibrated later): (dubbed + kept-original + non-verbal speech seconds) ÷ VAD speech seconds, using VAD on the dialogue stem (on the original when there is no stem) |
 
 §2 uses SC2–SC4 as pass criteria on golden clips.
 
@@ -626,7 +639,7 @@ Binds to `127.0.0.1` by default. No authentication in this release; do not expos
 | POST | `/api/jobs/{id}/resume` | Leave `PAUSED` (`CAST_REVIEW` or `TRANSLATION_REVIEW`) |
 | GET | `/api/jobs/{id}/stages` | StageRun list |
 | GET | `/api/jobs/{id}/cast` | Cast-review data: speakers, clips, similarity matrix, proposals, overrides |
-| PUT | `/api/jobs/{id}/cast` | Replace the override list (`merge`, `split`, `rename`, `ignore`, `set_gender`, `set_voice`) |
+| PUT | `/api/jobs/{id}/cast` | Replace the override list (`merge`, `split`, `rename`, `ignore`, `set_gender`, `set_voice`, `set_speaker_count`) |
 | GET | `/api/jobs/{id}/speakers` | Speaker profiles and voices |
 | GET | `/api/jobs/{id}/segments` | Segments (paged) |
 | PATCH | `/api/jobs/{id}/segments/{sid}` | Edit `tgt_text` or skip. Voice cannot be changed per segment (use `set_voice` per actor). |
@@ -645,7 +658,7 @@ Segment edits are applied by a run starting at the earliest affected stage (`ret
 - Job form: file upload (primary) or URL, consent checkbox, language selectors, "pause after translation" toggle.
 - Job list (reachable again after closing the browser).
 - Job page: `status`, `current_stage`, progress per stage using the §8.0 names, errors and warnings.
-- Cast review screen (job `PAUSED` at `CAST_REVIEW`): per speaker 3 clips, segment count, speech seconds, gender with confidence (editable), similarity-matrix heatmap, proposals; merge, split, rename, ignore, set gender; "Confirm cast" resumes.
+- Cast review screen (job `PAUSED` at `CAST_REVIEW`): per speaker 3 clips, segment count, speech seconds, gender with confidence (editable), similarity-matrix heatmap, proposals; merge, split, rename, ignore, set gender, set speaker count; "Confirm cast" resumes.
 - Speakers table: display name, gender with confidence, voice source (`cloned | fallback_bank`), audition score, segment count, reference preview, similar-voice warning; change voice per actor.
 - Segment table: source text, translation, `dub_status` and `skip_reason`, `fit_method`, `drift_cos`, `needs_review`, audio preview; edit text, skip, regenerate. In edit mode it serves the `TRANSLATION_REVIEW` pause.
 - Player: original vs dubbed (track switch).
@@ -728,7 +741,7 @@ Every case maps to at least one test in `tests/edge_cases/`.
 - Turkish female and male voices that return later, an overlap, silences, very short utterances, one English sentence (edge case 48).
 - Synthetic background music made with `lavfi` (no downloaded music).
 - Variants: audio start offset (edge case 49); 5.1 with two language-tagged audio tracks (edge case 50).
-- Turkish speech comes from a local TTS whose license permits this use (dev-only tooling; check per-voice licenses). English speech from Kokoro (Apache-2.0).
+- Turkish speech comes from Chatterbox Multilingual in Turkish (MIT), using license-cleared bank voices (§3.3) as references. English speech from Kokoro (Apache-2.0).
 - Real singing and laughter clips (CC0, listed in `docs/footage.md`) are used only by `models` tests; CPU tests mock the audio-event provider.
 
 ### 16.3 Required tests (beyond §15)
@@ -769,9 +782,9 @@ One numbering, Phase 0 to 12. Each phase ends runnable, with automated tests, an
 | 1 | Skeleton: repo layout, uv workspace, `dubber` package, api (127.0.0.1), worker, SQLite WAL and migrations, data model (§7), stage engine (hashing, Artifact rows, manifest, atomic per-attempt dirs, segment checkpoints), provider protocol with license gate and offline enforcement, local storage, FFmpeg wrapper, `INGESTING`, `EXTRACTING_AUDIO`, pass-through `RENDERING_VIDEO`, `doctor`, CLI | Upload → pass-through MP4 with two audio tracks; edge cases 1–6, 35, 36, 42, 50, 51 tested; 49 tested for offset handling (H6 sync check added in Phase 8) |
 | 2 | Audio analysis: `SEPARATING_AUDIO`, `DETECTING_SPEECH`, `TRANSCRIBING`, `ALIGNING_WORDS`, `DIARIZING`, `BUILDING_SEGMENTS` | Segments with speakers and flags on the fixture |
 | 3 | Identity: `BUILDING_SPEAKER_PROFILES`, `CAST_REVIEW` (API and `dubber cast` CLI; UI in Phase 10), `EXTRACTING_REFERENCES`, gender, voice-bank assets | Cast review round-trip changes hashes |
-| 4 | Translation: `TRANSLATING` (opus-mt baseline, then LLM with context, glossary, keyed JSON, budgets, validation), rewrite provider, `TRANSLATION_REVIEW` | Validated translations on the fixture |
+| 4 | Translation: `TRANSLATING` (opus-mt baseline, then the LLM through per-model prompt adapters, with budgets, glossary and validation), rewrite provider, `TRANSLATION_REVIEW` | Validated translations on the fixture |
 | 5 | Voices and TTS: TTS provider (variant and backend from Phase 0), `AUDITIONING_VOICES`, `REGISTERING_VOICES`, `GENERATING_TTS` with drift gate, per-actor fallback, optional VC lock | Drift gate and voice-consistency tests pass |
-| 6 | `FIT_AND_PLACE` (§9), including batched rewrite rounds and overlap placement | Fitting tests on fixture |
+| 6 | `FIT_AND_PLACE` (§9), including batched rewrite rounds, ripple (rule 5b) and overlap placement | Fitting tests on fixture |
 | 7 | `MIXING_AUDIO` (§10) | Mix tests incl. lay-back leakage |
 | 8 | `RENDERING_VIDEO` and `VALIDATING` (§11, §12), report | Hard checks pass on the fixture |
 | 9 | Resilience: leases and heartbeats, orphan kill, `kill -9` resume at every stage, out-of-memory ladder, cancel, disk guard, purge, `retry` with `from_stage` | §15 resilience and resource tests pass |
@@ -782,8 +795,8 @@ One numbering, Phase 0 to 12. Each phase ends runnable, with automated tests, an
 **Phase 0 — feasibility, licenses, footage.** Must finish before any provider code; spike scripts live in `scripts/spikes/` and are throwaway.
 
 1. Hardware: detect chip and RAM (`sysctl -n machdep.cpu.brand_string hw.memsize`), macOS version and MPS availability; record them in `docs/spikes.md`. Do not assume a RAM size.
-2. Benchmarks (real-time factor and peak memory on 60-second and 5-minute clips): VAD; ASR (mlx-whisper large-v3 vs large-v3-turbo; faster-whisper CPU int8); alignment; diarization CPU vs MPS (with parity check); separation TIGER-DnR vs Bandit v2 vs Demucs on a 5-minute clip; TTS Chatterbox Multilingual V3, Chatterbox English, Turbo/Nano and Qwen3-TTS, each on CPU vs MPS vs hybrid-MLX (`chatterbox-mlx` fork); translation TranslateGemma 4B vs 12B and the rewrite LLM via Ollama. On the Mac, measurements are staged (D-66): a small Chatterbox TTS experiment first, and the rest of the model set only after it.
-3. TTS bake-off (Turkish reference, English text): speaker similarity, re-transcription WER, real-time factor, memory, listening tests; voice-consistency metrics (drift over 50 segments per actor, cosine to centroid, variance across seeds); VC lock on vs off; exaggeration band; `cfg_weight` 0 vs default, including its effect on clip duration (hypothesis: 0 lengthens clips); reference length 5–15 s vs 10–30 s.
+2. Benchmarks (real-time factor and peak memory on 60-second and 5-minute clips): VAD; ASR (mlx-whisper large-v3 vs large-v3-turbo; faster-whisper CPU int8); alignment; diarization CPU vs MPS (with parity check); separation Demucs `htdemucs` on a 5-minute clip; TTS Chatterbox Multilingual V3, Chatterbox English, Turbo/Nano and Qwen3-TTS, each on CPU vs MPS vs hybrid-MLX (`chatterbox-mlx` fork); translation TranslateGemma 4B vs 12B and the rewrite LLM via Ollama. On the Mac, measurements are staged (D-66): a small Chatterbox TTS experiment first, and the rest of the model set only after it.
+3. TTS bake-off (Turkish reference, English text): speaker similarity, re-transcription WER, real-time factor, memory, listening tests; voice-consistency metrics (drift over 50 segments per actor, cosine to centroid, variance across seeds); VC lock on vs off; exaggeration band; `cfg_weight` 0 vs default, including its effect on clip duration (hypothesis: 0 lengthens clips); reference length 5–15 s vs 10–30 s. Voices: 2–3 consenting Turkish speakers with ≥ 2 min of speech each. Consent notes are kept outside git; the recordings are kept only in private datasets and deleted after use.
 4. Calibrate thresholds (§19 item 12) on golden clips.
 5. Footage: source rights-cleared multi-speaker Turkish footage (CC-BY or the owner's recordings) for `golden/`; record source, license and attribution in `docs/footage.md`. If none can be found, ask the owner. Never use copyrighted TV footage.
 6. Licenses: build `models.lock.json`, `MODEL_LICENSES.md`, `NOTICE`, initial `THIRD_PARTY_LICENSES.md`; work through §19.
@@ -837,13 +850,13 @@ Process only content you have the right to dub; voice references only with conse
 
 ### 18.8 G7 — Reading list
 
-pyannote community-1 model card (https://huggingface.co/pyannote/speaker-diarization-community-1); Chatterbox README (https://github.com/resemble-ai/chatterbox); yt-dlp JavaScript runtime announcement (https://github.com/yt-dlp/yt-dlp/issues/15012); open-dubbing reference pipeline (https://github.com/Softcatala/open-dubbing); Bandit cinematic separation (https://github.com/karnwatcharasupat/bandit); opus-mt-tr-en (https://huggingface.co/Helsinki-NLP/opus-mt-tr-en); MADLAD-400 (https://huggingface.co/google/madlad400-3b-mt).
+pyannote community-1 model card (https://huggingface.co/pyannote/speaker-diarization-community-1); Chatterbox README (https://github.com/resemble-ai/chatterbox); yt-dlp JavaScript runtime announcement (https://github.com/yt-dlp/yt-dlp/issues/15012); open-dubbing reference pipeline (https://github.com/Softcatala/open-dubbing); opus-mt-tr-en (https://huggingface.co/Helsinki-NLP/opus-mt-tr-en); MADLAD-400 (https://huggingface.co/google/madlad400-3b-mt).
 
 ---
 
 ## 19. Verify in Phase 0
 
-1. Licenses: Turkish WhisperX alignment model; TIGER-DnR weights; Bandit v2 weights; audio-event tagger; QC embedder; `chatterbox-mlx` fork; Turkish fixture TTS voices; voice-bank sources.
+1. Licenses: Turkish WhisperX alignment model; audio-event tagger; QC embedder; `chatterbox-mlx` fork; Turkish fixture TTS voices; voice-bank sources.
 2. Model names and revisions exist as named: Chatterbox Multilingual V3, Chatterbox Turbo and Nano, Qwen3-TTS sizes, TranslateGemma sizes in Ollama.
 3. pyannote community-1: whether the pipeline exposes per-speaker embeddings (else add a separate embedding model); MPS works; CPU-vs-MPS parity.
 4. mlx-whisper: per-segment `avg_logprob`, `no_speech_prob`, `compression_ratio`, word timestamps and language detection; the faster-whisper equivalents on CPU.

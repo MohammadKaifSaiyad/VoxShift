@@ -9,11 +9,7 @@ The Phase 0 completion plan (`docs/superpowers/plans/2026-10-07-phase-0-completi
 
 ## A. Provisional choices — confirm or change
 
-| # | Question | Current choice in SPEC | Decision |
-| --- | --- | --- | --- |
-| Q-12 | Should translation output be JSON keyed by segment id? | Keyed JSON, with per-segment translation as the fallback | D-51 |
-
-**Conflict on Q-12:** the owner's answer to Q-27 conflicts with D-51. That answer is a provider adapter in which each model gets its own prompt format, and keyed JSON is not forced on TranslateGemma. D-51 stays provisional until Q-27 is recorded (plan Task 2).
+None open.
 
 ## B. Unresolved — needs the owner or Phase 0
 
@@ -23,21 +19,12 @@ The Phase 0 completion plan (`docs/superpowers/plans/2026-10-07-phase-0-completi
 | Q-18 | Do "Chatterbox Multilingual V3" and "Chatterbox Nano (110M)" exist under those names? | Desk research says yes (`docs/feasibility.md` §2): V3 was released 2026-06-10 under MIT and includes Turkish; Nano is MIT, gated and English-only. There is also a new Chatterbox Flash. S1 loaded the multilingual model from `ResembleAI/chatterbox` through `chatterbox-tts` 0.1.7, but whether those weights are V3 is unconfirmed. S2 records the revision. |
 | Q-19 | Is the ≤ 3× target reachable on the M1 Pro? | Kaggle T4 measured about 1.6× (S1). The Mac is unmeasured. Measurement there is staged (D-66): spike S4a measures Chatterbox TTS first, and the other stages follow. |
 | Q-24 | With Demucs as default (D-62), does singing (for example Teneke's street musician) vanish from the separated background? | Demucs puts singing in the dialogue stem. S3b found no singing in the three films (AST maximum 0.03–0.09), so this is still untested. If singing does vanish, songs must be kept from the original (edge case 46). |
-| Q-25 | The timing target (§2 criterion 4: ≤ 15% of lines over 1.10×) is not met on rapid drama dialogue (S3d: 32–45%, truncation 9–28%). Should §9 get a "ripple" rule? | Per-line greedy fitting has reached its limits. Proposal: when a line still overflows after rewrites and tempo, the next line may start up to 0.25 s late, one line deep, if it still ends before its own hard limit. **The owner answered yes; to be recorded in Task 2.** |
-| Q-26 | Rewrite model: keep Qwen3-4B-Instruct-2507 (Apache-2.0)? | In S3d, round 1 shortens 64–82% of over-long lines but can be telegraphic. **Owner: keep it; benchmark a larger model in S4. To be recorded in Task 2.** |
-| Q-27 | SPEC §8.14 assumes the translator takes context and a glossary and returns keyed JSON. TranslateGemma uses a fixed one-line prompt. | **Owner: use a provider adapter and do not force keyed JSON on TranslateGemma; change the spec.** This resolves Q-12 once it is recorded in Task 2. |
-| Q-28 | Which QC embedder runs inside the TTS venv? | `chatterbox-tts` pins torch 2.6, but pyannote.audio 4 needs torch ≥ 2.8. **Owner: WeSpeaker through ONNX Runtime. To be recorded in Task 2.** |
-| Q-29 | Should the 11 S3–S3d mechanisms go into the spec (plan Task 2)? | **Owner: adopt all 11. To be recorded in Task 2.** |
-| Q-30 | Consented Turkish voices for the TTS bake-off (S2) | **Owner: 2–3 consenting Turkish speakers, ≥ 2 min each. To be recorded in Task 2.** |
-| Q-31 | Keep TIGER-DnR and Bandit v2 as fallback separators? | **Owner: Demucs only; the ducked original is the fallback. To be recorded in Task 2.** |
-| Q-32 | Sources for bank voices (§3.3) and fixture voices (D-59) | **Owner: Kokoro voices for the bank and Chatterbox Turkish for the fixture, both behind the license gate. To be recorded in Task 2.** |
-| Q-33 | `chatterbox-tts` 0.1.7 requires `pykakasi==2.3.0` (GPL-3.0-or-later) and `gradio==6.8.0` | **Owner: if S4 shows the tr/en runtime does not need them, exclude them and declare dependencies explicitly. To be recorded in Task 2.** |
-| Q-35 | D-61 allows Kaggle only for S1 with synthetic audio, but practice has gone further. | S3–S3d already processed the CC-BY films on Kaggle. D-66, D-67 and Q-30 also plan to use Kaggle for calibration with golden clips and consented voices. Should D-61 be amended to allow rights-cleared footage and consented voices in private Kaggle datasets that are deleted after use? |
-| Q-36 | How loud should the dub be when the original is very quiet? | D-68 matches the original's loudness. An original near −50 LUFS would give a dub that can fail hard check H2 (mean volume > −50 dB). Anything below `QUIET_LUFS` (−40) would give a very quiet dub. Option: use the −16 LUFS fallback (or a floor) below `QUIET_LUFS`. |
-| Q-37 | HEVC tag in MP4: always write `-tag:v hvc1`? | Task 1 found that FFmpeg writes `hev1` by default, while Apple players are commonly reported to need `hvc1`. SPEC §11 does not say. This matters for the render in Phase 8. |
+| Q-38 | What happens to cast edits made before `set_speaker_count`? (D-73(a)) | Rerunning diarization replaces the speaker labels that earlier merges, renames, ignores and gender edits point to. Options: discard them with a warning in the UI, or allow `set_speaker_count` only before any other edit. |
+| Q-39 | Footage acquisition vs YouTube's terms (`docs/platform_terms.md`) | YouTube's ToS forbid downloading except where the service allows it or with written permission, and CC-BY does not change that. The three S3 films were downloaded with yt-dlp; copies are in `media/` and the Kaggle dataset `voxshift-s3-clips`. Decide: re-obtain them through a sanctioned route, ask the creators, or delete. New golden clips come only from sanctioned routes (Wikimedia Commons, Vimeo downloads, creator-provided files)? |
+| Q-40 | The film actors' voices | CC BY 4.0 does not license personality rights, so cloning the actors in test footage is not covered by the license. Today's rule is "private evaluation only, never published" (`docs/footage.md`). Confirm that, or require the actors' consent for golden clips. |
+| Q-41 | CC footage on Kaggle | Kaggle's terms (§9) take a perpetual license over every upload, but CC licenses do not allow sublicensing content you do not own. Accept the risk for private evaluation, or keep CC footage off Kaggle (process it on the Mac only)? |
+| Q-42 | Consent note for voice contributors (S2) | It must cover Kaggle's license, its access to private data, slow deletion (about 2 months, backups up to 6) and cross-border processing (checklist in `docs/platform_terms.md`). The contributors' local law (for example KVKK or GDPR, where voice can be biometric data) is not addressed by Kaggle's terms. Owner to review, possibly with legal advice. |
 
 ## C. Environment notes
 
-| # | Note |
-| --- | --- |
-| Q-34 | `origin/main` on GitHub already contains the S3 spike `review_*.md` files, which hold the Turkish and English lines of the CC-BY films. **Owner: the repository is private; stop committing film review artifacts. To be applied in Task 12.** |
+None open.
