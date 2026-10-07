@@ -10,6 +10,32 @@
 
 **Spec:** `docs/SPEC.md` §17 (Phase 0), §19 (verify list), §4 (licensing), §5 (stack), §6.5 (config). Open items: `docs/OPEN_QUESTIONS.md`.
 
+## Execution (owner decision, 2026-10-07)
+
+The plan runs subagent-driven, with review by the main agent:
+1. Each task goes to a subagent with a bounded scope.
+2. The subagent investigates, implements and tests only within that task. It does not commit.
+3. The main agent reviews the diff and the results.
+4. The main agent verifies them against `docs/SPEC.md` and `docs/DECISIONS.md`.
+5. Only then does the main agent commit and move to the next task.
+
+Subagents must not decide on their own:
+- licensing exceptions;
+- model substitutions;
+- architecture changes;
+- acceptance criteria;
+- dependency exceptions.
+
+They report these to the main agent, which takes them to the owner.
+
+## Status (2026-10-07)
+
+- **Task 1:** done (commit `6495eda`).
+- **Decided:** Q-23 (D-66), Q-20 (D-67), Q-16 (D-68), and Q-01–Q-15 except Q-12.
+- **Answered, not yet recorded:** Q-25–Q-34; Task 2 will record them.
+- **New open items:** Q-35–Q-37.
+- **Task 3:** starts as S4a, a Chatterbox-only experiment on the Mac (D-66). The other Mac downloads wait for its result.
+
 ## Global Constraints
 
 - Phase 0 must finish, and be approved by the owner, before any provider code (SPEC §0.1, `CLAUDE.md` rule 1). Spike scripts live in `scripts/spikes/` and are throwaway.
@@ -189,6 +215,11 @@ git commit -m "Phase 0: owner decisions after S3d"
 
 **Input:** ISLIK (`media/QJH3CCrjda4.m4a`, CC-BY, private), cut to 60 s and 5 min.
 
+**Staging (D-66):**
+1. **S4a** runs first: only the TTS row below (Chatterbox Multilingual, CPU vs MPS), about 3–4 GB of downloads, after the owner's OK.
+2. The other rows run only after S4a's result, and only if the owner agrees.
+3. If S4a projects the Mac pipeline to be clearly over 3×, the reference machine is revisited before anything else is downloaded.
+
 | Family | Variants | Measures | Answers |
 | --- | --- | --- | --- |
 | ASR | mlx-whisper large-v3-turbo vs large-v3; faster-whisper large-v3 CPU int8 | RTF, peak memory, and whether `avg_logprob`, `no_speech_prob`, `compression_ratio`, word timestamps and the language probability are exposed | §19.4, ASR size |
@@ -303,8 +334,8 @@ git commit -m "Phase 0: translation prompt format"
 - Create: `scripts/spikes/kaggle_cal/` (calibration notebook; use CPU where possible, which costs no GPU quota)
 
 - [ ] **Step 1:** Find 2 or more owner-uploaded CC-BY Turkish shorts with dense multi-speaker dialogue. As before, reject re-uploads and TV footage.
-- [ ] **Step 2:** Cut 5 or more excerpts of 1–5 min into `golden/` and write `golden/manifest.json`.
-- [ ] **Step 3:** The owner corrects the transcripts and speaker labels for each excerpt. I prepare editable files from the ASR output.
+- [ ] **Step 2:** Cut 5 or more excerpts of 1–5 min into `golden/<clip_id>/clip.<ext>`, and write `golden/manifest.json`. Files and fields are listed in SPEC §16.4 (D-67).
+- [ ] **Step 3:** Prepare the draft `reference_turns.rttm` and `reference_transcript.json` from ASR and diarization output (on Kaggle, if Q-35 allows it). A human then corrects every speaker label by listening to and watching the clip. Freeze the files by recording their sha256 in the manifest.
 - [ ] **Step 4:** Compare `ASR_INPUT` and `DIARIZATION_INPUT` (dialogue stem vs original) by WER and by error in speaker count (§19.13).
 - [ ] **Step 5:** Compute the calibration statistics:
   - Source-side embedding statistics (within vs between speakers, outliers). These set `MERGE_COS`, `SPLIT_COS`, `OUTLIER_COS`, `OUTLIER_MARGIN` and the `speaker_confidence` formula.

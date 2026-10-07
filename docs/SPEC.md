@@ -418,7 +418,7 @@ SQLite via SQLAlchemy, WAL mode, schema migrations (tool chosen in Phase 1). **T
 
 1. Start offset (edge case 49): read `start_time` of the selected audio and video streams; pad or trim the start so that t = 0 equals the first video presentation time; store `audio_offset_s`.
 2. Downmix (edge case 50): more than 2 channels → stereo using explicit ITU-R BS.775 coefficients (center −3 dB into both channels, surrounds −3 dB, LFE dropped). Record the source layout.
-3. Write `source_48k` (stereo float32) and `source_16k_mono`. Integrated loudness < `QUIET_LUFS` (default −40 LUFS) → warning plus a normalized copy used only for ASR (edge case 6).
+3. Write `source_48k` (stereo float32) and `source_16k_mono`. Measure the integrated loudness of `source_48k` and store it as a `Metric` (`source_lufs`); it is also the master loudness target (§10.6). Integrated loudness < `QUIET_LUFS` (default −40 LUFS) → warning plus a normalized copy used only for ASR (edge case 6).
 
 ### 8.3 SEPARATING_AUDIO
 
@@ -561,7 +561,7 @@ Each rewrite round is one translation process call plus one TTS process call; th
 3. **Dialogue assembly** in blocks of `BLOCK_SECONDS` (default 300) with 2 s crossfaded overlap; within a block, per-speaker tracks are summed (overlaps are mixed, never serialized; edge case 15); every clip gets 10–20 ms fades (edge case 30). Blocks are concatenated, or memory-mapped. Full-length multi-track audio is never held in RAM; a 90-minute stereo 48 kHz float32 track is about 2 GB.
 4. **Loudness match**: each clip is gain-matched to the original dialogue loudness over the same span (short-term LUFS; spans < 400 ms use RMS), clamped to ±12 dB. Whispers stay quiet, shouts stay loud.
 5. **Ducking**: background ducked under dubbed dialogue with FFmpeg `sidechaincompress`, in `separated` mode only (the other modes are already attenuated; no double ducking).
-6. **Master**: two-pass `loudnorm` with `linear=true` to `LOUDNESS_TARGET_LUFS` (default −16) and `TRUE_PEAK_TARGET_DBTP` (default −2.0). If the second pass reports `normalization_type` other than `linear`, apply a static gain plus a true-peak limiter instead. Verify no clipping (edge case 29).
+6. **Master**: two-pass `loudnorm` with `linear=true` to the original program's integrated loudness (`source_lufs`, §8.2) and `TRUE_PEAK_TARGET_DBTP` (default −2.0), so switching between the dubbed and original tracks keeps the same loudness. If the original's loudness cannot be measured (no result, or below −70 LUFS), the target is `LOUDNESS_FALLBACK_LUFS` (default −16). The effective target and its source (`original | fallback`) are stored in the report. If the second pass reports `normalization_type` other than `linear`, apply a static gain plus a true-peak limiter instead. Verify no clipping (edge case 29).
 7. Background stereo is preserved; dialogue sits near the center.
 
 ---
@@ -596,7 +596,7 @@ Each rewrite round is one translation process call plus one TTS process call; th
 
 | # | Check |
 | --- | --- |
-| SC1 | Integrated loudness within 1.5 LU of target |
+| SC1 | Integrated loudness within 1.5 LU of the effective target (§10.6) |
 | SC2 | WER ≤ 25%: re-transcribe a random 10% sample (≥ 20 segments) of placed clips and compare with `tts_text`, both through Whisper's English text normalizer |
 | SC3 | Drift gate pass rate ≥ 95% of gate-eligible segments; per-speaker standard deviation of `drift_cos` |
 | SC4 | Share of segments with tempo > 1.10× ≤ 15% |
@@ -737,7 +737,25 @@ License gate; lock-hash mismatch; offline enforcement; hallucination filters; la
 
 ### 16.4 Golden clips
 
-`golden/` holds ≥ 5 rights-cleared multi-speaker Turkish clips (1–5 minutes) plus one long clip (≥ 60 minutes) for Phase 12. Media files are not committed; `golden/manifest.json` (name, sha256, source) is. Sources, licenses and attributions are recorded in `docs/footage.md`.
+`golden/` holds ≥ 5 rights-cleared, dialogue-dense, multi-speaker Turkish clips (1–5 minutes), plus one long clip (≥ 60 minutes, or concatenated golden clips per D-60) for Phase 12. Sources, licenses and attributions are recorded in `docs/footage.md`. The golden clips are regression fixtures from Phase 0 onward and the acceptance set for §2.
+
+Per clip, in `golden/<clip_id>/`:
+
+| File | Content |
+| --- | --- |
+| `clip.<ext>` | The excerpt (video, or audio only where video is not needed) |
+| `reference_turns.rttm` | Corrected speaker turns in RTTM. Overlapping turns are allowed. Speaker names are stable within the clip. |
+| `reference_transcript.json` | Corrected segments: `id`, `start`, `end`, `speaker` (matching the RTTM), `text` (verbatim Turkish), `flags` (`overlap`, `singing`, `foreign_language`, `non_verbal`, `unintelligible`) |
+
+- Speaker labels are corrected by a human listening to and watching the clip. Model output only provides drafts.
+- Only `golden/manifest.json` is committed. Per clip it records:
+  - source URL, license and attribution;
+  - excerpt start and end in the source, and duration;
+  - speaker count;
+  - the sha256 of each file above;
+  - who verified the clip and when.
+- Media and reference files stay out of git, because they contain the films' audio and dialogue.
+- Once frozen, a reference file changes only with a `docs/DECISIONS.md` entry. Tests verify the hashes against the manifest.
 
 ---
 
@@ -764,7 +782,7 @@ One numbering, Phase 0 to 12. Each phase ends runnable, with automated tests, an
 **Phase 0 — feasibility, licenses, footage.** Must finish before any provider code; spike scripts live in `scripts/spikes/` and are throwaway.
 
 1. Hardware: detect chip and RAM (`sysctl -n machdep.cpu.brand_string hw.memsize`), macOS version and MPS availability; record them in `docs/spikes.md`. Do not assume a RAM size.
-2. Benchmarks (real-time factor and peak memory on 60-second and 5-minute clips): VAD; ASR (mlx-whisper large-v3 vs large-v3-turbo; faster-whisper CPU int8); alignment; diarization CPU vs MPS (with parity check); separation TIGER-DnR vs Bandit v2 vs Demucs on a 5-minute clip; TTS Chatterbox Multilingual V3, Chatterbox English, Turbo/Nano and Qwen3-TTS, each on CPU vs MPS vs hybrid-MLX (`chatterbox-mlx` fork); translation TranslateGemma 4B vs 12B and the rewrite LLM via Ollama.
+2. Benchmarks (real-time factor and peak memory on 60-second and 5-minute clips): VAD; ASR (mlx-whisper large-v3 vs large-v3-turbo; faster-whisper CPU int8); alignment; diarization CPU vs MPS (with parity check); separation TIGER-DnR vs Bandit v2 vs Demucs on a 5-minute clip; TTS Chatterbox Multilingual V3, Chatterbox English, Turbo/Nano and Qwen3-TTS, each on CPU vs MPS vs hybrid-MLX (`chatterbox-mlx` fork); translation TranslateGemma 4B vs 12B and the rewrite LLM via Ollama. On the Mac, measurements are staged (D-66): a small Chatterbox TTS experiment first, and the rest of the model set only after it.
 3. TTS bake-off (Turkish reference, English text): speaker similarity, re-transcription WER, real-time factor, memory, listening tests; voice-consistency metrics (drift over 50 segments per actor, cosine to centroid, variance across seeds); VC lock on vs off; exaggeration band; `cfg_weight` 0 vs default, including its effect on clip duration (hypothesis: 0 lengthens clips); reference length 5–15 s vs 10–30 s.
 4. Calibrate thresholds (§19 item 12) on golden clips.
 5. Footage: source rights-cleared multi-speaker Turkish footage (CC-BY or the owner's recordings) for `golden/`; record source, license and attribution in `docs/footage.md`. If none can be found, ask the owner. Never use copyrighted TV footage.
