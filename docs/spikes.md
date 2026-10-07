@@ -2,6 +2,54 @@
 
 Measured results from Phase 0 spikes. Desk research lives in `docs/feasibility.md`. Defaults are not chosen yet; that needs S2 and S3.
 
+## Reference machine (2026-10-07)
+
+The owner's Mac (SPEC §18.1), checked after `brew install ffmpeg`. FFmpeg checks cover SPEC §19 item 11 and Q-08. Test media were synthetic (`testsrc`) and lived in a `mktemp -d` dir that was deleted afterwards.
+
+| Item | Value |
+| --- | --- |
+| Chip | Apple M1 Pro (8 performance + 2 efficiency cores), arm64 |
+| RAM | 16 GB |
+| macOS | 27.0.1 |
+| Free disk (home volume) | 57 GiB of 460 GiB |
+| Tools on PATH | `uv` 0.12.10; `ollama` 0.19.0 (server not running at check time); `ffmpeg`/`ffprobe` 9.0.2 (Homebrew). `deno` absent |
+
+### FFmpeg
+
+- **Version:** `ffmpeg version 9.0.2` and `ffprobe version 9.0.2`, Homebrew (`/opt/homebrew/bin`), built with Apple clang 21.0.0.
+- **License flags:** `--enable-gpl` and `--enable-version3` are set, so this is a GPLv3 build. `--enable-nonfree` and any `libfdk` are absent. SPEC §4.4 allows a GPL build here because FFmpeg is installed by the user, run as an executable and not redistributed.
+- **External libraries:** libsvtav1, libopus, libx264, libmp3lame, libdav1d, libvmaf, libvpx, libx265, openssl, videotoolbox, audiotoolbox.
+
+| Filter | Present |
+| --- | --- |
+| `loudnorm` | yes |
+| `sidechaincompress` | yes |
+| `atempo` | yes |
+| `ebur128` | yes |
+| `alimiter` | yes |
+| `pan` | yes |
+
+`rubberband` (GPL-only; SPEC §4.4 forbids depending on it) is not in this build.
+
+**Encoders:** native `aac` present (`aac_at`, AudioToolbox, also present; SPEC §11 uses native `aac`). `mov_text` present. `libfdk_aac` absent.
+
+### MP4 stream copy (Q-08)
+
+Method: a 3 s `testsrc` 320×240 clip encoded to MKV (WebM for VP9), then `ffmpeg -i in -i t.srt -map 0 -map 1 -c copy -c:s mov_text -movflags +faststart out.mp4` with a one-cue SRT, checked with `ffprobe`.
+
+| Codec | Encoder used | MP4 stream copy (tag) | `mov_text` (tag) | Notes |
+| --- | --- | --- | --- | --- |
+| h264 | `libx264` | ok (`avc1`) | ok (`tx3g`) | — |
+| hevc | `libx265` | ok (`hev1`) | ok (`tx3g`) | `-tag:v hvc1` not needed for the remux; with it the tag is `hvc1`. Playback in Apple players (often reported to need `hvc1`) not tested |
+| vp9 | `libvpx-vp9` (WebM input) | ok (`vp09`) | ok (`tx3g`) | No `-strict experimental` needed |
+| av1 | `libsvtav1` | ok (`av01`) | ok (`tx3g`) | `libaom-av1` and `librav1e` not in this build |
+
+- Every output lasts 3.000 s and has `moov` before `mdat` (faststart applied).
+- Every remux printed one harmless warning: the later `-c:s mov_text` overrides `-c copy` for the subtitle stream.
+- Result: all four codecs in the default `MP4_COPY_CODECS` stream-copy into MP4 with `mov_text` subtitles on this build. Synthetic 8-bit clips only; real files (10-bit, HDR, unusual profiles) not tested.
+
+**Deferred:** MPS availability needs torch → spike S4.
+
 ## S1 — model families on Kaggle (run v4, 2026-10-05)
 
 - **Setup:** Kaggle, 2× Tesla T4 (16 GB each; benchmarks used GPU 0 only), 33 GB RAM. Every model family ran in its own uv venv (Python 3.11).
