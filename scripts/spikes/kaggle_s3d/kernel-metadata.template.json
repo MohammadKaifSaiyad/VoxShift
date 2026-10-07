@@ -1,0 +1,15 @@
+{
+  "id": "KAGGLE_USERNAME/voxshift-s3d",
+  "title": "voxshift-s3d",
+  "code_file": "run_s3d.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": ["KAGGLE_USERNAME/voxshift-s3-clips"],
+  "competition_sources": [],
+  "kernel_sources": [],
+  "model_sources": []
+}
