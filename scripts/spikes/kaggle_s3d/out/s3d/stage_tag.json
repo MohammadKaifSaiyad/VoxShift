@@ -1,0 +1,45 @@
+{
+  "stage": "tag",
+  "ok": true,
+  "labels": [
+    "Singing",
+    "Music",
+    "Speech",
+    "Laughter",
+    "Crying, sobbing",
+    "Screaming",
+    "Sigh"
+  ],
+  "QJH3CCrjda4": {
+    "audio_s": 438.39,
+    "run_s": 29.62,
+    "x_realtime": 14.8,
+    "rtf": 0.068,
+    "windows": 291,
+    "singing_windows": 0,
+    "max_singing": 0.092,
+    "music_windows": 1
+  },
+  "aLvkEaaDte8": {
+    "audio_s": 516.13,
+    "run_s": 36.82,
+    "x_realtime": 14.02,
+    "rtf": 0.071,
+    "windows": 343,
+    "singing_windows": 0,
+    "max_singing": 0.024,
+    "music_windows": 0
+  },
+  "cQ8J2vdB9VU": {
+    "audio_s": 504.85,
+    "run_s": 38.57,
+    "x_realtime": 13.09,
+    "rtf": 0.076,
+    "windows": 335,
+    "singing_windows": 0,
+    "max_singing": 0.045,
+    "music_windows": 3
+  },
+  "peak_rss_mb": 1404.3,
+  "torch_peak_gpu_mb": 1032.0
+}

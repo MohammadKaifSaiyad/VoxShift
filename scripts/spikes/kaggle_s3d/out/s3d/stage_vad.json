@@ -1,0 +1,30 @@
+{
+  "stage": "vad",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "audio_s": 438.39,
+    "run_s": 8.06,
+    "x_realtime": 54.39,
+    "rtf": 0.018,
+    "regions": 21,
+    "speech_s": 37.4
+  },
+  "aLvkEaaDte8": {
+    "audio_s": 516.13,
+    "run_s": 9.28,
+    "x_realtime": 55.64,
+    "rtf": 0.018,
+    "regions": 27,
+    "speech_s": 26.3
+  },
+  "cQ8J2vdB9VU": {
+    "audio_s": 504.85,
+    "run_s": 9.02,
+    "x_realtime": 55.99,
+    "rtf": 0.018,
+    "regions": 48,
+    "speech_s": 53.7
+  },
+  "peak_rss_mb": 703.9,
+  "torch_peak_gpu_mb": 0.0
+}

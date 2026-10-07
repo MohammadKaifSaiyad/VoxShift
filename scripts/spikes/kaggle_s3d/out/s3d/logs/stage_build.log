@@ -1,0 +1,2 @@
+
+$ /tmp/s3d/venvs/dsp/bin/python /tmp/s3d/bench/stage_build.py {"build": {"flip_s": 0.5, "merge_gap_s": 0.35, "min_seg_s": 1.0, "fragment_gap_s": 1.0, "max_seg_s": 12.0, "min_mean_p": 0.45}, "singing_threshold": 0.3, "blacklist": ["izlediğiniz için teşekkür", "altyazı", "abone olmayı unutmayın", "abone olun", "beğenmeyi unutmayın", "bir sonraki videoda", "m.k."], "pass2_min": {"avg_logprob": -0.8, "no_speech_prob": 0.5}, "stage": "build", "result_path": "/kaggle/working/s3d/stage_build.json", "clip

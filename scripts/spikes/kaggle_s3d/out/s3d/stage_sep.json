@@ -1,0 +1,28 @@
+{
+  "stage": "sep",
+  "ok": true,
+  "versions": {
+    "demucs": "4.1.0",
+    "torch": "2.14.1"
+  },
+  "QJH3CCrjda4": {
+    "audio_s": 438.39,
+    "run_s": 20.85,
+    "x_realtime": 21.03,
+    "rtf": 0.048
+  },
+  "aLvkEaaDte8": {
+    "audio_s": 516.13,
+    "run_s": 24.27,
+    "x_realtime": 21.26,
+    "rtf": 0.047
+  },
+  "cQ8J2vdB9VU": {
+    "audio_s": 504.85,
+    "run_s": 24.22,
+    "x_realtime": 20.84,
+    "rtf": 0.048
+  },
+  "peak_rss_mb": 4393.0,
+  "torch_peak_gpu_mb": 550.8
+}

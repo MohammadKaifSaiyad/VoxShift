@@ -1,0 +1,63 @@
+{
+  "stage": "build",
+  "ok": true,
+  "QJH3CCrjda4": {
+    "segments": 16,
+    "dubbable": 16,
+    "skipped": {},
+    "asr_segments_dropped": {
+      "whisper_scores": 0,
+      "blacklist": 1,
+      "pass2_scores": 1
+    },
+    "speaker_flips_smoothed": 0,
+    "fragments_merged": 0,
+    "segments_under_1s": 1,
+    "median_segment_s": 1.94,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 8.0,
+      "SPEAKER_01": 19.5,
+      "SPEAKER_02": 6.2
+    }
+  },
+  "aLvkEaaDte8": {
+    "segments": 23,
+    "dubbable": 23,
+    "skipped": {},
+    "asr_segments_dropped": {
+      "whisper_scores": 0,
+      "blacklist": 0,
+      "pass2_scores": 0
+    },
+    "speaker_flips_smoothed": 2,
+    "fragments_merged": 5,
+    "segments_under_1s": 6,
+    "median_segment_s": 1.38,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 19.0,
+      "SPEAKER_01": 15.8
+    }
+  },
+  "cQ8J2vdB9VU": {
+    "segments": 32,
+    "dubbable": 29,
+    "skipped": {
+      "low_confidence": 3
+    },
+    "asr_segments_dropped": {
+      "whisper_scores": 0,
+      "blacklist": 0,
+      "pass2_scores": 5
+    },
+    "speaker_flips_smoothed": 0,
+    "fragments_merged": 2,
+    "segments_under_1s": 5,
+    "median_segment_s": 1.64,
+    "speech_s_per_speaker": {
+      "SPEAKER_00": 40.8,
+      "SPEAKER_01": 18.0,
+      "UNKNOWN": 1.4
+    }
+  },
+  "peak_rss_mb": 44.8
+}

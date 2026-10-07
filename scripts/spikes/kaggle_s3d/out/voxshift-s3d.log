@@ -1,0 +1,129 @@
+[{"stream_name":"stdout","time":8.637137852,"data":"   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 20.6/20.6 MB 75.6 MB/s eta 0:00:00\n"}
+,{"stream_name":"stdout","time":254.78185133,"data":"[s3d] sep: ok=True wall=90.0s peak=869MB \n"}
+,{"stream_name":"stdout","time":299.828372598,"data":"[s3d] vad: ok=True wall=31.5s peak=3MB \n"}
+,{"stream_name":"stdout","time":425.800276423,"data":"[s3d] tag: ok=True wall=123.6s peak=1605MB \n"}
+,{"stream_name":"stdout","time":539.404668174,"data":"[s3d] asr: ok=True wall=65.1s peak=4119MB \n"}
+,{"stream_name":"stdout","time":706.824510369,"data":"[s3d] diar: ok=True wall=164.1s peak=2853MB \n"}
+,{"stream_name":"stdout","time":707.863923175,"data":"[s3d] build: ok=True wall=0.5s peak=0MB \n"}
+,{"stream_name":"stdout","time":708.65357656,"data":"[s3d] refs: ok=True wall=0.7s peak=0MB \n"}
+,{"stream_name":"stdout","time":993.193324677,"data":"[s3d] audition: ok=True wall=215.8s peak=3961MB \n"}
+,{"stream_name":"stdout","time":1259.057169218,"data":"[s3d] translate: ok=True primary=translategemma \n"}
+,{"stream_name":"stdout","time":1286.693830935,"data":"[s3d] opus: ok=True wall=26.1s peak=453MB \n"}
+,{"stream_name":"stdout","time":1603.309178839,"data":"[s3d] tts: ok=True wall=316.4s peak=4009MB \n"}
+,{"stream_name":"stdout","time":1619.201534457,"data":"[s3d] rewrite_1: {\"QJH3CCrjda4\": {\"over_1_10\": 10, \"rewritten\": 9}, \"aLvkEaaDte8\": {\"over_1_10\": 11, \"rewritten\": 7}, \"cQ8J2vdB9VU\": {\"over_1_10\": 16, \"rewritten\": 12}}\n"}
+,{"stream_name":"stdout","time":1744.14517826,"data":"[s3d] tts_round1: ok=True wall=124.7s peak=4001MB \n"}
+,{"stream_name":"stdout","time":1757.067603188,"data":"[s3d] rewrite_2: {\"QJH3CCrjda4\": {\"over_1_10\": 5, \"rewritten\": 1}, \"aLvkEaaDte8\": {\"over_1_10\": 6, \"rewritten\": 0}, \"cQ8J2vdB9VU\": {\"over_1_10\": 14, \"rewritten\": 4}}\n"}
+,{"stream_name":"stdout","time":1810.191360013,"data":"[s3d] tts_round2: ok=True wall=52.9s peak=4137MB \n"}
+,{"stream_name":"stdout","time":1832.507337496,"data":"[s3d] qc: ok=True wall=22.2s peak=235MB \n"}
+,{"stream_name":"stdout","time":2012.965990952,"data":"[s3d] mix: ok=True wall=180.2s peak=0MB \n"}
+,{"stream_name":"stdout","time":2055.803785172,"data":"[s3d] check: ok=True wall=42.7s peak=4119MB \n"}
+,{"stream_name":"stdout","time":2057.287813463,"data":"# Spike S3d results\n"}
+,{"stream_name":"stdout","time":2057.28784788,"data":"\n"}
+,{"stream_name":"stdout","time":2057.28785412,"data":"Started 2026-10-07 07:24:51; finished 2026-10-07 07:59:07\n"}
+,{"stream_name":"stdout","time":2057.287859423,"data":"\n"}
+,{"stream_name":"stdout","time":2057.287864488,"data":"| Stage | OK | Wall s | Peak GPU MB | Error |\n"}
+,{"stream_name":"stdout","time":2057.287873321,"data":"| --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":2057.287877787,"data":"| sep | True | 90.0 | 869 |  |\n"}
+,{"stream_name":"stdout","time":2057.287881236,"data":"| vad | True | 31.5 | 3 |  |\n"}
+,{"stream_name":"stdout","time":2057.287884812,"data":"| tag | True | 123.6 | 1605 |  |\n"}
+,{"stream_name":"stdout","time":2057.287904454,"data":"| asr | True | 65.1 | 4119 |  |\n"}
+,{"stream_name":"stdout","time":2057.28791106,"data":"| diar | True | 164.1 | 2853 |  |\n"}
+,{"stream_name":"stdout","time":2057.287917431,"data":"| build | True | 0.5 | 0 |  |\n"}
+,{"stream_name":"stdout","time":2057.287923454,"data":"| refs | True | 0.7 | 0 |  |\n"}
+,{"stream_name":"stdout","time":2057.287928697,"data":"| audition | True | 215.8 | 3961 |  |\n"}
+,{"stream_name":"stdout","time":2057.287933613,"data":"| translate | True | 265.9 |  |  |\n"}
+,{"stream_name":"stdout","time":2057.28793848,"data":"| opus | True | 26.1 | 453 |  |\n"}
+,{"stream_name":"stdout","time":2057.287956951,"data":"| tts | True | 316.4 | 4009 |  |\n"}
+,{"stream_name":"stdout","time":2057.287970041,"data":"| rewrite_1 | True | 15.9 |  |  |\n"}
+,{"stream_name":"stdout","time":2057.287974124,"data":"| tts_round1 | True | 124.7 | 4001 |  |\n"}
+,{"stream_name":"stdout","time":2057.28797831,"data":"| rewrite_2 | True | 12.9 |  |  |\n"}
+,{"stream_name":"stdout","time":2057.287986204,"data":"| tts_round2 | True | 52.9 | 4137 |  |\n"}
+,{"stream_name":"stdout","time":2057.287989715,"data":"| qc | True | 22.2 | 235 |  |\n"}
+,{"stream_name":"stdout","time":2057.288006715,"data":"| mix | True | 180.2 | 0 |  |\n"}
+,{"stream_name":"stdout","time":2057.288011586,"data":"| check | True | 42.7 | 4119 |  |\n"}
+,{"stream_name":"stdout","time":2057.288016155,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288021016,"data":"## S3 → S3b → S3c → S3d\n"}
+,{"stream_name":"stdout","time":2057.288026537,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288030418,"data":"| Clip | \u003e 1.10× S3 → S3b → S3c → S3d | Truncated S3 → S3b → S3c → S3d | Overflow | Short lines (pre-roll used, tempo \u003e 1.25) | Speech coverage | Untranscribed muted s | Check (lang, WER) |\n"}
+,{"stream_name":"stdout","time":2057.288037255,"data":"| --- | --- | --- | --- | --- | --- | --- | --- |\n"}
+,{"stream_name":"stdout","time":2057.288041294,"data":"| QJH3CCrjda4 | 64% → 67% → 42% → **38%** | 21% → 22% → 5% → **19%** | 19% | 1 (1, 1) | 67% | 12.5 | en 0.074 |\n"}
+,{"stream_name":"stdout","time":2057.288045671,"data":"| aLvkEaaDte8 | 93% → 54% → 54% → **32%** | 47% → 17% → 21% → **9%** | 14% | 5 (2, 2) | 83% | 4.6 | en 0.429 |\n"}
+,{"stream_name":"stdout","time":2057.288050052,"data":"| cQ8J2vdB9VU | 89% → 50% → 39% → **45%** | 43% → 19% → 14% → **28%** | 14% | 4 (2, 1) | 80% | 11.0 | en 0.157 |\n"}
+,{"stream_name":"stdout","time":2057.288054414,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288058167,"data":"## Per clip\n"}
+,{"stream_name":"stdout","time":2057.288062078,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288065842,"data":"### QJH3CCrjda4\n"}
+,{"stream_name":"stdout","time":2057.288069713,"data":"- sep `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 20.85, \"x_realtime\": 21.03, \"rtf\": 0.048}\n"}
+,{"stream_name":"stdout","time":2057.288074426,"data":"- vad `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 8.06, \"x_realtime\": 54.39, \"rtf\": 0.018, \"regions\": 21, \"speech_s\": 37.4}\n"}
+,{"stream_name":"stdout","time":2057.288079521,"data":"- tag `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 29.62, \"x_realtime\": 14.8, \"rtf\": 0.068, \"windows\": 291, \"singing_windows\": 0, \"max_singing\": 0.092, \"music_windows\": 1}\n"}
+,{"stream_name":"stdout","time":2057.288088389,"data":"- asr `QJH3CCrjda4`: {\"audio_s\": 438.39, \"run_s\": 13.65, \"x_realtime\": 32.12, \"rtf\": 0.031, \"segments\": 17, \"words\": 81, \"vad_regions_missed_by_pass1\": 3, \"pass2_segments\": 3, \"pass2_words\": 12}\n"}
+,{"stream_name":"stdout","time":2057.288107953,"data":"- diar `QJH3CCrjda4_auto`: {\"audio_s\": 438.39, \"run_s\": 19.85, \"x_realtime\": 22.09, \"rtf\": 0.045, \"speakers\": 7, \"speech_s_per_speaker\": {\"SPEAKER_00\": 6.2, \"SPEAKER_01\": 4.5, \"SPEAKER_02\": 5.1, \"SPEAKER_03\": 7.8, \"SPEAKER_04\": 4.2, \"SPEAKER_05\": 4.1, \"SPEAKER_06\": 19.3}}\n"}
+,{"stream_name":"stdout","time":2057.28811504,"data":"- diar `QJH3CCrjda4_fixed`: {\"audio_s\": 438.39, \"run_s\": 19.62, \"x_realtime\": 22.34, \"rtf\": 0.045, \"speakers\": 3, \"speech_s_per_speaker\": {\"SPEAKER_00\": 8.3, \"SPEAKER_01\": 19.2, \"SPEAKER_02\": 23.8}}\n"}
+,{"stream_name":"stdout","time":2057.288121714,"data":"- build `QJH3CCrjda4`: {\"segments\": 16, \"dubbable\": 16, \"skipped\": {}, \"asr_segments_dropped\": {\"whisper_scores\": 0, \"blacklist\": 1, \"pass2_scores\": 1}, \"speaker_flips_smoothed\": 0, \"fragments_merged\": 0, \"segments_under_1s\": 1, \"median_segment_s\": 1.94, \"speech_s_per_speaker\": {\"SPEAKER_00\": 8.0, \"SPEAKER_01\": 19.5, \"SPEAKER_02\": 6.2}}\n"}
+,{"stream_name":"stdout","time":2057.288133512,"data":"- refs `QJH3CCrjda4`: {\"SPEAKER_00\": 6.6, \"SPEAKER_01\": 13.2, \"SPEAKER_02\": 6.2}\n"}
+,{"stream_name":"stdout","time":2057.288138022,"data":"- audition `QJH3CCrjda4`: {\"SPEAKER_00\": {\"source\": \"cloned\", \"cps\": 16.17}, \"SPEAKER_01\": {\"source\": \"cloned\", \"cps\": 15.07}, \"SPEAKER_02\": {\"source\": \"cloned\", \"cps\": 11.34}}\n"}
+,{"stream_name":"stdout","time":2057.288143337,"data":"- translate `QJH3CCrjda4`: {\"segments\": 16, \"chosen\": {\"translategemma\": 16, \"qwen3\": 0, \"opus-mt\": 0}}\n"}
+,{"stream_name":"stdout","time":2057.288148103,"data":"- opus `QJH3CCrjda4`: {\"filled_by_opus_mt\": 0}\n"}
+,{"stream_name":"stdout","time":2057.288152286,"data":"- tts `QJH3CCrjda4`: {\"audio_s\": 46.19, \"run_s\": 66.13, \"x_realtime\": 0.7, \"rtf\": 1.432, \"segments\": 16, \"errors\": 0, \"silence_trimmed_s\": 1.17}\n"}
+,{"stream_name":"stdout","time":2057.288157231,"data":"- rewrite_1 `QJH3CCrjda4`: {\"over_1_10\": 10, \"rewritten\": 9}\n"}
+,{"stream_name":"stdout","time":2057.288161472,"data":"- tts_round1 `QJH3CCrjda4`: {\"audio_s\": 20.3, \"run_s\": 31.05, \"x_realtime\": 0.65, \"rtf\": 1.529, \"segments\": 9, \"errors\": 0, \"silence_trimmed_s\": 0.86}\n"}
+,{"stream_name":"stdout","time":2057.288166457,"data":"- rewrite_2 `QJH3CCrjda4`: {\"over_1_10\": 5, \"rewritten\": 1}\n"}
+,{"stream_name":"stdout","time":2057.28817087,"data":"- tts_round2 `QJH3CCrjda4`: {\"audio_s\": 2.32, \"run_s\": 4.04, \"x_realtime\": 0.57, \"rtf\": 1.741, \"segments\": 1, \"errors\": 0, \"silence_trimmed_s\": 0.32}\n"}
+,{"stream_name":"stdout","time":2057.288176444,"data":"- qc `QJH3CCrjda4`: {\"SPEAKER_02\": {\"n\": 1, \"cos_to_own_centroid_mean\": 1.0, \"cos_to_own_centroid_p10\": 1.0, \"below_0_6\": 0}, \"SPEAKER_01\": {\"n\": 11, \"cos_to_own_centroid_mean\": 0.702, \"cos_to_own_centroid_p10\": 0.659, \"below_0_6\": 1}, \"SPEAKER_00\": {\"n\": 4, \"cos_to_own_centroid_mean\": 0.758, \"cos_to_own_centroid_p10\": 0.7, \"below_0_6\": 0}, \"between_speakers\": {\"SPEAKER_00~SPEAKER_01\": 0.242, \"SPEAKER_00~SPEAKER_02\": 0.327, \"SPEAKER_01~SPEAKER_02\": 0.368}}\n"}
+,{"stream_name":"stdout","time":2057.288188081,"data":"- mix `QJH3CCrjda4`: {\"dubbed\": 16, \"kept_original\": 0, \"fit\": {\"none\": 8, \"tempo_le_1_10\": 2, \"tempo_gt_1_10\": 0, \"overflow\": 3, \"truncated\": 3}, \"ratio_median\": 1.0, \"share_over_1_10\": 0.375, \"share_truncated\": 0.188, \"share_overflow\": 0.188, \"speech_s\": 37.4, \"speech_dubbed_s\": 24.9, \"speech_kept_original_s\": 0.0, \"speech_nonverbal_s\": 0.0, \"speech_untranscribed_muted_s\": 12.5, \"speech_coverage\": 0.667, \"short_lines\": {\"short\": 1, \"preroll_used\": 1, \"tempo_over_1_25\": 1}}\n"}
+,{"stream_name":"stdout","time":2057.288209345,"data":"- check `QJH3CCrjda4`: {\"detected_language\": \"en\", \"language_probability\": 0.967, \"wer_vs_translation\": 0.074}\n"}
+,{"stream_name":"stdout","time":2057.288214812,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288219401,"data":"### aLvkEaaDte8\n"}
+,{"stream_name":"stdout","time":2057.288223864,"data":"- sep `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 24.27, \"x_realtime\": 21.26, \"rtf\": 0.047}\n"}
+,{"stream_name":"stdout","time":2057.288228291,"data":"- vad `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 9.28, \"x_realtime\": 55.64, \"rtf\": 0.018, \"regions\": 27, \"speech_s\": 26.3}\n"}
+,{"stream_name":"stdout","time":2057.288233145,"data":"- tag `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 36.82, \"x_realtime\": 14.02, \"rtf\": 0.071, \"windows\": 343, \"singing_windows\": 0, \"max_singing\": 0.024, \"music_windows\": 0}\n"}
+,{"stream_name":"stdout","time":2057.288242395,"data":"- asr `aLvkEaaDte8`: {\"audio_s\": 516.13, \"run_s\": 7.24, \"x_realtime\": 71.31, \"rtf\": 0.014, \"segments\": 25, \"words\": 95, \"vad_regions_missed_by_pass1\": 1, \"pass2_segments\": 1, \"pass2_words\": 4}\n"}
+,{"stream_name":"stdout","time":2057.288247764,"data":"- diar `aLvkEaaDte8_auto`: {\"audio_s\": 516.13, \"run_s\": 24.79, \"x_realtime\": 20.82, \"rtf\": 0.048, \"speakers\": 4, \"speech_s_per_speaker\": {\"SPEAKER_00\": 6.2, \"SPEAKER_01\": 21.0, \"SPEAKER_02\": 34.5, \"SPEAKER_03\": 20.3}}\n"}
+,{"stream_name":"stdout","time":2057.288253026,"data":"- diar `aLvkEaaDte8_fixed`: {\"audio_s\": 516.13, \"run_s\": 24.71, \"x_realtime\": 20.88, \"rtf\": 0.048, \"speakers\": 2, \"speech_s_per_speaker\": {\"SPEAKER_00\": 20.3, \"SPEAKER_01\": 61.7}}\n"}
+,{"stream_name":"stdout","time":2057.288258816,"data":"- build `aLvkEaaDte8`: {\"segments\": 23, \"dubbable\": 23, \"skipped\": {}, \"asr_segments_dropped\": {\"whisper_scores\": 0, \"blacklist\": 0, \"pass2_scores\": 0}, \"speaker_flips_smoothed\": 2, \"fragments_merged\": 5, \"segments_under_1s\": 6, \"median_segment_s\": 1.38, \"speech_s_per_speaker\": {\"SPEAKER_00\": 19.0, \"SPEAKER_01\": 15.8}}\n"}
+,{"stream_name":"stdout","time":2057.288264965,"data":"- refs `aLvkEaaDte8`: {\"SPEAKER_00\": 7.0, \"SPEAKER_01\": 12.1}\n"}
+,{"stream_name":"stdout","time":2057.288269187,"data":"- audition `aLvkEaaDte8`: {\"SPEAKER_00\": {\"source\": \"cloned\", \"cps\": 16.67}, \"SPEAKER_01\": {\"source\": \"cloned\", \"cps\": 11.6}}\n"}
+,{"stream_name":"stdout","time":2057.288274119,"data":"- translate `aLvkEaaDte8`: {\"segments\": 23, \"chosen\": {\"translategemma\": 22, \"qwen3\": 0, \"opus-mt\": 1}}\n"}
+,{"stream_name":"stdout","time":2057.288278995,"data":"- opus `aLvkEaaDte8`: {\"filled_by_opus_mt\": 1}\n"}
+,{"stream_name":"stdout","time":2057.288286302,"data":"- tts `aLvkEaaDte8`: {\"audio_s\": 51.61, \"run_s\": 78.76, \"x_realtime\": 0.66, \"rtf\": 1.526, \"segments\": 22, \"errors\": 1, \"silence_trimmed_s\": 1.15}\n"}
+,{"stream_name":"stdout","time":2057.288303521,"data":"- rewrite_1 `aLvkEaaDte8`: {\"over_1_10\": 11, \"rewritten\": 7}\n"}
+,{"stream_name":"stdout","time":2057.288308595,"data":"- tts_round1 `aLvkEaaDte8`: {\"audio_s\": 9.27, \"run_s\": 16.85, \"x_realtime\": 0.55, \"rtf\": 1.817, \"segments\": 7, \"errors\": 0, \"silence_trimmed_s\": 0.41}\n"}
+,{"stream_name":"stdout","time":2057.288314021,"data":"- rewrite_2 `aLvkEaaDte8`: {\"over_1_10\": 6, \"rewritten\": 0}\n"}
+,{"stream_name":"stdout","time":2057.288319304,"data":"- tts_round2 `aLvkEaaDte8`: {\"audio_s\": 0.0, \"run_s\": 0.0, \"x_realtime\": null, \"rtf\": null, \"segments\": 0, \"errors\": 0, \"silence_trimmed_s\": 0.0}\n"}
+,{"stream_name":"stdout","time":2057.288324446,"data":"- qc `aLvkEaaDte8`: {\"SPEAKER_00\": {\"n\": 11, \"cos_to_own_centroid_mean\": 0.712, \"cos_to_own_centroid_p10\": 0.627, \"below_0_6\": 1}, \"SPEAKER_01\": {\"n\": 7, \"cos_to_own_centroid_mean\": 0.656, \"cos_to_own_centroid_p10\": 0.496, \"below_0_6\": 2}, \"between_speakers\": {\"SPEAKER_00~SPEAKER_01\": 0.16}}\n"}
+,{"stream_name":"stdout","time":2057.288330265,"data":"- mix `aLvkEaaDte8`: {\"dubbed\": 22, \"kept_original\": 1, \"fit\": {\"none\": 15, \"tempo_le_1_10\": 0, \"tempo_gt_1_10\": 2, \"overflow\": 3, \"truncated\": 2}, \"ratio_median\": 0.88, \"share_over_1_10\": 0.318, \"share_truncated\": 0.091, \"share_overflow\": 0.136, \"speech_s\": 26.3, \"speech_dubbed_s\": 21.4, \"speech_kept_original_s\": 0.0, \"speech_nonverbal_s\": 0.3, \"speech_untranscribed_muted_s\": 4.6, \"speech_coverage\": 0.827, \"short_lines\": {\"short\": 5, \"preroll_used\": 2, \"tempo_over_1_25\": 2}}\n"}
+,{"stream_name":"stdout","time":2057.288337451,"data":"- check `aLvkEaaDte8`: {\"detected_language\": \"en\", \"language_probability\": 0.806, \"wer_vs_translation\": 0.429}\n"}
+,{"stream_name":"stdout","time":2057.288345984,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288349871,"data":"### cQ8J2vdB9VU\n"}
+,{"stream_name":"stdout","time":2057.288353819,"data":"- sep `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 24.22, \"x_realtime\": 20.84, \"rtf\": 0.048}\n"}
+,{"stream_name":"stdout","time":2057.288358672,"data":"- vad `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 9.02, \"x_realtime\": 55.99, \"rtf\": 0.018, \"regions\": 48, \"speech_s\": 53.7}\n"}
+,{"stream_name":"stdout","time":2057.288363415,"data":"- tag `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 38.57, \"x_realtime\": 13.09, \"rtf\": 0.076, \"windows\": 335, \"singing_windows\": 0, \"max_singing\": 0.045, \"music_windows\": 3}\n"}
+,{"stream_name":"stdout","time":2057.288368398,"data":"- asr `cQ8J2vdB9VU`: {\"audio_s\": 504.85, \"run_s\": 13.19, \"x_realtime\": 38.26, \"rtf\": 0.026, \"segments\": 35, \"words\": 149, \"vad_regions_missed_by_pass1\": 7, \"pass2_segments\": 6, \"pass2_words\": 7}\n"}
+,{"stream_name":"stdout","time":2057.288373625,"data":"- diar `cQ8J2vdB9VU_auto`: {\"audio_s\": 504.85, \"run_s\": 23.13, \"x_realtime\": 21.83, \"rtf\": 0.046, \"speakers\": 5, \"speech_s_per_speaker\": {\"SPEAKER_00\": 8.6, \"SPEAKER_01\": 8.4, \"SPEAKER_02\": 14.0, \"SPEAKER_03\": 18.4, \"SPEAKER_04\": 36.0}}\n"}
+,{"stream_name":"stdout","time":2057.288382889,"data":"- diar `cQ8J2vdB9VU_fixed`: {\"audio_s\": 504.85, \"run_s\": 23.39, \"x_realtime\": 21.58, \"rtf\": 0.046, \"speakers\": 2, \"speech_s_per_speaker\": {\"SPEAKER_00\": 48.0, \"SPEAKER_01\": 37.4}}\n"}
+,{"stream_name":"stdout","time":2057.288417287,"data":"- build `cQ8J2vdB9VU`: {\"segments\": 32, \"dubbable\": 29, \"skipped\": {\"low_confidence\": 3}, \"asr_segments_dropped\": {\"whisper_scores\": 0, \"blacklist\": 0, \"pass2_scores\": 5}, \"speaker_flips_smoothed\": 0, \"fragments_merged\": 2, \"segments_under_1s\": 5, \"median_segment_s\": 1.64, \"speech_s_per_speaker\": {\"SPEAKER_00\": 40.8, \"SPEAKER_01\": 18.0, \"UNKNOWN\": 1.4}}\n"}
+,{"stream_name":"stdout","time":2057.288429253,"data":"- refs `cQ8J2vdB9VU`: {\"SPEAKER_00\": 13.8, \"SPEAKER_01\": 11.4, \"UNKNOWN\": 0.0}\n"}
+,{"stream_name":"stdout","time":2057.288433936,"data":"- audition `cQ8J2vdB9VU`: {\"SPEAKER_00\": {\"source\": \"cloned\", \"cps\": 17.14}, \"SPEAKER_01\": {\"source\": \"cloned\", \"cps\": 16.77}, \"UNKNOWN\": {\"source\": \"fallback_bank_a\", \"cps\": 19.16}}\n"}
+,{"stream_name":"stdout","time":2057.288439285,"data":"- translate `cQ8J2vdB9VU`: {\"segments\": 29, \"chosen\": {\"translategemma\": 29, \"qwen3\": 0, \"opus-mt\": 0}}\n"}
+,{"stream_name":"stdout","time":2057.288443827,"data":"- opus `cQ8J2vdB9VU`: {\"filled_by_opus_mt\": 0}\n"}
+,{"stream_name":"stdout","time":2057.288447862,"data":"- tts `cQ8J2vdB9VU`: {\"audio_s\": 80.94, \"run_s\": 129.84, \"x_realtime\": 0.62, \"rtf\": 1.604, \"segments\": 29, \"errors\": 0, \"silence_trimmed_s\": 3.02}\n"}
+,{"stream_name":"stdout","time":2057.288452761,"data":"- rewrite_1 `cQ8J2vdB9VU`: {\"over_1_10\": 16, \"rewritten\": 12}\n"}
+,{"stream_name":"stdout","time":2057.288456923,"data":"- tts_round1 `cQ8J2vdB9VU`: {\"audio_s\": 29.47, \"run_s\": 45.68, \"x_realtime\": 0.65, \"rtf\": 1.55, \"segments\": 12, \"errors\": 0, \"silence_trimmed_s\": 1.21}\n"}
+,{"stream_name":"stdout","time":2057.288461866,"data":"- rewrite_2 `cQ8J2vdB9VU`: {\"over_1_10\": 14, \"rewritten\": 4}\n"}
+,{"stream_name":"stdout","time":2057.288466815,"data":"- tts_round2 `cQ8J2vdB9VU`: {\"audio_s\": 13.45, \"run_s\": 18.44, \"x_realtime\": 0.73, \"rtf\": 1.371, \"segments\": 4, \"errors\": 0, \"silence_trimmed_s\": 0.15}\n"}
+,{"stream_name":"stdout","time":2057.288471833,"data":"- qc `cQ8J2vdB9VU`: {\"SPEAKER_01\": {\"n\": 7, \"cos_to_own_centroid_mean\": 0.756, \"cos_to_own_centroid_p10\": 0.72, \"below_0_6\": 0}, \"SPEAKER_00\": {\"n\": 20, \"cos_to_own_centroid_mean\": 0.676, \"cos_to_own_centroid_p10\": 0.541, \"below_0_6\": 3}, \"between_speakers\": {\"SPEAKER_00~SPEAKER_01\": 0.174}}\n"}
+,{"stream_name":"stdout","time":2057.288482299,"data":"- mix `cQ8J2vdB9VU`: {\"dubbed\": 29, \"kept_original\": 3, \"fit\": {\"none\": 11, \"tempo_le_1_10\": 5, \"tempo_gt_1_10\": 1, \"overflow\": 4, \"truncated\": 8}, \"ratio_median\": 1.06, \"share_over_1_10\": 0.448, \"share_truncated\": 0.276, \"share_overflow\": 0.138, \"speech_s\": 53.7, \"speech_dubbed_s\": 40.5, \"speech_kept_original_s\": 0.4, \"speech_nonverbal_s\": 1.8, \"speech_untranscribed_muted_s\": 11.0, \"speech_coverage\": 0.795, \"short_lines\": {\"short\": 4, \"preroll_used\": 2, \"tempo_over_1_25\": 1}}\n"}
+,{"stream_name":"stdout","time":2057.28850621,"data":"- check `cQ8J2vdB9VU`: {\"detected_language\": \"en\", \"language_probability\": 0.798, \"wer_vs_translation\": 0.157}\n"}
+,{"stream_name":"stdout","time":2057.288512117,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288516325,"data":"LLM probes: {\"translategemma:4b\": {\"seconds_incl_load\": 104.9, \"answer\": \"Hello, how are you?\"}, \"qwen3:4b-instruct\": {\"seconds_incl_load\": 3.9, \"answer\": \"Hello, how are you?\"}}\n"}
+,{"stream_name":"stdout","time":2057.288522439,"data":"Translators: {\"translategemma\": {\"segments\": 68, \"within_budget\": 0.515, \"rejected\": {\"commentary\": 1}, \"mean_chars_over_budget\": 5.3, \"mean_generation_s\": 0.81}, \"qwen3\": {\"segments\": 68, \"within_budget\": 0.662, \"rejected\": {\"commentary\": 1}, \"mean_chars_over_budget\": 1.7, \"mean_generation_s\": 0.47}}\n"}
+,{"stream_name":"stdout","time":2057.288529067,"data":"Primary translator: translategemma\n"}
+,{"stream_name":"stdout","time":2057.288533134,"data":"\n"}
+,{"stream_name":"stdout","time":2057.288536881,"data":"Listen: audio/\u003cclip\u003e_dub.m4a. Read: review_\u003cclip\u003e.md. Private evaluation only (docs/footage.md).\n"}
+,{"stream_name":"stderr","time":2060.978499535,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":2060.978531364,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":2061.663827277,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":2061.663863469,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":2064.837588818,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":2066.642606268,"data":"[NbConvertApp] Writing 493735 bytes to __results__.html\n"}
+]

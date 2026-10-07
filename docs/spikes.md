@@ -204,6 +204,52 @@ The TTS projection assumes ~55 min of English speech × 1.3 for audition, drift-
 7. **Rewrite round 2 adds little** (0–3 lines): once a line is near its budget, the 4B model cannot shorten it further without losing meaning. A larger rewrite model, or the short-utterance policy, is the next lever, not more rounds.
 8. **Voices are distinct and fairly consistent.** Between speakers 0.07–0.41. Within a speaker, up to 4–5 of 14–22 lines fall below 0.6 cosine, so the drift gate (SPEC §3.2.7) would regenerate about 10–25% of a main actor's lines. That cost belongs in the speed estimate.
 
+## S3d — translation split and short-line rule (run v2, 2026-10-07)
+
+- **Code:** `scripts/spikes/kaggle_s3d/run_s3d.py`. Output: `scripts/spikes/kaggle_s3d/out/s3d/`. `review_<clip>.md` shows TranslateGemma and Qwen3 side by side.
+- **Run time:** 34 min.
+- **Changes from S3c:**
+  - TranslateGemma translates; Qwen3-4B-Instruct only shortens (and is the fallback);
+  - validation rejects untranslated and half-Turkish output;
+  - phantom-line blacklist;
+  - D-65 short-line rule.
+
+| | ISLIK | Teneke | Hediye |
+| --- | --- | --- | --- |
+| Lines needing tempo > 1.10×, S3 → S3b → S3c → S3d | 64 → 67 → 42 → **38%** | 93 → 54 → 54 → **32%** | 89 → 50 → 39 → **45%** |
+| Truncated, S3 → S3b → S3c → S3d | 21 → 22 → 5 → **19%** | 47 → 17 → 21 → **9%** | 43 → 19 → 14 → **28%** |
+| Short lines (< 1 s): count; pre-roll used; tempo > 1.25 | 1; 1; 1 | 5; 2; 2 | 4; 2; 1 |
+| English re-transcription (language; WER) | en; **7%** | en; 43% | en; **16%** |
+| Speech coverage; untranscribed muted | 67%; 12.5 s | 83%; 4.6 s | 80%; 11.0 s |
+| ASR segments dropped: blacklist; strict pass 2 | 1; 1 | 0; 0 | 0; 5 |
+
+**Translators on the same 68 lines:**
+
+| | Within budget | Mean chars over budget | Generation time per line | Rejected |
+| --- | --- | --- | --- | --- |
+| TranslateGemma 4B | 52% | 5.3 | 0.81 s | 1 commentary |
+| Qwen3-4B-Instruct | 66% | 1.7 | 0.47 s | 1 commentary |
+
+### Findings
+
+1. **TranslateGemma is clearly the better translator; Qwen3 is the better shortener.** Side by side on idioms and slang:
+
+   | Turkish | TranslateGemma | Qwen3 |
+   | --- | --- | --- |
+   | "Adam mı yiyorsun sen?" | "Are you serious?" | "Are you eating a man?" |
+   | "Aç mısın oğlum?" | "Hungry, son?" | "Ach, son?" |
+   | "Bak" | "Look." | "Bak" (untranslated) |
+
+   This confirms the spec's split: TranslateGemma translates, an instruct model rewrites. Qwen3's rewrites save time but can turn telegraphic ("History vis. below", "Yes, different game."). A larger rewrite model is the obvious next lever.
+2. **The split costs timing on two films.** TranslateGemma's longer lines raised truncation on ISLIK (5 → 19%) and Hediye (14 → 28%), even though rewrite round 1 now shortens 64–82% of the over-long lines. Teneke improved (truncation 21 → 9%, over 1.10× 54 → 32%), helped by the short-line rule and better translations.
+3. **The short-line rule works where it applies.** 10 short lines; pre-roll used on 5, tempo above 1.25 on 4. The worst S3c case, "bak." (4.5× its slot), now overflows briefly into silence instead of being truncated.
+4. **Intelligibility of the final dub improved** (WER 7% ISLIK, 16% Hediye; 43% Teneke, which has rapid slang exchanges). All dubs are detected as English with p 0.80–0.97.
+5. **The blacklist and strict second pass removed phantom lines** (7 ASR segments dropped), at a cost in coverage on ISLIK (77 → 67%). Hediye's opening announcer lines (garbled ASR) still get dubbed and truncated, inflating its numbers. Cast review's "ignore" action is the remedy.
+6. **The target (SPEC §2: ≤ 15% of lines over 1.10×) is still not met** on these short films (32–45%; truncation 9–28%). The per-line greedy fitting of SPEC §9 has reached its limits on rapid exchanges. Remaining levers:
+   - a **timeline solver** that may delay the next line by a fraction of a second when it has slack ("ripple"), instead of truncating the current one;
+   - a larger rewrite model;
+   - reconsidering whether SC2–SC4 thresholds suit drama dialogue (owner decision after golden clips, Phase 11).
+
 ### Still to do
 
 - **Listen** to `scripts/spikes/kaggle_s3/out/s3/audio/`:
