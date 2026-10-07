@@ -32,7 +32,13 @@ They report these to the main agent, which takes them to the owner.
 
 - **Done:** Task 1 (commit `6495eda`) and Task 2 (D-69 to D-80).
 - **Decided:** Q-01 to Q-37 (D-66 to D-81). Kaggle terms are recorded in `docs/platform_terms.md`.
-- **Open:** Q-17, Q-18, Q-19, Q-24 and Q-38 to Q-42.
+- **Open:** Q-17, Q-18, Q-19, Q-24, Q-43 and Q-45 to Q-47. Q-38 to Q-44 were decided as D-82 to D-88.
+- **Effects of D-83 to D-85 on this plan:**
+  - Task 6 runs on the Mac, not Kaggle, for CC film footage (D-85).
+  - Golden-clip dubbing waits for Q-45 (actor consent, D-84).
+  - The S4a rerun must not clone a film actor (D-84; Q-43).
+  - Task 12's Kaggle clean-up waits for Q-46.
+  - The "sanctioned routes only" line below is superseded by D-83.
 - **Task 3:** S4a is done (commit `2ac1ed4`). Chatterbox on the Mac runs at RTF 6.7–7.2, so TTS alone projects to about 8 h for a 90-min film. Per D-66 the reference machine is revisited (Q-43). The rest of Task 3 and any further downloads wait for the owner's answer to Q-43.
 - **Golden shortlist:** recorded in `docs/footage.md` (commit `084873b`) and waiting for owner approval.
 - **Changes caused by Task 2:**

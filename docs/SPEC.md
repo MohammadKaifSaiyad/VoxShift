@@ -63,6 +63,8 @@ A local-first application that dubs a video from a source language into a target
 ### 1.5 Legal and consent
 
 - Process only content the user has the right to dub. Use voice references only with consent. Test only with rights-cleared footage (`docs/footage.md`); never copyrighted TV footage.
+- Clone an actor's voice only with that actor's explicit consent. This applies to test footage too: a CC-BY license does not cover cloning. Without an actor's consent, that actor's voice is not cloned.
+- Voice contributors to tests (the consenting speakers in §17, Phase 0 item 3) give explicit, project-specific consent to voice cloning: written, naming VoxShift and the uses, and covering the checklist in `docs/platform_terms.md` (Kaggle processing, its license, access, deletion timeline, cross-border processing, withdrawal). Consent notes are kept outside git.
 - Keep the TTS watermark. Label outputs as AI-dubbed (§11).
 - Speaker embeddings and reference clips are biometric data: scoped to one job, never reused across jobs, deleted by `DELETE /api/jobs/{id}`.
 - Non-commercial models are disabled by default (§4.3).
@@ -106,7 +108,7 @@ Two separate layers: **identity** (who is who across the whole video) and **voic
    - merge proposal: cosine ≥ `MERGE_COS`;
    - "similar voices" warning: `SPLIT_COS` ≤ cosine < `MERGE_COS` (edge case 12);
    - split proposal: a speaker whose segment embeddings form two clusters (agglomerative; cosine between cluster centroids < `SPLIT_COS`; each cluster ≥ 5 segments and ≥ 5 s).
-4. **Cast review** (stage `CAST_REVIEW`, mandatory). Job status `PAUSED`. Shown per speaker: 3 audio clips (highest confidence, spread across the timeline), segment count, speech seconds, estimated gender with confidence, the similarity matrix and the proposals. Actions: `merge`, `split` (accept a proposal or list segment ids), `rename` (display name), `ignore` (reason `crowd | tv | song | other`; that speaker's segments are not dubbed and keep original audio), `set_gender` (`female | male | unknown`), `set_voice` (§3.2.9), `set_speaker_count` (`n`; reruns `DIARIZING` with `num_speakers = n` and the stages after it, so `CAST_REVIEW` pauses again with the new speakers). Actions are stored as `SpeakerOverride` rows. The effective cast (diarization + overrides) feeds the input hash of every later stage. Leave the pause with `POST /api/jobs/{id}/resume`.
+4. **Cast review** (stage `CAST_REVIEW`, mandatory). Job status `PAUSED`. Shown per speaker: 3 audio clips (highest confidence, spread across the timeline), segment count, speech seconds, estimated gender with confidence, the similarity matrix and the proposals. Actions: `merge`, `split` (accept a proposal or list segment ids), `rename` (display name), `ignore` (reason `crowd | tv | song | other`; that speaker's segments are not dubbed and keep original audio), `set_gender` (`female | male | unknown`), `set_voice` (§3.2.9), `set_speaker_count` (`n`; reruns `DIARIZING` with `num_speakers = n` and the stages after it, so `CAST_REVIEW` pauses again with the new speakers). `set_speaker_count` is allowed only before any other cast edit. Once other cast edits exist, changing the speaker count requires an explicit reset of those edits followed by re-diarization; the user is told first that the edits will be discarded. Actions are stored as `SpeakerOverride` rows. The effective cast (diarization + overrides) feeds the input hash of every later stage. Leave the pause with `POST /api/jobs/{id}/resume`.
 5. **`--auto-cast`** (CLI) / `auto_cast=true` (API) resumes `CAST_REVIEW` with no overrides. Accepted only when `DUBBER_TEST_MODE=true`. The report records `cast_review_mode = auto | human`; only `human` counts for §2.
 6. Overrides may change after later stages ran. The changed hash invalidates the affected downstream stages and segments.
 
@@ -171,7 +173,9 @@ Keep them disabled for any commercial use, including internal use within a compa
 ### 4.4 Packages and tools
 
 - Python and npm package licenses are audited by `scripts/license_report.py` into `THIRD_PARTY_LICENSES.md`. Runtime packages: permissive, MPL-2.0, or LGPL (unmodified, dynamically used). GPL packages only in dev-only tooling (for example fixture generation), never imported by the shipped runtime.
-- Provider environments declare their dependencies explicitly. `chatterbox-tts` 0.1.7 requires `pykakasi==2.3.0` (GPL-3.0-or-later) and `gradio==6.8.0`; both are excluded from the TTS environment if the tr/en runtime does not need them (checked in Phase 0). If they turn out to be required, the owner decides, because GPL is not allowed in the shipped runtime.
+- Provider environments declare their dependencies explicitly. The TTS environment excludes three packages; an install without them (explicit dependency list) is verified when that environment is built:
+  - `pykakasi` and `gradio`: `chatterbox-tts` 0.1.7 requires `pykakasi==2.3.0` (GPL-3.0-or-later, not allowed in the shipped runtime) and `gradio==6.8.0`, but the tr/en runtime does not import either (Phase 0, S4a);
+  - `spacy-pkuseg`: Chatterbox's tokenizer imports it on every load, and it downloads `spacy_ontonotes.zip` from GitHub, outside the lock and the offline rule (§4.2). It is needed only for Chinese.
 - FFmpeg is installed by the user and run as an executable; it is not redistributed in this release. Use the native `aac` encoder (never `libfdk_aac`). Never depend on GPL-only filters such as `rubberband`. A future image that bundles FFmpeg must use an LGPL build.
 
 ---
@@ -639,7 +643,7 @@ Binds to `127.0.0.1` by default. No authentication in this release; do not expos
 | POST | `/api/jobs/{id}/resume` | Leave `PAUSED` (`CAST_REVIEW` or `TRANSLATION_REVIEW`) |
 | GET | `/api/jobs/{id}/stages` | StageRun list |
 | GET | `/api/jobs/{id}/cast` | Cast-review data: speakers, clips, similarity matrix, proposals, overrides |
-| PUT | `/api/jobs/{id}/cast` | Replace the override list (`merge`, `split`, `rename`, `ignore`, `set_gender`, `set_voice`, `set_speaker_count`) |
+| PUT | `/api/jobs/{id}/cast` | Replace the override list (`merge`, `split`, `rename`, `ignore`, `set_gender`, `set_voice`, `set_speaker_count`). `set_speaker_count` follows the rule in §3.1 item 4. |
 | GET | `/api/jobs/{id}/speakers` | Speaker profiles and voices |
 | GET | `/api/jobs/{id}/segments` | Segments (paged) |
 | PATCH | `/api/jobs/{id}/segments/{sid}` | Edit `tgt_text` or skip. Voice cannot be changed per segment (use `set_voice` per actor). |
@@ -658,7 +662,7 @@ Segment edits are applied by a run starting at the earliest affected stage (`ret
 - Job form: file upload (primary) or URL, consent checkbox, language selectors, "pause after translation" toggle.
 - Job list (reachable again after closing the browser).
 - Job page: `status`, `current_stage`, progress per stage using the §8.0 names, errors and warnings.
-- Cast review screen (job `PAUSED` at `CAST_REVIEW`): per speaker 3 clips, segment count, speech seconds, gender with confidence (editable), similarity-matrix heatmap, proposals; merge, split, rename, ignore, set gender, set speaker count; "Confirm cast" resumes.
+- Cast review screen (job `PAUSED` at `CAST_REVIEW`): per speaker 3 clips, segment count, speech seconds, gender with confidence (editable), similarity-matrix heatmap, proposals; merge, split, rename, ignore, set gender, set speaker count (once other edits exist, only through a reset, after telling the user the edits will be discarded; §3.1 item 4); "Confirm cast" resumes.
 - Speakers table: display name, gender with confidence, voice source (`cloned | fallback_bank`), audition score, segment count, reference preview, similar-voice warning; change voice per actor.
 - Segment table: source text, translation, `dub_status` and `skip_reason`, `fit_method`, `drift_cos`, `needs_review`, audio preview; edit text, skip, regenerate. In edit mode it serves the `TRANSLATION_REVIEW` pause.
 - Player: original vs dubbed (track switch).
@@ -761,6 +765,7 @@ Per clip, in `golden/<clip_id>/`:
 | `reference_transcript.json` | Corrected segments: `id`, `start`, `end`, `speaker` (matching the RTTM), `text` (verbatim Turkish), `flags` (`overlap`, `singing`, `foreign_language`, `non_verbal`, `unintelligible`) |
 
 - Speaker labels are corrected by a human listening to and watching the clip. Model output only provides drafts.
+- Cloning an actor's voice from a golden clip requires that actor's explicit consent (§1.5); the clip's CC-BY license does not cover cloning. Without an actor's consent, that actor's voice is not cloned.
 - Only `golden/manifest.json` is committed. Per clip it records:
   - source URL, license and attribution;
   - excerpt start and end in the source, and duration;
@@ -796,7 +801,7 @@ One numbering, Phase 0 to 12. Each phase ends runnable, with automated tests, an
 
 1. Hardware: detect chip and RAM (`sysctl -n machdep.cpu.brand_string hw.memsize`), macOS version and MPS availability; record them in `docs/spikes.md`. Do not assume a RAM size.
 2. Benchmarks (real-time factor and peak memory on 60-second and 5-minute clips): VAD; ASR (mlx-whisper large-v3 vs large-v3-turbo; faster-whisper CPU int8); alignment; diarization CPU vs MPS (with parity check); separation Demucs `htdemucs` on a 5-minute clip; TTS Chatterbox Multilingual V3, Chatterbox English, Turbo/Nano and Qwen3-TTS, each on CPU vs MPS vs hybrid-MLX (`chatterbox-mlx` fork); translation TranslateGemma 4B vs 12B and the rewrite LLM via Ollama. On the Mac, measurements are staged (D-66): a small Chatterbox TTS experiment first, and the rest of the model set only after it.
-3. TTS bake-off (Turkish reference, English text): speaker similarity, re-transcription WER, real-time factor, memory, listening tests; voice-consistency metrics (drift over 50 segments per actor, cosine to centroid, variance across seeds); VC lock on vs off; exaggeration band; `cfg_weight` 0 vs default, including its effect on clip duration (hypothesis: 0 lengthens clips); reference length 5–15 s vs 10–30 s. Voices: 2–3 consenting Turkish speakers with ≥ 2 min of speech each. Consent notes are kept outside git; the recordings are kept only in private datasets and deleted after use.
+3. TTS bake-off (Turkish reference, English text): speaker similarity, re-transcription WER, real-time factor, memory, listening tests; voice-consistency metrics (drift over 50 segments per actor, cosine to centroid, variance across seeds); VC lock on vs off; exaggeration band; `cfg_weight` 0 vs default, including its effect on clip duration (hypothesis: 0 lengthens clips); reference length 5–15 s vs 10–30 s. Voices: 2–3 consenting Turkish speakers (consent as in §1.5) with ≥ 2 min of speech each. Consent notes are kept outside git; the recordings are kept only in private datasets and deleted after use.
 4. Calibrate thresholds (§19 item 12) on golden clips.
 5. Footage: source rights-cleared multi-speaker Turkish footage (CC-BY or the owner's recordings) for `golden/`; record source, license and attribution in `docs/footage.md`. If none can be found, ask the owner. Never use copyrighted TV footage.
 6. Licenses: build `models.lock.json`, `MODEL_LICENSES.md`, `NOTICE`, initial `THIRD_PARTY_LICENSES.md`; work through §19.
@@ -846,7 +851,9 @@ Unified memory is shared by CPU and GPU. One model process at a time; exit the p
 
 ### 18.7 G6 — Legal and ethical checklist
 
-Process only content you have the right to dub; voice references only with consent; keep the TTS watermark; label outputs as AI-dubbed in metadata and wherever they are published; respect platform terms (prefer uploading files you own over downloading); keep `NOTICE` current for CC-BY models; keep non-commercial plugins disabled; purge jobs you no longer need (biometric data).
+Process only content you have the right to dub; voice references only with consent; keep the TTS watermark; label outputs as AI-dubbed in metadata and wherever they are published; respect platform terms (prefer uploading files you own over downloading; for test footage, see the owner exception below); keep `NOTICE` current for CC-BY models; keep non-commercial plugins disabled; purge jobs you no longer need (biometric data).
+
+**Owner exception for test footage (D-83):** CC-BY videos uploaded by the rights holder may be downloaded from YouTube with yt-dlp, for private evaluation, on the owner's Mac only. The owner accepts the risk that YouTube's Terms of Service prohibit this (download clause; `docs/platform_terms.md`): CC-BY covers copyright, not the platform agreement. Never run a downloader inside Kaggle.
 
 ### 18.8 G7 — Reading list
 

@@ -2,7 +2,13 @@
 
 Every clip used for testing, with source, license and required attribution. Media files live in `media/` (git-ignored) and are never committed. Only rights-cleared material: no copyrighted TV footage (owner decision, Phase 0).
 
-**Use limits for all clips:** private evaluation only. Dubbed outputs contain cloned voices of real people who did not consent to voice cloning (the CC-BY license covers the recordings, not consent to cloning), so outputs are never published or shared, and are deleted when the evaluation ends.
+**Download route (D-83):** CC-BY videos uploaded by the rights holder may be downloaded from YouTube with yt-dlp, for private evaluation, on the owner's Mac only. The owner accepts the risk that YouTube's Terms of Service prohibit this; CC-BY covers copyright, not the platform agreement (`docs/platform_terms.md`). Never run a downloader inside Kaggle. The sanctioned routes (Wikimedia Commons, Vimeo downloads, files from the creator) remain available.
+
+**Use limits for all clips:**
+- Private evaluation only. Outputs are never published or shared, and are deleted when the evaluation ends.
+- **Voice cloning (D-84):** explicit consent from the actor is required before that actor's voice is cloned. The CC-BY license covers the recordings, not cloning. Without an actor's consent, that actor's voice is not cloned.
+- **Made before D-84 and D-85:** the S3–S3d dubs and the S4a outputs contain cloned voices of these films' actors, made without their consent, and the three films are in the Kaggle dataset `voxshift-s3-clips`. Their deletion awaits the owner's OK (Q-46).
+- **Kaggle (D-85):** CC-licensed film footage stays off Kaggle unless the right to upload it to Kaggle (given Kaggle's §9 license grant, `docs/platform_terms.md`) is explicitly verified for that film.
 
 | ID | Title | Uploader (rights holder) | URL | License | Length | Retrieved | Credits from the description | Used for |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -14,11 +20,11 @@ Attribution text to use wherever a clip or derivative is shown: "<Title>" by <Up
 
 ## Golden-set shortlist (2026-10-07; not approved, nothing downloaded)
 
-The candidates came from a read-only search by a subagent, reviewed by the main agent.
+The candidates came from a read-only search by a subagent, reviewed by the main agent. Owner (2026-10-07): listen to the candidates and rank them first, then select clips (1–5 min excerpts), not necessarily whole films.
 
 - **License:** taken from each page ("Creative Commons Attribution license (reuse allowed)" on YouTube; `license: by` in Vimeo's public API). The main agent spot-checked #1–#3 on their YouTube pages, and license, uploader and duration matched.
 - **Dialogue density:** unverified for every entry; check by listening.
-- **Download:** YouTube offers no sanctioned file download for third parties (Q-39), so for YouTube picks, ask the creator for the file. That request also gets written confirmation of the rights.
+- **Download:** YouTube offers no sanctioned file download for third parties. YouTube picks may be downloaded with yt-dlp within the limits of D-83 (above); asking the creator for the file instead also gets written confirmation of the rights. The "Download route" column below predates D-83.
 
 | # | Title | Link | Uploader (evidence of rights) | Length · credited cast | Download route | Red flags |
 | --- | --- | --- | --- | --- | --- | --- |
