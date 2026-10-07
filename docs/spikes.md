@@ -249,6 +249,7 @@ The TTS projection assumes ~55 min of English speech × 1.3 for audition, drift-
    - a **timeline solver** that may delay the next line by a fraction of a second when it has slack ("ripple"), instead of truncating the current one;
    - a larger rewrite model;
    - reconsidering whether SC2–SC4 thresholds suit drama dialogue (owner decision after golden clips, Phase 11).
+7. **The blacklist cannot match a capital "İ" (spike bug, found afterwards).** Python's `"İ".lower()` returns `"i̇"` (two code points), so "İzlediğiniz için teşekkür ederim" never matches "izlediğiniz için teşekkür". The phantom line did not appear in S3d only because the stricter pass-2 scores removed it. The real implementation must casefold Turkish first (`İ→i`, `I→ı`).
 
 ### Still to do
 

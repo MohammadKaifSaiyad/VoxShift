@@ -1,6 +1,6 @@
 # Open questions
 
-Items `docs/SPEC.md` could not settle. Each provisional item is already applied in the spec (see the linked decision) and needs the owner's confirmation or a Phase 0 result. When resolved, record the answer in `docs/DECISIONS.md`, update the spec, and delete the item here.
+Items `docs/SPEC.md` could not settle. Each provisional item is already applied in the spec (see the linked decision) and needs the owner's confirmation or a Phase 0 result. When resolved, record the answer in `docs/DECISIONS.md`, update the spec, and delete the item here. The Phase 0 completion plan (`docs/superpowers/plans/2026-10-07-phase-0-completion.md`) gives a recommendation for each item and names the task that answers it.
 
 ## A. Provisional choices — confirm or change
 
@@ -17,7 +17,7 @@ Items `docs/SPEC.md` could not settle. Each provisional item is already applied 
 | Q-09 | Does the ≤ 3× speed target exclude time spent `PAUSED` in review? | Excludes it | D-47 |
 | Q-10 | Is `tr → en` the only pair that must pass acceptance in this release? | Yes; other pairs best-effort | D-48 |
 | Q-11 | End-of-video sync as a hard check with a 45 ms threshold | Hard check H6, 45 ms | D-50 |
-| Q-12 | Translation output as JSON keyed by segment id (needs Phase 0 to show TranslateGemma follows it) | Keyed JSON; per-segment fallback | D-51 |
+| Q-12 | Translation output as JSON keyed by segment id (needs Phase 0 to show TranslateGemma follows it; see Q-27) | Keyed JSON; per-segment fallback | D-51 |
 | Q-13 | One background mode per job (no per-region switching) | One per job | D-53 |
 | Q-14 | "Regenerate with the next seed (max 3)": 3 regenerations (4 attempts) or 3 attempts in total? | 3 regenerations, 4 attempts | D-57 |
 | Q-15 | If no rights-cleared 90-minute Turkish footage exists, may concatenated golden clips be used for the speed and resilience criteria only? | Yes, for §2 criteria 7–8 only | D-60 |
@@ -26,17 +26,25 @@ Items `docs/SPEC.md` could not settle. Each provisional item is already applied 
 
 | # | Question | Why it is open |
 | --- | --- | --- |
-| Q-16 | Loudness target: keep −16 LUFS, or match the original track's measured loudness so switching audio tracks in a player is not jarring? | v2 chose −16 LUFS; the dual-track output makes a mismatch audible. The spec keeps −16 LUFS until decided. |
-| Q-17 | Singing detection (edge case 46): which audio-event tagger, and what if no license-safe tagger works? | Model choice and license are Phase 0 work; a fallback heuristic may be needed. |
-| Q-18 | Do "Chatterbox Multilingual V3" and "Chatterbox Nano (110M)" exist under those names? | Desk research says yes (V3 released 2026-06-10, MIT, includes Turkish; Nano MIT, gated, English), plus a new Chatterbox Flash (`docs/feasibility.md` §2). Close once spike S1 loads them. |
-| Q-19 | Is the ≤ 3× target reachable on the M1 Pro? | TTS real-time factor (with drift-gate regenerations and audition) is the dominant unknown until Phase 0 benchmarks. |
-| Q-20 | Golden-clip footage source | Phase 0 must find rights-cleared multi-speaker Turkish footage; the owner will be asked if none is found. |
-| Q-24 | With Demucs as default (D-62), does singing (for example Teneke's street musician) vanish from the separated background? | Demucs puts singing in the dialogue stem. Check by listening to `aLvkEaaDte8_cfg05_separated` and in spike S3b (singing detection). If it does, songs must be kept from the original (edge case 46). |
-| Q-23 | Reference machine for §2 (Definition of Done): the Mac (D-04) or Kaggle 2× T4 run headless? | Spike S1 measures Kaggle; Kaggle's terms reportedly limit it to personal, non-commercial use, so it fits only while the project stays personal R&D (D-61). |
+| Q-16 | Loudness target: keep −16 LUFS, or match the original track's measured loudness so switching audio tracks in a player is not jarring? | v2 chose −16 LUFS, but with dual-track output a mismatch is audible. The spec keeps −16 LUFS until this is decided. |
+| Q-17 | Singing detection (edge case 46): which audio-event tagger, and what if no license-safe tagger works? | AST (`MIT/ast-finetuned-audioset-10-10-0.4593`, reported BSD-3) ran in S1–S3d at 38–62× real time and returns singing probabilities. Proposed: adopt it, and close this item once its model card is checked at lock time. |
+| Q-18 | Do "Chatterbox Multilingual V3" and "Chatterbox Nano (110M)" exist under those names? | Desk research says yes (`docs/feasibility.md` §2): V3 was released 2026-06-10 under MIT and includes Turkish; Nano is MIT, gated and English-only. There is also a new Chatterbox Flash. S1 loaded the multilingual model from `ResembleAI/chatterbox` through `chatterbox-tts` 0.1.7, but whether those weights are V3 is unconfirmed. S2 records the revision. |
+| Q-19 | Is the ≤ 3× target reachable on the M1 Pro? | Kaggle T4 measured about 1.6× for 90 min (S1). The Mac is unmeasured; spike S4 answers this. |
+| Q-20 | Golden set: footage source and labels | We have 3 CC-BY shorts (`docs/footage.md`), but each has only 31–55 s of speech. The golden set needs ≥ 5 dialogue-dense clips of 1–5 min. It also needs reference transcripts and speaker labels to measure WER and diarization (§19.13). Who produces them? Proposed: the owner corrects the ASR output. |
+| Q-23 | Reference machine for §2 (Definition of Done): the Mac (D-04), or Kaggle 2× T4 run headless? | Spike S1 measured Kaggle, whose terms reportedly limit it to personal, non-commercial use, so it fits only while the project stays personal R&D (D-61). The Mac (checked 2026-10-07) is an M1 Pro with 16 GB, 52 GB of free disk and no FFmpeg installed. A Kaggle reference would mean headless runs on Linux with CUDA, and the local UI would need a remote-run path the spec does not have. |
+| Q-24 | With Demucs as default (D-62), does singing (for example Teneke's street musician) vanish from the separated background? | Demucs puts singing in the dialogue stem. S3b found no singing in the three films (AST maximum 0.03–0.09), so this is still untested. If singing does vanish, songs must be kept from the original (edge case 46). |
+| Q-25 | The timing target (§2 criterion 4: ≤ 15% of lines over 1.10×) is not met on rapid drama dialogue (S3d: 32–45%, truncation 9–28%). Add a "ripple" rule to §9? | Per-line greedy fitting has reached its limits. Proposal: when a line still overflows after rewrites and tempo, the next line may start up to 0.25 s late, if it still ends before its own hard limit. This applies one line deep only. Alternatives: a larger rewrite model (Q-26), or revisiting SC4 after golden clips (Phase 11). |
+| Q-26 | Rewrite model: keep Qwen3-4B-Instruct-2507 (Apache-2.0)? | Measured in S3d: round 1 shortens 64–82% of over-long lines, but the results can be telegraphic, and round 2 adds little. A larger model may shorten better; whether it fits in 16 GB is measured in S4. |
+| Q-27 | SPEC §8.14 assumes the translator takes context and a glossary and returns keyed JSON. TranslateGemma uses a fixed one-line prompt, and the spikes never tested the §8.14 format with it. | Related to Q-12. If TranslateGemma cannot follow keyed JSON, translation becomes per segment in its native format, and context and glossary handling move to validation or the rewriter. |
+| Q-28 | Which QC embedder runs inside the TTS venv? | D-26 loads the QC embedder in the TTS process. But `chatterbox-tts` pins torch 2.6, while pyannote.audio 4 needs torch ≥ 2.8, and the spikes ran WeSpeaker through pyannote.audio 4. Candidates: Chatterbox's own voice encoder, or WeSpeaker through ONNX Runtime. S2 compares them. |
+| Q-29 | Adopt the S3–S3d mechanisms into the spec? These are: a cast-review speaker count, flip smoothing, fragment merging, deterministic ASR, a second ASR pass, the blacklist, stricter translation validation, TTS silence trimming, speech-aware lay-back, a coverage soft check, and LLM call rules. | Each worked in a spike but is not in the spec yet. Details and values: plan Task 2. |
+| Q-30 | Consented Turkish voices for the TTS bake-off (S2) | S3 used the CC-BY actors, whose license covers the recordings but not cloning. A clean S2 needs 2–3 people who consent, with ≥ 2 min of speech each. |
+| Q-31 | Keep TIGER-DnR and Bandit v2 as fallback separators? | Every enabled model needs a lock entry. TIGER-DnR has a non-commercial training-data caveat and is slow. Bandit v2's weights license is unknown. The ducked original (§10) is already the fallback. |
+| Q-32 | Sources for bank voices (§3.3) and fixture voices (D-59) | §19.1 requires their licenses in Phase 0. Candidates: Kokoro-82M voices for the bank (Apache-2.0; voice provenance still to check), and Chatterbox in Turkish for the fixture. |
+| Q-33 | `chatterbox-tts` 0.1.7 requires `pykakasi==2.3.0` (GPL-3.0-or-later) and `gradio==6.8.0` | §4.4 allows GPL only in dev tooling. If the tr/en path never imports these packages, install without them; if it does import them, the owner decides. S4 checks. |
 
 ## C. Environment notes
 
 | # | Note |
 | --- | --- |
-| Q-21 | The project folder is not a git repository, so the archive move used plain `mv`. Working rule 6 (commit per phase) needs `git init` and a first commit before Phase 0. |
-| Q-22 | No `CLAUDE.md` existed; a new one was created. |
+| Q-34 | `origin/main` on GitHub already contains the S3 spike `review_*.md` files, which hold the Turkish and English lines of the CC-BY films. `docs/footage.md` says outputs stay private. Confirm the repository is private, and stop committing review files. |

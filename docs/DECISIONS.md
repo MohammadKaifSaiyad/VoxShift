@@ -12,6 +12,7 @@ Entries marked **provisional** resolve a conflict that the owner's decisions did
 | 2026-10-05 | Desk research in `docs/feasibility.md`; D-61 added; spike S1 prepared in `scripts/spikes/kaggle_s1/` (not yet run). No SPEC.md change. |
 | 2026-10-06 | S1 and S3 run (`docs/spikes.md`). Owner listening test → D-62 to D-64; SPEC §5 updated (separation default, `cfg_weight`). |
 | 2026-10-07 | S3b and S3c run. Owner decision D-65 (short lines); SPEC §9 rule 5a added. |
+| 2026-10-07 | S3d run. Phase 0 completion plan written (`docs/superpowers/plans/2026-10-07-phase-0-completion.md`). `docs/OPEN_QUESTIONS.md`: Q-21 and Q-22 closed (the git repository and `CLAUDE.md` exist); Q-25 to Q-34 added. No SPEC.md change. |
 
 ## Owner decisions (A–H)
 
