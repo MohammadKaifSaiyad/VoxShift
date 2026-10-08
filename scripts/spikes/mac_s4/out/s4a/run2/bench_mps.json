@@ -1,0 +1,603 @@
+{
+  "device": "mps",
+  "voice": {
+    "voice": "built-in default (model.conds from conds.pt; prepare_conditionals not called)",
+    "conds_blob": "f3671d13fefc57b8361ae771bdf603d992c239855916d511f7799245810df3cc",
+    "conds_bytes": 107374,
+    "builtin_emotion_adv": 0.5,
+    "speaker_emb_shape": [
+      1,
+      256
+    ],
+    "cond_prompt_speech_tokens": 150
+  },
+  "empty_cache_per_line": true,
+  "blocked_modules": [
+    "pykakasi",
+    "gradio",
+    "spacy_pkuseg"
+  ],
+  "env": {
+    "HF_HUB_OFFLINE": "1",
+    "PYTORCH_ENABLE_MPS_FALLBACK": "1",
+    "TQDM_DISABLE": "1"
+  },
+  "torch_threads": 8,
+  "import_s": 3.32,
+  "load_s": 15.3,
+  "cond_s": null,
+  "warmup": {
+    "gen_s": 34.65,
+    "audio_s": 6.4,
+    "forced_eos": 1,
+    "repetition": 0,
+    "t3_s": 26.894,
+    "s3gen_s": 7.24,
+    "wm_s": 0.348,
+    "speech_tokens": 160,
+    "sleep_gap_s": 0.0,
+    "cleanup_s": 0.858,
+    "mps_before_cleanup": {
+      "current_allocated": 3247559424,
+      "driver_allocated": 16088334336
+    },
+    "mps_after_cleanup": {
+      "current_allocated": 3247559424,
+      "driver_allocated": 4839211008
+    }
+  },
+  "lines": 16,
+  "total_gen_s": 322.37,
+  "total_audio_s": 49.84,
+  "rtf": 6.468,
+  "x_realtime": 0.155,
+  "stage_totals_s": {
+    "t3_s": 232.58,
+    "s3gen_s": 87.77,
+    "wm_s": 0.39
+  },
+  "speech_tokens_total": 1246,
+  "t3_tokens_per_s": 5.4,
+  "lines_with_sleep_gap": [],
+  "per_line": [
+    {
+      "i": 0,
+      "chars": 31,
+      "gen_s": 11.594,
+      "audio_s": 2.28,
+      "rtf": 5.085,
+      "chars_per_audio_s": 13.6,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 7.919,
+      "s3gen_s": 3.599,
+      "wm_s": 0.007,
+      "speech_tokens": 57,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1699495936,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 7513030656
+      },
+      "cleanup_s": 0.132,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 4879007744
+      }
+    },
+    {
+      "i": 1,
+      "chars": 29,
+      "gen_s": 7.843,
+      "audio_s": 1.64,
+      "rtf": 4.782,
+      "chars_per_audio_s": 17.7,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "t3_s": 4.629,
+      "s3gen_s": 3.162,
+      "wm_s": 0.006,
+      "speech_tokens": 41,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1909702656,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 6592954368
+      },
+      "cleanup_s": 0.112,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 4898455552
+      }
+    },
+    {
+      "i": 2,
+      "chars": 31,
+      "gen_s": 9.056,
+      "audio_s": 2.2,
+      "rtf": 4.116,
+      "chars_per_audio_s": 14.1,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 1,
+      "t3_s": 5.971,
+      "s3gen_s": 3.045,
+      "wm_s": 0.006,
+      "speech_tokens": 55,
+      "sleep_gap_s": 0.0,
+      "rss_after": 2095480832,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 7433125888
+      },
+      "cleanup_s": 0.119,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 4924932096
+      }
+    },
+    {
+      "i": 3,
+      "chars": 78,
+      "gen_s": 126.636,
+      "audio_s": 15.12,
+      "rtf": 8.375,
+      "chars_per_audio_s": 5.2,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 1,
+      "t3_s": 114.149,
+      "s3gen_s": 12.173,
+      "wm_s": 0.192,
+      "speech_tokens": 378,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1365360640,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 18065358848
+      },
+      "cleanup_s": 0.875,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 16396025856
+      }
+    },
+    {
+      "i": 4,
+      "chars": 14,
+      "gen_s": 14.308,
+      "audio_s": 1.16,
+      "rtf": 12.334,
+      "chars_per_audio_s": 12.1,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 7.831,
+      "s3gen_s": 6.36,
+      "wm_s": 0.01,
+      "speech_tokens": 29,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1423998976,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17302388736
+      },
+      "cleanup_s": 0.167,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 16262201344
+      }
+    },
+    {
+      "i": 5,
+      "chars": 37,
+      "gen_s": 10.571,
+      "audio_s": 1.56,
+      "rtf": 6.776,
+      "chars_per_audio_s": 23.7,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "t3_s": 5.729,
+      "s3gen_s": 4.731,
+      "wm_s": 0.009,
+      "speech_tokens": 39,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1302511616,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17994694656
+      },
+      "cleanup_s": 0.203,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 16216309760
+      }
+    },
+    {
+      "i": 6,
+      "chars": 6,
+      "gen_s": 10.079,
+      "audio_s": 1.52,
+      "rtf": 6.631,
+      "chars_per_audio_s": 3.9,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 5.446,
+      "s3gen_s": 4.535,
+      "wm_s": 0.006,
+      "speech_tokens": 38,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1711718400,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17466228736
+      },
+      "cleanup_s": 0.112,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 16182771712
+      }
+    },
+    {
+      "i": 7,
+      "chars": 32,
+      "gen_s": 11.287,
+      "audio_s": 1.48,
+      "rtf": 7.626,
+      "chars_per_audio_s": 21.6,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 1,
+      "t3_s": 4.707,
+      "s3gen_s": 6.463,
+      "wm_s": 0.009,
+      "speech_tokens": 37,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1480785920,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17713414144
+      },
+      "cleanup_s": 0.209,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 16127967232
+      }
+    },
+    {
+      "i": 8,
+      "chars": 38,
+      "gen_s": 16.22,
+      "audio_s": 2.92,
+      "rtf": 5.555,
+      "chars_per_audio_s": 13.0,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 10.115,
+      "s3gen_s": 5.955,
+      "wm_s": 0.018,
+      "speech_tokens": 73,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1400586240,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 19390283776
+      },
+      "cleanup_s": 0.327,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 16051617792
+      }
+    },
+    {
+      "i": 9,
+      "chars": 36,
+      "gen_s": 17.801,
+      "audio_s": 3.8,
+      "rtf": 4.685,
+      "chars_per_audio_s": 9.5,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 11.759,
+      "s3gen_s": 5.904,
+      "wm_s": 0.028,
+      "speech_tokens": 95,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1334706176,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 19357057024
+      },
+      "cleanup_s": 0.325,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15984836608
+      }
+    },
+    {
+      "i": 10,
+      "chars": 31,
+      "gen_s": 11.859,
+      "audio_s": 1.76,
+      "rtf": 6.738,
+      "chars_per_audio_s": 17.6,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 6.352,
+      "s3gen_s": 5.364,
+      "wm_s": 0.007,
+      "speech_tokens": 44,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1801945088,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17965678592
+      },
+      "cleanup_s": 0.136,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15952412672
+      }
+    },
+    {
+      "i": 11,
+      "chars": 18,
+      "gen_s": 11.721,
+      "audio_s": 1.8,
+      "rtf": 6.512,
+      "chars_per_audio_s": 10.0,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 5.913,
+      "s3gen_s": 5.676,
+      "wm_s": 0.006,
+      "speech_tokens": 45,
+      "sleep_gap_s": 0.0,
+      "rss_after": 2041888768,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17719558144
+      },
+      "cleanup_s": 0.114,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15907618816
+      }
+    },
+    {
+      "i": 12,
+      "chars": 29,
+      "gen_s": 6.847,
+      "audio_s": 1.56,
+      "rtf": 4.389,
+      "chars_per_audio_s": 18.6,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "t3_s": 4.821,
+      "s3gen_s": 1.999,
+      "wm_s": 0.005,
+      "speech_tokens": 39,
+      "sleep_gap_s": 0.0,
+      "rss_after": 2159951872,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17535008768
+      },
+      "cleanup_s": 0.113,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15840509952
+      }
+    },
+    {
+      "i": 13,
+      "chars": 24,
+      "gen_s": 12.562,
+      "audio_s": 2.12,
+      "rtf": 5.925,
+      "chars_per_audio_s": 11.3,
+      "flag": null,
+      "forced_eos": 0,
+      "repetition": 0,
+      "t3_s": 6.875,
+      "s3gen_s": 5.525,
+      "wm_s": 0.012,
+      "speech_tokens": 53,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1781628928,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 18100207616
+      },
+      "cleanup_s": 0.226,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15784951808
+      }
+    },
+    {
+      "i": 14,
+      "chars": 22,
+      "gen_s": 22.254,
+      "audio_s": 4.36,
+      "rtf": 5.104,
+      "chars_per_audio_s": 5.0,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 15.459,
+      "s3gen_s": 6.644,
+      "wm_s": 0.023,
+      "speech_tokens": 109,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1520173056,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 19391971328
+      },
+      "cleanup_s": 0.496,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15684206592
+      }
+    },
+    {
+      "i": 15,
+      "chars": 38,
+      "gen_s": 21.735,
+      "audio_s": 4.56,
+      "rtf": 4.766,
+      "chars_per_audio_s": 8.3,
+      "flag": null,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 14.903,
+      "s3gen_s": 6.631,
+      "wm_s": 0.046,
+      "speech_tokens": 114,
+      "sleep_gap_s": 0.0,
+      "rss_after": 1570471936,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 19038846976
+      },
+      "cleanup_s": 0.32,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15607906304
+      }
+    }
+  ],
+  "forced_eos_lines": 12,
+  "repetition_warning_lines": 3,
+  "flagged_lines": [],
+  "turkish": [
+    {
+      "k": 0,
+      "chars": 37,
+      "gen_s": 16.13,
+      "audio_s": 2.96,
+      "forced_eos": 1,
+      "repetition": 1,
+      "t3_s": 9.945,
+      "s3gen_s": 6.005,
+      "wm_s": 0.016,
+      "speech_tokens": 74,
+      "sleep_gap_s": 0.0,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 18274861056
+      },
+      "cleanup_s": 0.123,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15531786240
+      }
+    },
+    {
+      "k": 1,
+      "chars": 46,
+      "gen_s": 24.54,
+      "audio_s": 5.24,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 17.572,
+      "s3gen_s": 6.776,
+      "wm_s": 0.027,
+      "speech_tokens": 131,
+      "sleep_gap_s": 0.0,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17983193088
+      },
+      "cleanup_s": 0.236,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 15449833472
+      }
+    },
+    {
+      "k": 2,
+      "chars": 51,
+      "gen_s": 59.34,
+      "audio_s": 4.52,
+      "forced_eos": 1,
+      "repetition": 0,
+      "t3_s": 40.858,
+      "s3gen_s": 18.112,
+      "wm_s": 0.164,
+      "speech_tokens": 113,
+      "sleep_gap_s": 0.0,
+      "mps": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 17625579520
+      },
+      "cleanup_s": 0.598,
+      "mps_after_cleanup": {
+        "current_allocated": 3247559424,
+        "driver_allocated": 10335879168
+      }
+    }
+  ],
+  "modules_after_english": {
+    "pykakasi": false,
+    "gradio": false,
+    "spacy_pkuseg": false
+  },
+  "modules_after_turkish": {
+    "pykakasi": false,
+    "gradio": false,
+    "spacy_pkuseg": false
+  },
+  "related_top_level_modules_loaded": [],
+  "peak_rss_sampled": 4736876544,
+  "mem_after_load": {
+    "rss": 871170048,
+    "mps": {
+      "current_allocated": 3205989632,
+      "driver_allocated": 3691380736
+    }
+  },
+  "mps_peak_after_lines": {
+    "current_allocated": 3247559424,
+    "driver_allocated": 19391971328
+  },
+  "mps_peak_after_cleanup": {
+    "current_allocated": 3247559424,
+    "driver_allocated": 16396025856
+  },
+  "cleanup_total_s": 3.99,
+  "mps_fallback_ops": {},
+  "python_warnings": {
+    "UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as ": 1,
+    "FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by install": 1,
+    "FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new": 2
+  },
+  "other_log_warnings": {
+    "pkuseg not available - Chinese segmentation will be skipped": 1
+  },
+  "network_hosts_blocked": [],
+  "versions": {
+    "python": "3.11.16",
+    "macos": "27.0.1",
+    "machine": "arm64",
+    "chatterbox-tts": "0.1.7",
+    "torch": "2.6.0",
+    "torchaudio": "2.6.0",
+    "transformers": "5.2.0",
+    "huggingface-hub": "1.33.0",
+    "numpy": "1.26.4",
+    "resemble-perth": "1.0.1",
+    "s3tokenizer": "0.3.0",
+    "librosa": "0.11.0"
+  }
+}

@@ -102,6 +102,103 @@ For comparison, the Kaggle T4 ran the same model on the same film's lines at RTF
 - **Next step:** a clean rerun (AC power, lid open, `caffeinate`, nothing else running, MPS cache freed per line) would give fairer numbers. It needs no downloads, because the model and venv are kept.
 - **Lines:** 16 short dub lines (median about 30 characters), not 20. Short lines carry fixed per-call overhead.
 
+### Run 2 — clean rerun (2026-10-08)
+
+- **Why:** D-87. Same script and venv, same model revision, no downloads. Results: `scripts/spikes/mac_s4/out/s4a/run2/results.json`. How to run: `scripts/spikes/mac_s4/README.md`.
+- **Same as run 1:**
+  - the 16 English lines and 3 Turkish sentences;
+  - `cfg_weight` 0.5, exaggeration 0.5, seed 1000 + line;
+  - one warm-up generation, excluded;
+  - `HF_HUB_OFFLINE=1` with the socket guard allowing no hosts. No host was attempted.
+- **Different from run 1:**
+  - **Voice:** Chatterbox's built-in default voice (`model.conds` from the repo's `conds.pt`; `prepare_conditionals` not called), not a cloned film voice (D-84).
+  - `pykakasi`, `gradio` and `spacy_pkuseg` are blocked in the model process (D-77, D-88).
+  - Memory is freed after every generation, untimed. On MPS: `synchronize`, `gc.collect`, `empty_cache`. On CPU: `gc.collect`.
+  - Each run is wrapped in `caffeinate -dimsu`.
+- **Process:** a subagent ran run 2 and wrote this subsection. The main agent reviewed it and recomputed the RTFs, the MPS memory peak and the voice and blocking settings from `results.json`.
+
+| Conditions | CPU (09:58–10:04) | MPS (10:06–10:14) |
+| --- | --- | --- |
+| Power | AC, charging (83% → 86%) | AC, charging (87% → 91%) |
+| 1-min load, before → after | 3.12 → 9.66 | 3.42 → 11.16 |
+| Lid | open before and after | open before and after |
+| Sleep (`pmset -g log`) | No sleep. One 5 s clamshell DarkWake (10:02:08–10:02:13, lid closed briefly) during line 09 | none |
+| Process clock lost to sleep | 0 s | 0 s |
+| `caffeinate` assertions | held for the whole run (from `pmset -g log`) | held for the whole run |
+| Top CPU before | Brave Browser Helper 23%, WindowServer 16%, iTerm2 10%, kernel_task 10%, top 9% | WindowServer 24%, loginwindow 19%, WallpaperAerials 10%, kernel_task 10%, claude.exe 7% |
+| Voice | built-in | built-in |
+
+No load wait was needed (load was below 4 at both starts). The "after" loads include the benchmark's own threads.
+
+| | CPU | MPS |
+| --- | --- | --- |
+| Load | 13.9 s | 15.3 s |
+| Warm-up (excluded) | 16.7 s for 3.0 s of audio | 34.7 s for 6.4 s of audio |
+| Generation, 16 lines | 238 s for 43.6 s of audio | 322 s for 49.8 s of audio |
+| **RTF** (generation ÷ audio) | **5.45** | **6.47** (5.64 without line 03) |
+| Per-line RTF | 4.98–8.08 (median 5.46) | 4.12–12.33 (median 5.74) |
+| T3 speed (speech tokens per second) | 6.0 overall (5.7–6.2 per line) | 5.4 overall (6.8–9.2 per line, except 3.3 and 3.7 on lines 03–04) |
+| Time in T3 / S3Gen | 183 s / 55 s | 233 s / 88 s |
+| Peak RSS (`/usr/bin/time -l`) | 5.9 GB | 4.8 GB |
+| Peak process footprint | 5.0 GB | **27.3 GB** (on 16 GB) |
+| MPS driver allocation | — | 3.7 GB after load. Peak 19.4 GB right after a generation. After cleanup: about 4.9 GB through line 02, then 15.6–16.4 GB from line 03 on |
+| Turkish check, 3 sentences | RTF 4.99 (5.00, 4.98, 5.00) | RTF 7.86 (5.45, 4.68, 13.13) |
+| Forced-EOS / repetition warnings | 15 / 4 of 16 lines | 12 / 3 of 16 lines |
+| Cleanup time (not in RTF) | 1.6 s | 4.0 s |
+| Ops falling back to CPU | — | none logged |
+
+| Run 1 vs run 2 | Run 1 | Run 2 |
+| --- | --- | --- |
+| CPU RTF | 7.24 | **5.45** (−25%) |
+| CPU per-line RTF | 6.5–9.0 | 5.0–8.1 |
+| MPS RTF | 6.71 | 6.47 (−4%); 5.64 without line 03 |
+| MPS per-line RTF | 5.0–9.5 | 4.1–12.3 |
+| Turkish RTF, CPU / MPS | 6.6 / 13.6 | 5.0 / 7.9 |
+| MPS peak driver allocation | 13.1 GB | 19.4 GB |
+| MPS peak process footprint | 19.7 GB | 27.3 GB |
+| Load (CPU / MPS) | 12.2 s / 15.4 s | 13.9 s / 15.3 s |
+
+**90-minute projection (estimate):**
+
+- 55 min of English speech × 1.3 = 71.5 min of audio to generate.
+- On CPU (the faster device): 71.5 × RTF 5.45 ≈ **390 min (6.5 h) for TTS alone**.
+- On MPS: 463 min, or 403 min without the run-on line.
+- The whole pipeline's 3× budget is 270 min, so TTS alone takes 1.44× the whole budget (run 1's estimate was 480 min).
+- To fit TTS alone into 270 min would need an RTF of 3.78 or less. The rest of the pipeline would then have no time left.
+
+#### Findings
+
+1. **Clean conditions made CPU 25% faster (RTF 7.24 → 5.45), but it is still about 5.5× slower than real time.** CPU is the faster device on this Mac. The 90-minute target is still missed by a wide margin (projection above).
+2. **MPS is not faster than CPU overall.**
+   - On most lines its T3 loop is faster per token (6.8–9.2 vs 5.7–6.2 tokens/s).
+   - Its S3Gen stage took longer per audio second (1.76 s vs 1.26 s).
+   - One run-on line and memory pressure dominated its total.
+3. **Freeing the MPS cache after every line did not keep memory bounded.**
+   - Live tensors stayed at 3.25 GB throughout.
+   - After the warm-up and lines 00–02, `empty_cache` brought the driver allocation back to about 4.9 GB.
+   - After the 378-token line 03 it stayed at 15.6–16.4 GB to the end of the run, and the process footprint peaked at 27.3 GB on a 16 GB machine. A manual `sysctl vm.swapusage` right after the run showed 2.4 GB of swap in use.
+   - Cause not investigated. `PYTORCH_MPS_HIGH_WATERMARK_RATIO` was not tested.
+4. **MPS line 03 ran on.**
+   - It produced 15.1 s of audio (13.2 s non-silent) for a 78-character line. The same line gave 5.7 s on CPU.
+   - T3 generated 378 tokens at 3.3 tokens/s, so the line took 127 s, which is 39% of the MPS generation time.
+   - The crude length check (characters ÷ 5 + 1.5 s = 17.1 s) did not flag it. Nobody has listened to it. The third MPS Turkish sentence (RTF 13.1) ran later, under the same memory pressure.
+5. **The built-in voice works offline, and English and Turkish generate with `pykakasi`, `gradio` and `spacy_pkuseg` blocked** (none were loaded after the Turkish pass).
+6. **Forced stops remain the norm** (15 of 16 lines on CPU, 12 of 16 on MPS), as in run 1.
+
+#### Caveats
+
+- **Voice differs from run 1** (built-in vs cloned).
+  - Assumption: speed per audio second does not depend on the voice.
+  - Chatterbox emits 25 speech tokens per second of audio, so RTF is set by the time per token.
+  - Both voices give T3 a 150-token speech prompt.
+  - This is not tested beyond that.
+  - The voice does change the speech rate, so audio lengths differ between runs.
+- **Single run per device.** Sampling differs between devices, so the same lines gave 43.6 s of audio on CPU and 49.8 s on MPS.
+- **Lid closed for about 5 s during the CPU run (line 09):**
+  - the Mac went to DarkWake, not sleep, and the process clock lost no time;
+  - line 09's RTF (5.50) and token rate (5.7/s) match its neighbours.
+- **CPU caffeinate check:** the script's live caffeinate check recorded nothing on the CPU run (it matched the wrong PID). It was fixed before the MPS run, and `pmset -g log` confirms the CPU run's assertions were held from 09:58:53 to 10:04:32.
+
 ## S1 — model families on Kaggle (run v4, 2026-10-05)
 
 - **Setup:** Kaggle, 2× Tesla T4 (16 GB each; benchmarks used GPU 0 only), 33 GB RAM. Every model family ran in its own uv venv (Python 3.11).

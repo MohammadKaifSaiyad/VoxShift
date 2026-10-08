@@ -1,0 +1,52 @@
+$ caffeinate -dimsu /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/bin/python /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/run_s4a.py bench --device mps --run-dir run2 --voice default --block-optional --empty-cache
+# env: {"HF_HUB_OFFLINE": "1", "PYTORCH_ENABLE_MPS_FALLBACK": "1"}
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/perth/perth_net/__init__.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+loaded PerthNet (Implicit) at step 250,000
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+  self.gen = func(*args, **kwds)
+The following generation flags are not valid and may be ignored: ['output_attentions']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+  self.gen = func(*args, **kwds)
+mps line 00: chars=31 gen=11.59s audio=2.28s eos=1 drv=7.51GB->4.88GB
+mps line 01: chars=29 gen=7.84s audio=1.64s eos=0 drv=6.59GB->4.90GB
+mps line 02: chars=31 gen=9.06s audio=2.20s eos=1 drv=7.43GB->4.92GB
+mps line 03: chars=78 gen=126.64s audio=15.12s eos=1 drv=18.07GB->16.40GB
+mps line 04: chars=14 gen=14.31s audio=1.16s eos=1 drv=17.30GB->16.26GB
+mps line 05: chars=37 gen=10.57s audio=1.56s eos=0 drv=17.99GB->16.22GB
+mps line 06: chars=6 gen=10.08s audio=1.52s eos=1 drv=17.47GB->16.18GB
+mps line 07: chars=32 gen=11.29s audio=1.48s eos=1 drv=17.71GB->16.13GB
+mps line 08: chars=38 gen=16.22s audio=2.92s eos=1 drv=19.39GB->16.05GB
+mps line 09: chars=36 gen=17.80s audio=3.80s eos=1 drv=19.36GB->15.98GB
+mps line 10: chars=31 gen=11.86s audio=1.76s eos=1 drv=17.97GB->15.95GB
+mps line 11: chars=18 gen=11.72s audio=1.80s eos=1 drv=17.72GB->15.91GB
+mps line 12: chars=29 gen=6.85s audio=1.56s eos=0 drv=17.54GB->15.84GB
+mps line 13: chars=24 gen=12.56s audio=2.12s eos=0 drv=18.10GB->15.78GB
+mps line 14: chars=22 gen=22.25s audio=4.36s eos=1 drv=19.39GB->15.68GB
+mps line 15: chars=38 gen=21.73s audio=4.56s eos=1 drv=19.04GB->15.61GB
+mps tr 0: chars=37 gen=16.13s audio=2.96s
+mps tr 1: chars=46 gen=24.54s audio=5.24s
+mps tr 2: chars=51 gen=59.34s audio=4.52s
+mps: load 15.3s built-in voice RTF 6.468 (322.4s / 49.8s)
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/tempfile.py:934: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/bv/wyfb50rx2dvcx6zt23wwh67m0000gn/T/tmp_zcjpyc4'>
+  _warnings.warn(warn_message, ResourceWarning)
+      500.28 real       818.16 user       253.41 sys
+          4803133440  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1948524  page reclaims
+              133225  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+              754653  voluntary context switches
+             7929621  involuntary context switches
+      13894340558987  instructions retired
+       3233328316912  cycles elapsed
+         27257800632  peak memory footprint

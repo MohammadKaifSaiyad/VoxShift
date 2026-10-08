@@ -1,0 +1,241 @@
+{
+  "load_wait_cpu": {
+    "max_load_1m": 4.0,
+    "max_wait_s": 300,
+    "waited_s": 0,
+    "checks": [
+      {
+        "t": "2026-10-08T09:58:53",
+        "load_1m": 3.12
+      }
+    ],
+    "proceeded_above_max": false
+  },
+  "power_before_cpu": {
+    "time": "2026-10-08T09:58:53",
+    "power_source": "AC",
+    "battery": "83%; charging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "3.12, 7.37, 18.83",
+    "top_cpu": [
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "23.2"
+      },
+      {
+        "command": "WindowServer",
+        "cpu_pct": "16.2"
+      },
+      {
+        "command": "iTerm2",
+        "cpu_pct": "9.5"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "9.5"
+      },
+      {
+        "command": "top",
+        "cpu_pct": "8.8"
+      },
+      {
+        "command": "Brave Browser He",
+        "cpu_pct": "8.6"
+      }
+    ],
+    "sysctl_loadavg": [
+      3.12,
+      7.37,
+      18.83
+    ],
+    "lid": "open",
+    "memory_free_pct": 77
+  },
+  "bench_cpu": {
+    "step": "bench_cpu",
+    "rc": 0,
+    "wall_s": 339.2,
+    "max_rss_bytes": 5896011776,
+    "peak_footprint_bytes": 5044834984,
+    "caffeinate": "caffeinate -dimsu",
+    "caffeinate_assertions": {
+      "checked_after_s": 20,
+      "types": []
+    },
+    "wall_clock_minus_monotonic_s": 0.0
+  },
+  "power_after_cpu": {
+    "time": "2026-10-08T10:04:33",
+    "power_source": "AC",
+    "battery": "86%; charging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "9.66, 9.05, 15.85",
+    "top_cpu": [
+      {
+        "command": "WindowServer",
+        "cpu_pct": "20.6"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "11.0"
+      },
+      {
+        "command": "WallpaperAerials",
+        "cpu_pct": "10.7"
+      },
+      {
+        "command": "iTerm2",
+        "cpu_pct": "9.6"
+      },
+      {
+        "command": "top",
+        "cpu_pct": "8.6"
+      },
+      {
+        "command": "VTDecoderXPCServ",
+        "cpu_pct": "5.0"
+      }
+    ],
+    "sysctl_loadavg": [
+      9.66,
+      9.05,
+      15.85
+    ],
+    "lid": "open",
+    "memory_free_pct": 70
+  },
+  "sleep_wake_cpu": {
+    "window": [
+      "2026-10-08T09:58:53",
+      "2026-10-08T10:04:32"
+    ],
+    "events": [
+      "2026-10-08 10:02:08 +0530 Sleep               \tEntering DarkWake state due to 'Clamshell Sleep':TCPK",
+      "2026-10-08 10:02:13 +0530 Wake                \tDarkWake to FullWake from Deep Idle [CDNVA] : due to"
+    ],
+    "sleep_events": 1,
+    "caffeinate_assertion_log_lines": 13
+  },
+  "load_wait_mps": {
+    "max_load_1m": 4.0,
+    "max_wait_s": 300,
+    "waited_s": 0,
+    "checks": [
+      {
+        "t": "2026-10-08T10:06:02",
+        "load_1m": 3.42
+      }
+    ],
+    "proceeded_above_max": false
+  },
+  "power_before_mps": {
+    "time": "2026-10-08T10:06:02",
+    "power_source": "AC",
+    "battery": "87%; charging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "3.42, 7.15, 14.43",
+    "top_cpu": [
+      {
+        "command": "WindowServer",
+        "cpu_pct": "24.0"
+      },
+      {
+        "command": "loginwindow",
+        "cpu_pct": "19.2"
+      },
+      {
+        "command": "WallpaperAerials",
+        "cpu_pct": "10.1"
+      },
+      {
+        "command": "kernel_task",
+        "cpu_pct": "9.7"
+      },
+      {
+        "command": "claude.exe",
+        "cpu_pct": "7.0"
+      },
+      {
+        "command": "top",
+        "cpu_pct": "6.0"
+      }
+    ],
+    "sysctl_loadavg": [
+      3.42,
+      7.15,
+      14.43
+    ],
+    "lid": "open",
+    "memory_free_pct": 70
+  },
+  "bench_mps": {
+    "step": "bench_mps",
+    "rc": 0,
+    "wall_s": 500.3,
+    "max_rss_bytes": 4803133440,
+    "peak_footprint_bytes": 27257800632,
+    "caffeinate": "caffeinate -dimsu",
+    "caffeinate_assertions": {
+      "checked_after_s": 20,
+      "types": [
+        "PreventSystemSleep",
+        "PreventUserIdleDisplaySleep",
+        "PreventUserIdleSystemSleep"
+      ]
+    },
+    "wall_clock_minus_monotonic_s": 0.0
+  },
+  "power_after_mps": {
+    "time": "2026-10-08T10:14:24",
+    "power_source": "AC",
+    "battery": "91%; charging;",
+    "low_power_mode": "0",
+    "thermal": "Note: No thermal warning level has been recorded | Note: No performance warning level has been recorded | Note: No CPU power status has been recorded",
+    "load_avg": "11.16, 7.06, 10.78",
+    "top_cpu": [
+      {
+        "command": "kernel_task",
+        "cpu_pct": "29.5"
+      },
+      {
+        "command": "WindowServer",
+        "cpu_pct": "17.7"
+      },
+      {
+        "command": "WallpaperAerials",
+        "cpu_pct": "8.5"
+      },
+      {
+        "command": "top",
+        "cpu_pct": "4.3"
+      },
+      {
+        "command": "iTerm2",
+        "cpu_pct": "4.2"
+      },
+      {
+        "command": "VTDecoderXPCServ",
+        "cpu_pct": "3.7"
+      }
+    ],
+    "sysctl_loadavg": [
+      11.16,
+      7.06,
+      10.78
+    ],
+    "lid": "open",
+    "memory_free_pct": 83
+  },
+  "sleep_wake_mps": {
+    "window": [
+      "2026-10-08T10:06:02",
+      "2026-10-08T10:14:22"
+    ],
+    "events": [],
+    "sleep_events": 0,
+    "caffeinate_assertion_log_lines": 9
+  }
+}

@@ -1,0 +1,52 @@
+$ caffeinate -dimsu /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/bin/python /Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/run_s4a.py bench --device cpu --run-dir run2 --voice default --block-optional --empty-cache
+# env: {"HF_HUB_OFFLINE": "1"}
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/perth/perth_net/__init__.py:1: UserWarning: pkg_resources is deprecated as an API. See https://setuptools.pypa.io/en/latest/pkg_resources.html. The pkg_resources package is slated for removal as early as 2025-11-30. Refrain from using this package or pin to Setuptools<81.
+  from pkg_resources import resource_filename
+/Users/mohammadkaifsaiyad/Development/VoxShift/scripts/spikes/mac_s4/.venv/lib/python3.11/site-packages/diffusers/models/lora.py:393: FutureWarning: `LoRACompatibleLinear` is deprecated and will be removed in version 1.0.0. Use of `LoRACompatibleLinear` is deprecated. Please switch to PEFT backend by installing PEFT: `pip install peft`.
+  deprecate("LoRACompatibleLinear", "1.0.0", deprecation_message)
+loaded PerthNet (Implicit) at step 250,000
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+  self.gen = func(*args, **kwds)
+The following generation flags are not valid and may be ignored: ['output_attentions']. Set `TRANSFORMERS_VERBOSITY=info` for more details.
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/contextlib.py:105: FutureWarning: `torch.backends.cuda.sdp_kernel()` is deprecated. In the future, this context manager will be removed. Please see `torch.nn.attention.sdpa_kernel()` for the new context manager, with updated signature.
+  self.gen = func(*args, **kwds)
+cpu line 00: chars=31 gen=12.38s audio=2.32s eos=1
+cpu line 01: chars=29 gen=18.09s audio=3.60s eos=1
+cpu line 02: chars=31 gen=15.72s audio=2.92s eos=1
+cpu line 03: chars=78 gen=28.28s audio=5.68s eos=1
+cpu line 04: chars=14 gen=8.54s audio=1.28s eos=1
+cpu line 05: chars=37 gen=17.18s audio=3.16s eos=1
+cpu line 06: chars=6 gen=5.81s audio=0.72s eos=1
+cpu line 07: chars=32 gen=10.57s audio=1.72s eos=1
+cpu line 08: chars=38 gen=15.60s audio=2.84s eos=1
+cpu line 09: chars=36 gen=32.79s audio=5.96s eos=1
+cpu line 10: chars=31 gen=10.28s audio=1.72s eos=1
+cpu line 11: chars=18 gen=13.59s audio=2.48s eos=1
+cpu line 12: chars=29 gen=18.59s audio=3.68s eos=1
+cpu line 13: chars=24 gen=12.14s audio=2.28s eos=1
+cpu line 14: chars=22 gen=7.52s audio=1.24s eos=0
+cpu line 15: chars=38 gen=10.90s audio=2.04s eos=1
+cpu tr 0: chars=37 gen=18.79s audio=3.76s
+cpu tr 1: chars=46 gen=19.34s audio=3.88s
+cpu tr 2: chars=51 gen=18.99s audio=3.80s
+cpu: load 13.9s built-in voice RTF 5.453 (238.0s / 43.6s)
+/Users/mohammadkaifsaiyad/.local/share/uv/python/cpython-3.11.16-macos-aarch64-none/lib/python3.11/tempfile.py:934: ResourceWarning: Implicitly cleaning up <TemporaryDirectory '/var/folders/bv/wyfb50rx2dvcx6zt23wwh67m0000gn/T/tmpdvu9499s'>
+  _warnings.warn(warn_message, ResourceWarning)
+      338.60 real      2112.56 user       361.85 sys
+          5896011776  maximum resident set size
+                   0  average shared memory size
+                   0  average unshared data size
+                   0  average unshared stack size
+             1030430  page reclaims
+              128218  page faults
+                   0  swaps
+                   0  block input operations
+                   0  block output operations
+                   0  messages sent
+                   0  messages received
+                   0  signals received
+                9624  voluntary context switches
+             6100758  involuntary context switches
+      37298901279749  instructions retired
+       6965014279727  cycles elapsed
+          5044834984  peak memory footprint

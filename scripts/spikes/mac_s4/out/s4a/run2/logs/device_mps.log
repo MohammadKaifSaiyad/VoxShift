@@ -1,0 +1,3 @@
+before mps: power=AC load=[3.42, 7.15, 14.43] lid=open
+{"step": "bench_mps", "rc": 0, "wall_s": 500.3, "max_rss_bytes": 4803133440, "peak_footprint_bytes": 27257800632, "caffeinate": "caffeinate -dimsu", "caffeinate_assertions": {"checked_after_s": 20, "types": ["PreventSystemSleep", "PreventUserIdleDisplaySleep", "PreventUserIdleSystemSleep"]}, "wall_clock_minus_monotonic_s": 0.0}
+after mps: rc=0 sleep_events=0 load=[11.16, 7.06, 10.78]

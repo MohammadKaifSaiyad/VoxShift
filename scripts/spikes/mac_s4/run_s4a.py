@@ -13,11 +13,17 @@ Rules this script keeps:
   every load) and installs a socket guard that records and refuses any network
   host that is not allowed for that step.
 - Timed passes run with HF_HUB_OFFLINE=1 and no network host allowed.
+
+Run 2 (clean rerun, D-87) uses the `device` step once per device, then `collect`, all with
+`--run-dir run2`: built-in voice (`--voice default`, no film audio, D-84), pykakasi/gradio blocked
+(`--block-optional`), MPS cache freed after every line (`--empty-cache`), caffeinate, and power/load/
+sleep checks. Without these options the script behaves as in run 1.
 """
 
 from __future__ import annotations
 
 import argparse
+import datetime as dt_mod
 import json
 import os
 import platform
@@ -33,7 +39,12 @@ REPO = HERE.parents[2]
 OUT = HERE / "out" / "s4a"
 AUDIO = OUT / "audio"
 LOGS = OUT / "logs"
+# Where a run writes bench/steps/results JSON and generated audio. Run 1 used OUT/AUDIO directly
+# (moved to out/s4a/run1/ by hand afterwards); --run-dir NAME redirects to out/s4a/NAME/.
+RUN = OUT
+AUDIO_OUT = AUDIO
 VENV_PY = HERE / ".venv" / "bin" / "python"
+OPTIONAL_BLOCKED = ("pykakasi", "gradio")  # D-77/D-88: not installed in the target TTS environment
 
 MEDIA = REPO / "media" / "QJH3CCrjda4.m4a"
 REVIEW = REPO / "scripts" / "spikes" / "kaggle_s3d" / "out" / "s3d" / "review_QJH3CCrjda4.md"
@@ -66,6 +77,24 @@ HF_HOSTS = re.compile(r"(^|\.)(huggingface\.co|hf\.co)$")
 # --------------------------------------------------------------------------------------
 # helpers usable from any python (stdlib only)
 # --------------------------------------------------------------------------------------
+
+def configure_run(run_dir: str | None) -> None:
+    """--run-dir NAME: JSON, logs and audio go under out/s4a/NAME/ (run 1's files are never touched)."""
+    global RUN, AUDIO_OUT, LOGS
+    if run_dir:
+        if run_dir == "run1":
+            sys.exit("stop: run1 is the archived first run; pick another --run-dir")
+        RUN = OUT / run_dir
+        AUDIO_OUT = RUN / "audio"
+        LOGS = RUN / "logs"
+
+
+def sh(cmd, timeout=60) -> str:
+    try:
+        return subprocess.run(cmd, capture_output=True, text=True, timeout=timeout).stdout
+    except Exception as e:  # noqa: BLE001
+        return f"error: {e}"
+
 
 def save_json(path: Path, data) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -140,6 +169,49 @@ def power_state() -> dict:
         "load_avg": load.group(1).strip() if load else None,
         "top_cpu": procs,
     }
+
+
+def load_1min() -> float | None:
+    vals = sh(["sysctl", "-n", "vm.loadavg"]).strip(" {}\n").split()
+    try:
+        return float(vals[0])
+    except (IndexError, ValueError):
+        return None
+
+
+def conditions() -> dict:
+    """power_state() plus sysctl load averages, lid state and free-memory percentage (run 2)."""
+    st = power_state()
+    vals = sh(["sysctl", "-n", "vm.loadavg"]).strip(" {}\n").split()
+    st["sysctl_loadavg"] = [float(v) for v in vals[:3]] if len(vals) >= 3 else None
+    clam = re.search(r'"AppleClamshellState" = (Yes|No)', sh(["ioreg", "-r", "-k", "AppleClamshellState", "-d", "4"]))
+    st["lid"] = {"No": "open", "Yes": "closed"}.get(clam.group(1)) if clam else None
+    free = re.search(r"free percentage: (\d+)%", sh(["memory_pressure"]))
+    st["memory_free_pct"] = int(free.group(1)) if free else None
+    return st
+
+
+def pmset_sleep_wake(start: dt_mod.datetime, end: dt_mod.datetime) -> dict:
+    """Sleep/Wake/DarkWake events from `pmset -g log` between start and end (local time)."""
+    events, assertion_lines = [], 0
+    # type column is padded and ends at a tab ("Wake Requests" is scheduling bookkeeping, not a wake)
+    pat = re.compile(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d) [+-]\d{4} ([^\t]+?)\s*\t")
+    for ln in sh(["pmset", "-g", "log"], timeout=180).splitlines():
+        if not re.search(r"Sleep|Wake", ln):
+            continue
+        m = pat.match(ln)
+        if not m:
+            continue
+        t = dt_mod.datetime.strptime(m.group(1), "%Y-%m-%d %H:%M:%S")
+        if not (start <= t <= end):
+            continue
+        if m.group(2) in ("Sleep", "Wake", "DarkWake"):
+            events.append(ln[:100].rstrip())
+        elif "caffeinate" in ln:
+            assertion_lines += 1
+    return {"window": [start.isoformat(timespec="seconds"), end.isoformat(timespec="seconds")],
+            "events": events, "sleep_events": sum(1 for e in events if pat.match(e).group(2) == "Sleep"),
+            "caffeinate_assertion_log_lines": assertion_lines}
 
 
 # --------------------------------------------------------------------------------------
@@ -258,6 +330,29 @@ def sync(device: str):
         torch.mps.synchronize()
 
 
+def block_optional() -> None:
+    """Make `import pykakasi` / `import gradio` raise ImportError (must run before chatterbox is imported)."""
+    for m in OPTIONAL_BLOCKED:
+        sys.modules[m] = None
+
+
+def free_memory(device: str) -> dict:
+    """Run 2 per-line cleanup. MPS: synchronize, gc.collect, empty_cache. CPU: gc.collect."""
+    import gc
+
+    import torch
+
+    t = time.perf_counter()
+    before = mps_mem(device)
+    if device == "mps":
+        torch.mps.synchronize()
+    gc.collect()
+    if device == "mps":
+        torch.mps.empty_cache()
+    return {"cleanup_s": round(time.perf_counter() - t, 3), "mps_before_cleanup": before,
+            "mps_after_cleanup": mps_mem(device)}
+
+
 def mps_mem(device: str) -> dict | None:
     if device != "mps":
         return None
@@ -367,11 +462,16 @@ def step_fetch(_args) -> None:
 
 def step_bench(args) -> None:
     device = args.device
+    voice = getattr(args, "voice", "ref")
+    empty_cache = getattr(args, "empty_cache", False)
+    if getattr(args, "block_optional", False):
+        block_optional()
     rec = install_guards(allow_hf=False)
     warn = WarnCounter()
     rss = RssSampler()
     import torch
 
+    AUDIO_OUT.mkdir(parents=True, exist_ok=True)
     t0 = time.perf_counter()
     from chatterbox.mtl_tts import ChatterboxMultilingualTTS
     t_import = time.perf_counter() - t0
@@ -382,10 +482,29 @@ def step_bench(args) -> None:
     t_load = time.perf_counter() - t0
     mem_after_load = {"rss": rss.now(), "mps": mps_mem(device)}
 
-    t0 = time.perf_counter()
-    model.prepare_conditionals(str(REF_PATH), exaggeration=GEN["exaggeration"])
-    sync(device)
-    t_cond = time.perf_counter() - t0
+    if voice == "default":
+        # D-84: no cloning. Use the built-in voice that from_pretrained loads from the repo's conds.pt.
+        if model.conds is None:
+            save_json(RUN / f"bench_{device}_error.json", {"device": device, "error": "model.conds is None: no built-in voice"})
+            sys.exit("stop: model.conds is None (no built-in voice); prepare_conditionals is not allowed in this run")
+        rev = (HF_REPO_DIR / "refs" / "main").read_text().strip()
+        conds_file = HF_REPO_DIR / "snapshots" / rev / "conds.pt"
+        c = model.conds.t3
+        voice_info = {
+            "voice": "built-in default (model.conds from conds.pt; prepare_conditionals not called)",
+            "conds_blob": conds_file.resolve().name if conds_file.exists() else None,
+            "conds_bytes": conds_file.resolve().stat().st_size if conds_file.exists() else None,
+            "builtin_emotion_adv": float(c.emotion_adv.flatten()[0]) if c.emotion_adv is not None else None,
+            "speaker_emb_shape": list(c.speaker_emb.shape) if c.speaker_emb is not None else None,
+            "cond_prompt_speech_tokens": int(c.cond_prompt_speech_tokens.numel()) if c.cond_prompt_speech_tokens is not None else None,
+        }
+        t_cond = None
+    else:
+        voice_info = {"voice": "cloned from reference", "ref": str(REF_PATH.relative_to(REPO))}
+        t0 = time.perf_counter()
+        model.prepare_conditionals(str(REF_PATH), exaggeration=GEN["exaggeration"])
+        sync(device)
+        t_cond = time.perf_counter() - t0
 
     # Stage timers (behaviour unchanged): T3 = text -> speech tokens (autoregressive loop),
     # S3Gen = tokens -> waveform, wm = Perth watermark (CPU, numpy).
@@ -427,24 +546,36 @@ def step_bench(args) -> None:
         extra["sleep_gap_s"] = round(wall - dt, 2) if wall - dt > 1.0 else 0.0
         return wav, dt, extra
 
+    def cleanup() -> dict:
+        return free_memory(device) if empty_cache else {}
+
     wav, dt, w = gen(WARMUP_EN, "en", SEED_BASE - 1)
-    warm = {"gen_s": round(dt, 2), "audio_s": round(write_wav(AUDIO / f"{device}_warmup.wav", wav, model.sr), 2), **w}
+    warm = {"gen_s": round(dt, 2), "audio_s": round(write_wav(AUDIO_OUT / f"{device}_warmup.wav", wav, model.sr), 2), **w}
+    warm.update(cleanup())
 
     lines = english_lines()
     per_line = []
     mps_peak = {"current_allocated": 0, "driver_allocated": 0}
+    mps_peak_after_cleanup = {"current_allocated": 0, "driver_allocated": 0}
     for i, text in enumerate(lines):
         wav, dt, w = gen(text, "en", SEED_BASE + i)
-        audio_s = write_wav(AUDIO / f"{device}_en_{i:02d}.wav", wav, model.sr)
-        m = mps_mem(device)
+        audio_s = write_wav(AUDIO_OUT / f"{device}_en_{i:02d}.wav", wav, model.sr)
+        m = mps_mem(device)  # after generation, before any cleanup (as in run 1)
         if m:
             for k in mps_peak:
                 mps_peak[k] = max(mps_peak[k], m[k])
+        cl = cleanup()
+        if cl.get("mps_after_cleanup"):
+            for k in mps_peak_after_cleanup:
+                mps_peak_after_cleanup[k] = max(mps_peak_after_cleanup[k], cl["mps_after_cleanup"][k])
+        cl.pop("mps_before_cleanup", None)  # same moment as "mps"
         per_line.append({"i": i, "chars": len(text), "gen_s": round(dt, 3), "audio_s": round(audio_s, 3),
                          "rtf": round(dt / audio_s, 3) if audio_s else None,
                          "chars_per_audio_s": round(len(text) / audio_s, 1) if audio_s else None,
-                         "flag": babble_flag(len(text), audio_s), **w, "rss_after": rss.now(), "mps": m})
-        print(f"{device} line {i:02d}: chars={len(text)} gen={dt:.2f}s audio={audio_s:.2f}s eos={w['forced_eos']}", flush=True)
+                         "flag": babble_flag(len(text), audio_s), **w, "rss_after": rss.now(), "mps": m, **cl})
+        drv = f" drv={m['driver_allocated'] / 1e9:.2f}GB" if m else ""
+        drv += f"->{cl['mps_after_cleanup']['driver_allocated'] / 1e9:.2f}GB" if cl.get("mps_after_cleanup") else ""
+        print(f"{device} line {i:02d}: chars={len(text)} gen={dt:.2f}s audio={audio_s:.2f}s eos={w['forced_eos']}{drv}", flush=True)
     tot_gen = sum(x["gen_s"] for x in per_line)
     tot_audio = sum(x["audio_s"] for x in per_line)
     mods_after_en = {m: (m in sys.modules and sys.modules[m] is not None) for m in ("pykakasi", "gradio", "spacy_pkuseg")}
@@ -452,18 +583,25 @@ def step_bench(args) -> None:
     tr = []
     for k, text in enumerate(TURKISH):
         wav, dt, w = gen(text, "tr", 2000 + k)
-        audio_s = write_wav(AUDIO / f"{device}_tr_{k}.wav", wav, model.sr)
-        tr.append({"k": k, "chars": len(text), "gen_s": round(dt, 2), "audio_s": round(audio_s, 2), **w})
+        audio_s = write_wav(AUDIO_OUT / f"{device}_tr_{k}.wav", wav, model.sr)
+        m = mps_mem(device)
+        tr.append({"k": k, "chars": len(text), "gen_s": round(dt, 2), "audio_s": round(audio_s, 2), **w,
+                   "mps": m, **{a: b for a, b in cleanup().items() if a != "mps_before_cleanup"}})
+        print(f"{device} tr {k}: chars={len(text)} gen={dt:.2f}s audio={audio_s:.2f}s", flush=True)
     mods_after_tr = {m: (m in sys.modules and sys.modules[m] is not None) for m in ("pykakasi", "gradio", "spacy_pkuseg")}
     loaded_like = sorted({m.split(".")[0] for m, v in sys.modules.items() if v is not None
                           and re.match(r"(pykakasi|gradio|jaconv|fastapi|uvicorn|starlette|spacy_pkuseg)", m)})
     rss.stop()
 
-    save_json(OUT / f"bench_{device}.json", {
+    save_json(RUN / f"bench_{device}.json", {
         "device": device,
+        "voice": voice_info,
+        "empty_cache_per_line": empty_cache,
+        "blocked_modules": [m for m in (*OPTIONAL_BLOCKED, "spacy_pkuseg") if m in sys.modules and sys.modules[m] is None],
         "env": {k: os.environ.get(k) for k in ("HF_HUB_OFFLINE", "PYTORCH_ENABLE_MPS_FALLBACK", "TQDM_DISABLE")},
         "torch_threads": torch.get_num_threads(),
-        "import_s": round(t_import, 2), "load_s": round(t_load, 2), "cond_s": round(t_cond, 2),
+        "import_s": round(t_import, 2), "load_s": round(t_load, 2),
+        "cond_s": round(t_cond, 2) if t_cond is not None else None,
         "warmup": warm,
         "lines": len(per_line), "total_gen_s": round(tot_gen, 2), "total_audio_s": round(tot_audio, 2),
         "rtf": round(tot_gen / tot_audio, 3), "x_realtime": round(tot_audio / tot_gen, 3),
@@ -479,12 +617,15 @@ def step_bench(args) -> None:
         "modules_after_english": mods_after_en, "modules_after_turkish": mods_after_tr,
         "related_top_level_modules_loaded": loaded_like,
         "peak_rss_sampled": rss.peak, "mem_after_load": mem_after_load, "mps_peak_after_lines": mps_peak if device == "mps" else None,
+        "mps_peak_after_cleanup": mps_peak_after_cleanup if device == "mps" and empty_cache else None,
+        "cleanup_total_s": round(sum(x.get("cleanup_s", 0) for x in per_line), 2) if empty_cache else None,
         "mps_fallback_ops": warn.fallback_ops, "python_warnings": warn.py_warnings,
         "other_log_warnings": warn.other_log_warnings,
         "network_hosts_blocked": rec["blocked"],
         "versions": versions(),
     })
-    print(f"{device}: load {t_load:.1f}s cond {t_cond:.2f}s RTF {tot_gen / tot_audio:.3f} ({tot_gen:.1f}s / {tot_audio:.1f}s)")
+    cond = f"cond {t_cond:.2f}s" if t_cond is not None else "built-in voice"
+    print(f"{device}: load {t_load:.1f}s {cond} RTF {tot_gen / tot_audio:.3f} ({tot_gen:.1f}s / {tot_audio:.1f}s)")
 
 
 def step_blocked(args) -> None:
@@ -515,7 +656,7 @@ def step_blocked(args) -> None:
             t = time.perf_counter()
             wav = model.generate(text, language_id=lang, cfg_weight=GEN["cfg_weight"], exaggeration=GEN["exaggeration"])
             dt = time.perf_counter() - t
-            audio_s = write_wav(AUDIO / f"blocked_{device}_{name}.wav", wav, model.sr)
+            audio_s = write_wav(AUDIO_OUT / f"blocked_{device}_{name}.wav", wav, model.sr)
             out.append({"lang": lang, "chars": len(text), "gen_s": round(dt, 2), "audio_s": round(audio_s, 2),
                         "flag": babble_flag(len(text), audio_s) if lang == "en" else None})
         result["generations"] = out
@@ -528,7 +669,7 @@ def step_blocked(args) -> None:
         result[f"{m}_sys_modules_at_end"] = state
     result["log_warnings"] = warn.other_log_warnings
     result["network_hosts_blocked"] = rec["blocked"]
-    save_json(OUT / f"blocked_{device}.json", result)
+    save_json(RUN / f"blocked_{device}.json", result)
     print(f"blocked ({device}): ok={result['ok']}")
 
 
@@ -536,18 +677,36 @@ def step_blocked(args) -> None:
 # orchestration (fresh process per step, wrapped in /usr/bin/time -l)
 # --------------------------------------------------------------------------------------
 
-def run_step(name: str, argv: list[str], env_extra: dict, log_name: str) -> dict:
+CAFFEINATE = ["caffeinate", "-dimsu"]
+
+
+def run_step(name: str, argv: list[str], env_extra: dict, log_name: str, caffeinate: bool = False) -> dict:
     LOGS.mkdir(parents=True, exist_ok=True)
     env = os.environ.copy()
     env.pop("HF_TOKEN", None)
     env.update({"TQDM_DISABLE": "1", "PYTHONUNBUFFERED": "1", **env_extra})
     log = LOGS / log_name
-    cmd = ["/usr/bin/time", "-l", str(VENV_PY), str(Path(__file__).resolve()), *argv]
+    prefix = CAFFEINATE if caffeinate else []
+    cmd = [*prefix, "/usr/bin/time", "-l", str(VENV_PY), str(Path(__file__).resolve()), *argv]
     t0 = time.perf_counter()
+    wall0 = time.time()
+    assertions = None
     with log.open("w") as f:
-        f.write(f"$ {' '.join(cmd[2:])}\n# env: {json.dumps(env_extra)}\n")
+        f.write(f"$ {' '.join(prefix + cmd[len(prefix) + 2:])}\n# env: {json.dumps(env_extra)}\n")
         f.flush()
-        rc = subprocess.run(cmd, stdout=f, stderr=subprocess.STDOUT, env=env, cwd=REPO).returncode
+        p = subprocess.Popen(cmd, stdout=f, stderr=subprocess.STDOUT, env=env, cwd=REPO)
+        if caffeinate:
+            try:
+                p.wait(timeout=20)
+            except subprocess.TimeoutExpired:
+                # proof that caffeinate holds its assertions while the step runs
+                # caffeinate forks: the asserting child's "Details" line names our pid ("on behalf of ... (pid N)")
+                rows = sh(["pmset", "-g", "assertions"]).splitlines()
+                types = {m.group(1) for ln, nxt in zip(rows, rows[1:] + [""])
+                         if "(caffeinate)" in ln and f"(pid {p.pid})" in nxt
+                         and (m := re.search(r"\]\s+\S+\s+(\w+)\s+named:", ln))}
+                assertions = {"checked_after_s": 20, "types": sorted(types)}
+        rc = p.wait()
     wall = time.perf_counter() - t0
     text = log.read_text()
     maxrss = re.search(r"(\d+)\s+maximum resident set size", text)
@@ -555,7 +714,12 @@ def run_step(name: str, argv: list[str], env_extra: dict, log_name: str) -> dict
     res = {"step": name, "rc": rc, "wall_s": round(wall, 1),
            "max_rss_bytes": int(maxrss.group(1)) if maxrss else None,
            "peak_footprint_bytes": int(footprint.group(1)) if footprint else None}
-    print(json.dumps(res))
+    if caffeinate:
+        res["caffeinate"] = " ".join(CAFFEINATE)
+        res["caffeinate_assertions"] = assertions
+        # perf_counter stops during sleep; wall clock does not
+        res["wall_clock_minus_monotonic_s"] = round((time.time() - wall0) - wall, 1)
+    print(json.dumps(res), flush=True)
     return res
 
 
@@ -591,7 +755,7 @@ def check_logs_for_text() -> dict:
     lines = english_lines()
     leaks = 0
     scanned = 0
-    for p in list(LOGS.glob("*.log")) + list(OUT.glob("*.json")):
+    for p in list(LOGS.glob("*.log")) + list(RUN.glob("*.json")):
         t = p.read_text(errors="ignore")
         scanned += 1
         leaks += sum(1 for ln in lines if len(ln) >= 8 and ln in t)
@@ -619,19 +783,211 @@ def step_all(args) -> None:
         steps[f"power_before_{dev}"] = power_state()
         steps[f"bench_{dev}"] = run_step(f"bench_{dev}", ["bench", "--device", dev], env, f"bench_{dev}.log")
         steps[f"power_after_{dev}"] = power_state()
-    rtfs = {d: load_json(OUT / f"bench_{d}.json")["rtf"] for d in args.devices if (OUT / f"bench_{d}.json").exists()}
+    rtfs = {d: load_json(RUN / f"bench_{d}.json")["rtf"] for d in args.devices if (RUN / f"bench_{d}.json").exists()}
     blocked_dev = args.blocked_device or (min(rtfs, key=rtfs.get) if rtfs else "cpu")
     env = dict(offline)
     if blocked_dev == "mps":
         env["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
     steps[f"blocked_{blocked_dev}"] = run_step(f"blocked_{blocked_dev}", ["blocked", "--device", blocked_dev], env,
                                                f"blocked_{blocked_dev}.log")
-    save_json(OUT / "steps.json", steps)
+    save_json(RUN / "steps.json", steps)
     step_collect(args)
 
 
+def step_device(args) -> None:
+    """Run 2: one clean device run. AC power required; waits for 1-min load < max; caffeinate; pmset log."""
+    dev = args.device
+    RUN.mkdir(parents=True, exist_ok=True)
+    LOGS.mkdir(parents=True, exist_ok=True)
+    steps = load_json(RUN / "steps.json") if (RUN / "steps.json").exists() else {}
+    before = conditions()
+    print(f"before {dev}: power={before['power_source']} load={before['sysctl_loadavg']} lid={before['lid']}", flush=True)
+    if before["power_source"] != "AC":
+        steps[f"power_before_{dev}"] = before
+        save_json(RUN / "steps.json", steps)
+        sys.exit(f"stop: not on AC power ({before['power_source']})")
+    checks = [{"t": before["time"], "load_1m": before["sysctl_loadavg"][0] if before["sysctl_loadavg"] else None}]
+    t_wait = time.time()
+    while (checks[-1]["load_1m"] or 0) >= args.max_load and time.time() - t_wait < args.max_wait_s:
+        time.sleep(20)
+        checks.append({"t": time.strftime("%Y-%m-%dT%H:%M:%S"), "load_1m": load_1min()})
+        print(f"load wait: {checks[-1]}", flush=True)
+    if len(checks) > 1:
+        before = conditions()  # re-record right before the run
+    steps[f"load_wait_{dev}"] = {"max_load_1m": args.max_load, "max_wait_s": args.max_wait_s,
+                                 "waited_s": round(time.time() - t_wait), "checks": checks,
+                                 "proceeded_above_max": (checks[-1]["load_1m"] or 0) >= args.max_load}
+    steps[f"power_before_{dev}"] = before
+    save_json(RUN / "steps.json", steps)
+
+    env = {"HF_HUB_OFFLINE": "1"}
+    if dev == "mps":
+        env["PYTORCH_ENABLE_MPS_FALLBACK"] = "1"
+    argv = ["bench", "--device", dev, "--run-dir", args.run_dir, "--voice", args.voice, "--block-optional"]
+    if not args.no_empty_cache:
+        argv.append("--empty-cache")
+    start = dt_mod.datetime.now().replace(microsecond=0)
+    steps[f"bench_{dev}"] = run_step(f"bench_{dev}", argv, env, f"bench_{dev}.log", caffeinate=True)
+    end = dt_mod.datetime.now().replace(microsecond=0)
+    steps[f"power_after_{dev}"] = conditions()
+    sw = pmset_sleep_wake(start, end)
+    (LOGS / f"pmset_sleep_wake_{dev}.log").write_text("\n".join(sw["events"]) + ("\n" if sw["events"] else ""))
+    steps[f"sleep_wake_{dev}"] = sw
+    save_json(RUN / "steps.json", steps)
+    print(f"after {dev}: rc={steps[f'bench_{dev}']['rc']} sleep_events={sw['sleep_events']} "
+          f"load={steps[f'power_after_{dev}']['sysctl_loadavg']}", flush=True)
+
+
+def _median(xs: list[float]) -> float | None:
+    s = sorted(xs)
+    n = len(s)
+    return None if not n else round(s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2, 3)
+
+
+def device_summary(b: dict, st: dict) -> dict:
+    rtfs = [x["rtf"] for x in b["per_line"]]
+    tr_gen = sum(x["gen_s"] for x in b["turkish"])
+    tr_audio = sum(x["audio_s"] for x in b["turkish"])
+    drv = [x["mps"]["driver_allocated"] for x in b["per_line"] if x.get("mps")]
+    drv_clean = [x["mps_after_cleanup"]["driver_allocated"] for x in b["per_line"] if x.get("mps_after_cleanup")]
+    tr_drv = [x["mps"]["driver_allocated"] for x in b["turkish"] if x.get("mps")]
+    load_mps = (b.get("mem_after_load") or {}).get("mps")
+    slowest = max(b["per_line"], key=lambda x: x["gen_s"])
+    rest = [x for x in b["per_line"] if x is not slowest]
+    return {
+        "rtf_without_slowest_line": {"i": slowest["i"], "rtf": round(sum(x["gen_s"] for x in rest) /
+                                                                     sum(x["audio_s"] for x in rest), 3)},
+        "import_s": b["import_s"], "load_s": b["load_s"], "cond_s": b.get("cond_s"),
+        "warmup_gen_s": b["warmup"]["gen_s"], "warmup_audio_s": b["warmup"]["audio_s"],
+        "lines": b["lines"], "total_gen_s": b["total_gen_s"], "total_audio_s": b["total_audio_s"],
+        "rtf": b["rtf"], "x_realtime": b["x_realtime"],
+        "per_line_rtf_min": min(rtfs), "per_line_rtf_max": max(rtfs), "per_line_rtf_median": _median(rtfs),
+        "stage_totals_s": b.get("stage_totals_s"), "t3_tokens_per_s": b.get("t3_tokens_per_s"),
+        "forced_eos_lines": b["forced_eos_lines"], "repetition_warning_lines": b["repetition_warning_lines"],
+        "flagged_lines": b["flagged_lines"], "lines_with_sleep_gap": b.get("lines_with_sleep_gap"),
+        "cleanup_total_s": b.get("cleanup_total_s"),
+        "peak_rss_bytes_time_l": st.get("max_rss_bytes"), "peak_footprint_bytes_time_l": st.get("peak_footprint_bytes"),
+        "peak_rss_sampled_bytes": b["peak_rss_sampled"], "step_wall_s": st.get("wall_s"),
+        "mps_driver_after_load": load_mps["driver_allocated"] if load_mps else None,
+        "mps_driver_per_line_after_gen": drv or None,
+        "mps_driver_per_line_after_cleanup": drv_clean or None,
+        "mps_driver_peak_after_gen": max(drv) if drv else None,
+        "mps_driver_peak_after_cleanup": max(drv_clean) if drv_clean else None,
+        "turkish_rtf": round(tr_gen / tr_audio, 3) if tr_audio else None,
+        "turkish_per_sentence_rtf": [round(x["gen_s"] / x["audio_s"], 2) for x in b["turkish"] if x["audio_s"]],
+        "turkish_mps_driver_after_gen": tr_drv or None,
+        "mps_fallback_ops": b.get("mps_fallback_ops"), "network_hosts_blocked": b.get("network_hosts_blocked"),
+        "modules_after_turkish": b.get("modules_after_turkish"),
+    }
+
+
+def caffeinate_created(window: list[str]) -> dict:
+    """Assertion types a caffeinate created within 2 s of the window start, read back from `pmset -g log`."""
+    start = dt_mod.datetime.fromisoformat(window[0])
+    end = dt_mod.datetime.fromisoformat(window[1])
+    by_pid: dict[str, list] = {}
+    for ln in sh(["pmset", "-g", "log"], timeout=180).splitlines():
+        m = re.match(r"^(\d{4}-\d\d-\d\d \d\d:\d\d:\d\d) [+-]\d{4} Assertions\s+PID (\d+)\(caffeinate\) (\w+) (\w+)", ln)
+        if not m:
+            continue
+        t = dt_mod.datetime.strptime(m.group(1), "%Y-%m-%d %H:%M:%S")
+        if start <= t <= end:
+            by_pid.setdefault(m.group(2), []).append((t, m.group(3), m.group(4)))
+    for pid, ev in by_pid.items():
+        created = [e for e in ev if e[1] == "Created"]
+        if created and abs((created[0][0] - start).total_seconds()) <= 2:
+            released = [e for e in ev if e[1] in ("ClientDied", "Released", "TimedOut")]
+            return {"created": sorted({e[2] for e in created}), "created_at": created[0][0].isoformat(),
+                    "ended": sorted({f"{e[2]} {e[1]} {e[0].time()}" for e in released})}
+    return {"created": None}
+
+
+def silent_seconds(path: Path) -> float | None:
+    """Total silence (ffmpeg silencedetect, -35 dB, >= 0.3 s) in a generated file."""
+    if not path.exists():
+        return None
+    err = subprocess.run(["ffmpeg", "-hide_banner", "-nostdin", "-i", str(path), "-af", "silencedetect=n=-35dB:d=0.3",
+                          "-f", "null", "-"], capture_output=True, text=True).stderr
+    return round(sum(float(x) for x in re.findall(r"silence_duration: ([0-9.]+)", err)), 2)
+
+
+def collect_clean_run(args) -> None:
+    """results.json for a --run-dir run (run 2): numbers and settings only, no text."""
+    steps = load_json(RUN / "steps.json") if (RUN / "steps.json").exists() else {}
+    chars = [len(x) for x in english_lines()]
+    res = {"spike": "S4a", "run": args.run_dir, "date": time.strftime("%Y-%m-%d"),
+           "machine": "Apple M1 Pro, 16 GB (see versions in bench_*)",
+           "settings": {**GEN, "seed": "1000 + line index (warm-up 999, Turkish 2000 + k)",
+                        "warmup": "1 generation, excluded",
+                        "voice": "built-in default: model.conds from the repo's conds.pt; prepare_conditionals not "
+                                 "called; no cloning, no film audio (D-84)",
+                        "per_line_cleanup": "MPS: synchronize, gc.collect, empty_cache; CPU: gc.collect "
+                                            "(after warm-up, every English line and every Turkish sentence; not timed)",
+                        "blocked_modules": [*OPTIONAL_BLOCKED, "spacy_pkuseg"],
+                        "caffeinate": " ".join(CAFFEINATE), "HF_HUB_OFFLINE": "1",
+                        "network": "socket guard, no hosts allowed"},
+           "english_lines": {"count": len(chars), "chars": chars, "total_chars": sum(chars)}}
+    summary, benches = {}, {}
+    for dev in ("cpu", "mps"):
+        p = RUN / f"bench_{dev}.json"
+        if p.exists():
+            benches[dev] = load_json(p)
+            summary[dev] = device_summary(benches[dev], steps.get(f"bench_{dev}", {}))
+            sil = [silent_seconds(AUDIO_OUT / f"{dev}_en_{x['i']:02d}.wav") for x in benches[dev]["per_line"]]
+            summary[dev]["per_line_silent_s"] = sil
+            summary[dev]["per_line_non_silent_s"] = [round(x["audio_s"] - s, 2) if s is not None else None
+                                                     for x, s in zip(benches[dev]["per_line"], sil)]
+    res["summary"] = summary
+    res["conditions"] = {}
+    for dev in summary:
+        b_step = steps.get(f"bench_{dev}", {})
+        res["conditions"][dev] = {
+            "power_before": steps.get(f"power_before_{dev}"), "load_wait": steps.get(f"load_wait_{dev}"),
+            "power_after": steps.get(f"power_after_{dev}"), "sleep_wake": steps.get(f"sleep_wake_{dev}"),
+            "caffeinate_assertions": b_step.get("caffeinate_assertions"),
+            "caffeinate_from_pmset_log": (caffeinate_created(steps[f"sleep_wake_{dev}"]["window"])
+                                          if steps.get(f"sleep_wake_{dev}") else None),
+            "wall_clock_minus_monotonic_s": b_step.get("wall_clock_minus_monotonic_s"),
+        }
+    comp = {"note": "run 1: cloned ISLIK SPEAKER_01 voice (11.8 s), battery, load ~10, Mac slept during the MPS "
+                    "pass, no cache freeing, pykakasi/gradio not blocked; run 2: built-in voice, see settings"}
+    for dev in summary:
+        p = OUT / "run1" / f"bench_{dev}.json"
+        if not p.exists():
+            continue
+        s1 = device_summary(load_json(p), (load_json(OUT / "run1" / "steps.json") if (OUT / "run1" / "steps.json").exists()
+                                           else {}).get(f"bench_{dev}", {}))
+        s2 = summary[dev]
+        comp[dev] = {k: {"run1": s1[k], "run2": s2[k]} for k in
+                     ("load_s", "rtf", "per_line_rtf_min", "per_line_rtf_max", "per_line_rtf_median", "total_gen_s",
+                      "total_audio_s", "forced_eos_lines", "turkish_rtf", "peak_rss_bytes_time_l",
+                      "peak_footprint_bytes_time_l", "mps_driver_peak_after_gen", "t3_tokens_per_s")}
+        comp[dev]["rtf_run2_over_run1"] = round(s2["rtf"] / s1["rtf"], 3)
+    res["run1_comparison"] = comp
+    if summary:
+        best = min(summary, key=lambda d: summary[d]["rtf"])
+        speech_min, factor, budget = 55.0, 1.3, 270
+        tts = speech_min * factor * summary[best]["rtf"]
+        res["projection_90min_estimate"] = {
+            "assumption": "55 min English speech x 1.3 (audition, drift-gate regenerations, rewrites) x best RTF; "
+                          "voice-independent speed is an assumption",
+            "best_device": best, "rtf": summary[best]["rtf"], "tts_minutes": round(tts, 1),
+            "per_device_tts_minutes": {d: round(speech_min * factor * s["rtf"], 1) for d, s in summary.items()},
+            "pipeline_budget_minutes_3x": budget, "tts_over_budget_ratio": round(tts / budget, 2),
+        }
+    res["steps"] = {k: v for k, v in steps.items() if k.startswith("bench")}
+    for dev, b in benches.items():
+        res[f"bench_{dev}"] = b
+    res["log_text_check"] = check_logs_for_text()
+    save_json(RUN / "results.json", res)
+    print("results:", RUN / "results.json")
+
+
 def step_collect(_args) -> None:
-    steps = load_json(OUT / "steps.json") if (OUT / "steps.json").exists() else {}
+    if getattr(_args, "run_dir", None):
+        collect_clean_run(_args)
+        return
+    steps = load_json(RUN / "steps.json") if (RUN / "steps.json").exists() else {}
     res = {"spike": "S4a", "date": "2026-10-07", "machine": "Apple M1 Pro, 16 GB, macOS (see versions)",
            "settings": {**GEN, "seed": "1000 + line index", "warmup": "1 generation, excluded",
                         "conditioning": "prepare_conditionals once from the reference"}}
@@ -643,10 +999,10 @@ def step_collect(_args) -> None:
                             "chars": [len(x) for x in english_lines()]}
     res["steps"] = steps
     for dev in ("cpu", "mps"):
-        p = OUT / f"bench_{dev}.json"
+        p = RUN / f"bench_{dev}.json"
         if p.exists():
             res[f"bench_{dev}"] = load_json(p)
-    for p in sorted(OUT.glob("blocked_*.json")):
+    for p in sorted(RUN.glob("blocked_*.json")):
         res[p.stem] = load_json(p)
     run1 = OUT / "run1"
     if run1.exists():
@@ -695,8 +1051,8 @@ def step_collect(_args) -> None:
             "pipeline_budget_minutes_3x": 270,
         }
     res["log_text_check"] = check_logs_for_text()
-    save_json(OUT / "results.json", res)
-    print("results:", OUT / "results.json")
+    save_json(RUN / "results.json", res)
+    print("results:", RUN / "results.json")
 
 
 def main() -> None:
@@ -707,15 +1063,29 @@ def main() -> None:
     sub.add_parser("importtime")
     b = sub.add_parser("bench")
     b.add_argument("--device", choices=["cpu", "mps"], required=True)
+    b.add_argument("--voice", choices=["ref", "default"], default="ref",
+                   help="ref: clone the ISLIK reference (run 1); default: built-in voice from conds.pt (run 2)")
+    b.add_argument("--empty-cache", action="store_true", help="free memory after every generation (run 2)")
+    b.add_argument("--block-optional", action="store_true", help="block pykakasi and gradio before import (run 2)")
+    b.add_argument("--run-dir", default=None)
     bl = sub.add_parser("blocked")
     bl.add_argument("--device", choices=["cpu", "mps"], required=True)
     a = sub.add_parser("all")
     a.add_argument("--devices", nargs="+", default=["cpu", "mps"])
     a.add_argument("--blocked-device", choices=["cpu", "mps"], default=None)
-    sub.add_parser("collect")
+    d = sub.add_parser("device", help="run 2: one clean device run with power/load/sleep checks")
+    d.add_argument("--device", choices=["cpu", "mps"], required=True)
+    d.add_argument("--run-dir", required=True)
+    d.add_argument("--voice", choices=["ref", "default"], default="default")
+    d.add_argument("--no-empty-cache", action="store_true")
+    d.add_argument("--max-load", type=float, default=4.0)
+    d.add_argument("--max-wait-s", type=int, default=300)
+    c = sub.add_parser("collect")
+    c.add_argument("--run-dir", default=None)
     args = ap.parse_args()
+    configure_run(getattr(args, "run_dir", None))
     {"ref": step_ref, "fetch": step_fetch, "importtime": step_importtime, "bench": step_bench,
-     "blocked": step_blocked, "all": step_all, "collect": step_collect}[args.cmd](args)
+     "blocked": step_blocked, "all": step_all, "device": step_device, "collect": step_collect}[args.cmd](args)
 
 
 if __name__ == "__main__":
